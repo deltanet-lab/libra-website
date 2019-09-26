@@ -38,8 +38,9 @@ const siteConfig = {
     {href: 'https://community.libra.org', label: 'Community'},
     {blog: true, label: "Blog" },
     {href: 'https://libra.org', label: 'libra.org'},
-    {href: 'https://github.com/libra/libra', label: 'GitHub'}
+    {href: 'https://github.com/libra/libra', label: 'GitHub'},
     // {search: false}, // position search box to the very right
+    {languages: true}
   ],
 
   // add users to the website

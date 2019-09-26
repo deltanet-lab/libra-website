@@ -69,7 +69,7 @@ Libra生态系统为各种各样的开发人员提供支持，从为Libra Core�
 
 该网站面向开发者。
 
-## 参考
+## 参考文档
 
 * [Libra协议: 关键概念](libra-protocol.md) &mdash; 向您介绍Libra协议的基本概念。
 * [我的第一个交易](my-first-transaction.md) &mdash; 指导您使用Libra命令行客户端在Libra区块链上执行您的第一笔交易。

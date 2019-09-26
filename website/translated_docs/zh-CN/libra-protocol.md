@@ -8,7 +8,7 @@ Libra区块链是一个加密认证的分布式数据库，它基于Libra协议�
 
 Libra区块链由[验证节点](reference/glossary.md#validator-node)的分布式网络维护，也称为验证者。验证者集体遵循[一致性协议](reference/glossary.md#consensus-protocol)来商定区块链中交易的顺序。
 
-Libra测试网络是Libra区块链软件的早期原型——Libra Core的演示。
+Libra测试网络是Libra区块链软件的早期原型 —— Libra Core的演示。
 
 ## 交易与状态(Transactions and States)
 
