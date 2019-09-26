@@ -7,37 +7,37 @@
 [![CircleCI](https://circleci.com/gh/libra/libra.svg?style=shield)](https://circleci.com/gh/libra/libra)
 [![License](https://img.shields.io/badge/license-Apache-green.svg)](LICENSE.md)
 
-Libra Core implements a decentralized, programmable database which provides a financial infrastructure that can empower billions of people.
+Libra Core实现了一个非中心化的，可编程的数据库，该数据库提供了一个可以赋能数十亿人的金融基础架构。
 
-## Note to Developers
-* Libra Core is a prototype.
-* The APIs are constantly evolving and designed to demonstrate types of functionality. Expect substantial changes before the release.
-* We've launched a testnet that is a live demonstration of an early prototype of the Libra Blockchain software.
+## 开发者注意事项
+* Libra Core是一个原型。
+* 我们的API在不断进化当中，旨在演示相关功能，预计在发布之前会有重大变化。
+* 我们已经启动了一个测试网，它是Libra区块链软件早期原型的可用演示。
 
-## Contributing
+## 贡献代码
 
 Read our [Contributing guide](https://developers.libra.org/docs/community/contributing). Find out what's coming on our [blog](https://developers.libra.org/blog/2019/06/18/the-path-forward).
 
-## Getting Started
+## 入门
 
-### Learn About Libra
-* [Welcome](https://developers.libra.org/docs/welcome-to-libra)
-* [Libra Protocol: Key Concepts](https://developers.libra.org/docs/libra-protocol)
-* [Life of a Transaction](https://developers.libra.org/docs/life-of-a-transaction)
+### 了解Libra
+* [欢迎页](https://developers.libra.org/docs/welcome-to-libra)
+* [Libra协议：关键概念](https://developers.libra.org/docs/libra-protocol)
+* [交易生命周期](https://developers.libra.org/docs/life-of-a-transaction)
 
-### Try Libra Core
+### 试用Libra Core
 * [My First Transaction](https://developers.libra.org/docs/my-first-transaction)
 * [Getting Started With Move](https://developers.libra.org/docs/move-overview)
 
-### Technical Papers
+### 技术论文
 * [The Libra Blockchain](https://developers.libra.org/docs/the-libra-blockchain-paper)
 * [Move: A Language With Programmable Resources](https://developers.libra.org/docs/move-paper)
 * [State Machine Replication in the Libra Blockchain](https://developers.libra.org/docs/state-machine-replication-paper)
 
-### Blog
+### 博客
 * [Libra: The Path Forward](https://developers.libra.org/blog/2019/06/18/the-path-forward/)
 
-### Libra Codebase
+### Libra相关代码库
 
 * [Libra Core Overview](https://developers.libra.org/docs/libra-core-overview)
 * [Admission Control](https://developers.libra.org/docs/crates/admission-control)
@@ -53,11 +53,11 @@ Read our [Contributing guide](https://developers.libra.org/docs/community/contri
 * [Virtual Machine](https://developers.libra.org/docs/crates/vm)
 
 
-## Community
+## 社区
 
-Join us on the [Libra Discourse](https://community.libra.org)
+在[Libra Discourse](https://community.libra.org)上加入我们！
 
-Get the latest updates to our project by signing up to our [newsletter](https://developers.libra.org/newsletter_form).
+请注册我们的[新闻邮件列表](https://developers.libra.org/newsletter_form)以获得最新的项目更新。
 
 ## License
 
