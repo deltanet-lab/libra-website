@@ -1,6 +1,6 @@
 ---
 id: move-paper
-title: Move: 一种具有可编程资源的语言
+title: Move: 一种具有可编程资源的开发语言
 ---
 
 <!-- hide the table of contents --><style>.toc-headings {display: none !important; visibility: hidden !important;}</style>
@@ -12,4 +12,4 @@ title: Move: 一种具有可编程资源的语言
 
 ### 下载链接
 
-[![《Move: 一种具有可编程资源的语言》的PDF下载](assets/illustrations/move-language-pdf.png){: .download}](assets/papers/libra-move-a-language-with-programmable-resources.pdf)
+[![《Move: 一种具有可编程资源的开发语言》的PDF下载](assets/illustrations/move-language-pdf.png){: .download}](assets/papers/libra-move-a-language-with-programmable-resources.pdf)
