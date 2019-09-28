@@ -11,10 +11,6 @@ title: 开源Libra
 
 ## Libra的工程实践准则
 
-* The technology behind the Libra Blockchain will be free for all to inspect, use, modify, and distribute, and this is understood by all.
-* Contributions are measured for technical merit and scrutinized for security.
-* Trust and transparency of decisions will help to make Libra successful.
-
 * Libra区块链背后的技术将免费提供给所有人检查，使用，修改和分发，并且所有人都可以理解。
 * 贡献根据技术价值和安全审核进行衡量。
 * 决策的信任和透明性将有助于使Libra成功。
