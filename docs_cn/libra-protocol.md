@@ -122,7 +122,7 @@ Libra区块链的客户创建交易并将其提交到验证者节点。 验证�
 
 有关每个验证器组件与其他组件的交互的信息，请参阅[交易的生命周期](life-of-a-transaction.md).
 
-## 参考
+## 参考资料
 
 * [欢迎页](welcome-to-libra.md).
 * [我的第一笔交易](my-first-transaction.md) &mdash; 指导您使用Libra命令行客户端在Libra上执行您的第一笔交易。
