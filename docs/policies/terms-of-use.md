@@ -1,6 +1,6 @@
 ---
 id: terms-of-use
-title: Libra Association Website Terms of Use
+title: Libra协会网站使用条款
 ---
 
 <!-- hide the edit button --><style>.edit-page-link {display: none !important; visibility: hidden !important;}</style>

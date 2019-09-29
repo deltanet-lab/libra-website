@@ -1,6 +1,6 @@
 ---
 id: privacy-policy
-title: Privacy Policy
+title: 隐私政策
 ---
 
 <!-- hide the edit button --><style>.edit-page-link {display: none !important; visibility: hidden !important;}</style>

@@ -1,6 +1,6 @@
 ---
 id: cookies-policy
-title: Cookies Policy
+title: Cookies政策
 ---
 
 <!-- hide the edit button --><style>.edit-page-link {display: none !important; visibility: hidden !important;}</style>

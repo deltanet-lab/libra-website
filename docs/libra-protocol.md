@@ -8,22 +8,22 @@ Libra区块链是一个加密认证的分布式数据库，它基于Libra协议�
 
 Libra区块链由[验证节点](reference/glossary.md#validator-node)的分布式网络维护，也称为验证者。验证者集体遵循[一致性协议](reference/glossary.md#consensus-protocol)来商定区块链中交易的顺序。
 
-Libra测试网络是Libra区块链软件的早期原型——Libra Core的演示。
+Libra测试网络是Libra区块链软件的早期原型 —— Libra Core的演示。
 
 ## 交易与状态(Transactions and States)
 
 Libra协议的核心是两个基础概念 &mdash; 交易和状态。在任何一个时间点，区块链都有一个状态，状态(或称为账本状态)代表当前的链上数据的快照。执行一个交易会改变区块链的状态。
 
 ![Figure 1.1 A transaction changes state.](assets/illustrations/transactions.svg)
-<small class="figure">Figure 1.1 交易改变状态。</small>
+<small class="figure">图1.1 交易改变状态</small>
 
-Figure 1.1 represents the change of state of the Libra Blockchain that occurs when a transaction is executed. For example, at state S~N-1~, Alice has a balance of 110 Libra, and Bob has a balance of 52 Libra. When a transaction is applied to the blockchain, it generates a new state. To transition from S~N-1~ to S~N~, transaction T~N~ is applied against the state S~N-1~. This causes Alice’s balance to be reduced by 10 Libra and Bob’s balance to be increased by 10 Libra. The new state S~N~ now shows these updated balances. In figure 1.1:
+图1.1表示执行交易时发生的Libra区块链的状态变化。 例如，在状态S~N-1~下，Alice的余额为110个Libra，Bob的余额为52个Libra。 将交易应用于区块链时，它将生成一个新状态。 为了从S~N-1~过渡到S~N~，在状态S~N-1~之上执行了交易T~N~。 这会导致Alice的余额减少10个Libra，而Bob的余额增加10个Libra。 现在，新状态S~N~显示这些更新的余额。 在图1.1中：
 
 * **A** 和 **B** 分别表示Alice和Bob在区块链中的账户。
 * **S~N-1~** 代表在区块链中的第 (N-1)^th^ 的状态。
 * **T~N~** 是指在区块链上执行的第 n-th 个交易。  
-    * 在该例子中, T~N~ is - “send 10 Libra from person A’s account to person B’s account.”
-* **F** is a deterministic function. F always returns the same final state for a specific initial state and a specific transaction. If the current state of the blockchain is S~N-1~, and transaction T~N~ is executed on state S~N-1~, the new state of the blockchain is always S~N~.
+    * 在该例子中, T~N~ 是指 - “从用户A的账户转账10个Libra币到用户B的账户。”
+* **F** 是一个确定性的函数。 F always returns the same final state for a specific initial state and a specific transaction. If the current state of the blockchain is S~N-1~, and transaction T~N~ is executed on state S~N-1~, the new state of the blockchain is always S~N~.
 * **S~N~** is the n-th state of the blockchain. S~N~ is an outcome of applying F to S~N-1~ and T~N~.
 
 Libra协议使用[Move语言](move-overview.md)来执行确定性函数F.
@@ -36,7 +36,7 @@ Libra区块链的用户通过提交一个交易请求来更新账本状态，区
 * **发送者的公钥** &mdash; 与对交易进行签名的私钥相对应的公钥。
 * **程序** &mdash; 该程序由如下部分组成：
     * Move字节码。
-    * 可选的 An optional list of inputs to the script. For a peer-to-peer transaction, the inputs contain the information about the recipient and the amount transferred to the recipient.
+    * 可选的脚本输入列表 An optional list of inputs to the script. For a peer-to-peer transaction, the inputs contain the information about the recipient and the amount transferred to the recipient.
     * 可选的将要发布的Move字节码模块。
 * **Gas 价格** (in microlibra/gas units) &mdash; The amount the sender is willing to pay per unit of [gas](reference/glossary.md#gas) to execute the transaction. Gas is a way to pay for computation and storage. A gas unit is an abstract measurement of computation with no inherent real-world value.
 * **最大燃料总量** &mdash; 交易允许消费的最大燃料量。 

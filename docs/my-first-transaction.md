@@ -3,12 +3,12 @@ id: my-first-transaction
 title: 我的第一笔交易
 ---
 
-This document will guide you through executing your first transaction on the Libra Blockchain. Before you follow the steps to execute your first transaction, we recommend that you read the following documents to familiarize yourself with the key aspects of the Libra ecosystem and the Libra protocol:
+本文档将指导您完成在Libra区块链上的第一笔交易。 在执行执行第一笔交易的步骤之前，建议您阅读以下文档，以熟悉Libra生态系统和Libra协议的关键方面：
 
-* [Welcome](welcome-to-libra.md)
-* [The Libra protocol: Key Concepts](libra-protocol.md)
+* [欢迎页](welcome-to-libra.md)
+* [Libra协议: 关键概念](libra-protocol.md)
 
-We provide a command line interface (CLI) client to interact with the blockchain.
+我们提供了一个命令行界面（CLI）客户端来与区块链进行交互。
 
 ## 假设
 
@@ -42,7 +42,7 @@ git clone https://github.com/libra/libra.git
 
 ### 安装Libra Core
 
-To setup Libra Core, change to the `libra` directory and run the setup script to install the dependencies, as shown below:
+要安装Libra Core，请转至`libra`目录并运行安装脚本以安装依赖项，如下所示：
 
 ```
 cd libra
@@ -105,7 +105,7 @@ If you have problems building the client and connecting to the testnet, refer to
 
 Once your client is connected to the testnet, you can run CLI commands to create new accounts.  We will walk you through creating accounts for two users (let's call them Alice and Bob).
 
-### Step 1: Check If the CLI Client Is Running on Your System
+### 第一步：确保命令行客户端已经在你的系统上运行
 
 A **libra%** command line prompt indicates that your Libra CLI client is running. To see the help information for the `account` command enter “account” as shown below:
 
@@ -127,7 +127,7 @@ mint | mintb | m | mb <receiver account> <number of coins>
   Mint coins to the account. Suffix 'b' is for blocking
 ```
 
-### Step 2: Create Alice’s Account
+### 第二步：创建Alice的账户
 
 Note that creating an account using the CLI does not update the blockchain, it just creates a local key-pair.
 
@@ -144,9 +144,9 @@ Created/retrieved account #0 address 3ed8e5fafae4147b2a105a0be2f81972883441cfaaa
 
 #0 is the index of Alice’s account, and the hex string is the address of Alice’s account. The index is just a way to refer to Alice’s account. The account index is a local CLI index that can be used in other CLI commands for users to conveniently refer to the accounts they have created. The index is meaningless to the blockchain. Alice’s account will be created on the blockchain only when either money is added to Alice’s account via minting, or money is transferred to Alice’s account via a transfer from another user. Note that you may also use the hex address in CLI commands. The account index is just a convenience wrapper around the account address.
 
-### Step 3: Create Bob’s Account
+### 第三步：创建Bob的账户
 
-To create Bob’s account, repeat the account creation command:
+为了创建Bob的账户，请重复账户创建的命令：
 
 `libra% account create`
 
@@ -160,7 +160,7 @@ Created/retrieved account #1 address 8337aac709a41fe6be03cad8878a0d4209740b1608f
 #1 is the index for Bob’s account, and the hex string is the address of Bob’s account.
 For more details on index refer to [Create Alice’s Account.](#step-2-create-alice-s-account)
 
-### Step 4 (Optional): List Accounts
+### 第四步(可选)：查询账户
 
 To list the accounts you have created, enter this command:
 

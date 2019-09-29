@@ -1,38 +1,29 @@
 ---
 id: security
-title: Reporting Vulnerabilities
+title: 漏洞报告
 ---
 
-This document outlines security procedures and general policies for the Libra project.
+本文档概述了Libra项目的安全程序和一般策略。
 
-> **Note**: As Libra Core is currently in the prototype stage and does not power a blockchain with a currency that has real-world value, our security procedures are not fully in place. We will release a more complete disclosure policy prior to the launch of the mainnet.
+> **注意**：由于Libra Core目前处于原型阶段，并且无法使用具有现实价值的货币为区块链提供动力，因此我们的安全程序尚未完全到位。 在主网启动之前，我们将发布更完整的披露政策。
 
-## Reporting a Bug
+## 报告错误
 
-The Libra team and community take all security bugs in the Libra project
-seriously. Thank you for improving the security of Libra. We appreciate your
-efforts and responsible disclosure. We will make every effort to acknowledge
-your contributions.
+Libra团队和社区认真对待Libra项目中的所有安全漏洞。 感谢您提高天秤座的安全性。 感谢您的努力和负责任的公开。 我们将尽一切努力感谢您的贡献。
 
-Report security bugs by emailing
-[security@libra.org](mailto:security@libra.org).
+您可以通过电子邮件报告安全错误
+[security@libra.org](mailto:security@libra.org)。
 
-A member of the security team will acknowledge your email. After the initial
-reply to your report is sent, the security team will try to keep you informed
-on the progress towards a fix and a full announcement. The security team may
-ask you for additional information or guidance.
+安全团队的成员将确认您的电子邮件。发送对您的报告的初始答复后，安全团队将尝试使您了解修复进度和完整公告。 安全团队可能会要求您提供其他信息或指导。
 
-## Disclosure Policy
+## 披露政策
 
-When the security team receives a security bug report, they will assign it to a
-primary handler. The primary handler will coordinate the fix and release
-process which involves the following steps:
+安全团队收到安全错误报告后，会将其分配给主要处理人。主处理人将协调修复和发布过程，其中涉及以下步骤：
 
-  * Confirm the problem and determine the affected versions.
-  * Audit code to find any potential similar problems.
-  * Prepare fixes for all releases that are still under maintenance.
+   * 确认问题并确定受影响的版本。
+   * 审核代码以查找任何潜在的类似问题。
+   * 为仍在维护中的所有发行版准备修复程序。
 
-## Comments on This Policy
+## 对此政策的评论
 
-If you have suggestions on how this process could be improved, please submit a
-pull request.
+如果您对如何改进此过程有任何建议，请提交修改请求。
