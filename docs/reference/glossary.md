@@ -1,6 +1,6 @@
 ---
 id: glossary
-title: Glossary
+title: 词汇表
 ---
 
 
@@ -8,29 +8,29 @@ title: Glossary
 
 * * *
 
-### Accumulator Root Hash
+### 累加器根哈希(accumulator root hash)
 
-* An **accumulator root hash** is the root hash of a [Merkle accumulator.](https://eprint.iacr.org/2009/625.pdf) 
+* 所谓**累加器根哈希**是一颗[默克尔累加器]树的根哈希(https://eprint.iacr.org/2009/625.pdf)。 
 
-### Access path
+### 存取路径(Access path)
 
-* An **access path** specifies the location of a resource or Move module within a specific account.
-* In a state of the Libra Blockchain, an account is represented as a map of access paths to values. The Move VM deserializes this representation into modules and resources.
+* 所谓**存取路径**指定了资源或Move模块在某个账户下的位置。
+* In a state of the Libra Blockchain, 一个账户(account)表现为一组存取路径(access paths)到值(values)的映射(map)。 an account is represented as a map of access paths to values. The Move VM deserializes this representation into modules and resources.
 * Clients can use access paths to request a resource or a specific piece of data stored inside a resource.
 
-### Account
+### 账户(Account)
 
 * An **account** in the Libra Blockchain is a container for an arbitrary number of [Move modules](#move-module) and [Move resources](#move-resources). This essentially means that the state of each account is comprised of both code and data.
 * The account is identified by an [account address](#account-address).
 
-### Account Address
+### 账户地址(Account Address)
 
 * The **address** of a Libra account is a 256-bit value.
 * Users can create an address by generating a cryptographic key-pair.
 * The account address is a cryptographic hash of a user's public verification key.
 * There is no limit on the number of addresses a Libra user can create. 
 
-### Admission Control (AC)
+### 准入控制(Admission Control) (AC)
 
 * In Libra Core, **admission control** is the sole external interface to the validator.  Any incoming request (transaction submission or queries) from a client goes through admission control. A client does not have the ability to access the storage, or any other component in the system, without going through AC.  This filters requests and protects the system.
 
@@ -38,7 +38,7 @@ title: Glossary
 
 * A client will use AC for submitting transactions and performing queries (reads).
 
-### Authentication Key
+### 认证钥匙(Authentication Key)
 
 * An **authentication key** is used to authenticate the cryptographic key used to sign a transaction. 
 * It is a piece of data stored in the user's account on the blockchain. 
@@ -48,22 +48,22 @@ title: Glossary
 
 * * *
 
-### Block
+### 区块(Block)
 
 * A **block** is an ordered list of one or more transactions. It is used by validators to reach consensus on the ordering and execution results of the transactions. 
 * Blocks are an internal implementation concept in the Libra Blockchain, i.e., they are not visible to the client. All transactions that are committed to the Libra ledger were part of a block at some point in time, however the blockchain is represented as a sequence of transactions.
 
-### Blockchain
+### 区块链(Blockchain)
 
 * A **blockchain** is a distributed public ledger.
 * The Libra Blockchain is formed with approved transactions and the execution results of those transactions.
 
-### Byzantine (Validator)
+### 拜占庭验证者(Byzantine Validator）
 
-* A **validator** that does not follow the specification of the consensus protocol, and wishes to compromise the correct execution of the protocol.
-* BFT algorithms traditionally support up to one-third of the algorithm's voting power being held by Byzantine validators.
+* 所谓**拜占庭验证者**是指那些不遵循共识协议并企图损害协议的正确执行。 that does not follow the specification of the consensus protocol, and wishes to compromise the correct execution of the protocol.
+* BFT算法通常支持至多三分之一的算法投票权被拜占庭验证者持有。
 
-### Byzantine Fault Tolerance (BFT)
+### 拜占庭容错(Byzantine Fault Tolerance) (BFT)
 
 * **Byzantine Fault Tolerance** (BFT) is the ability of a distributed system to provide safety and liveness guarantees in the presence of faulty, or “[Byzantine](#byzantine-validator),”  members below a certain threshold. 
 * The Libra Blockchain uses LibraBFT, a consensus protocol based on [HotStuff.](#hotstuff)
@@ -76,7 +76,7 @@ title: Glossary
 
 * * *
 
-### Client
+### 客户端(Client)
 
 A **client** is a piece of software that has the capability to interact with the Libra Blockchain.
 
@@ -84,13 +84,13 @@ A **client** is a piece of software that has the capability to interact with the
 * It can issue queries to the Libra Blockchain and request the status of a transaction or account.
 * A client can be run by the end-user or on behalf of the end user (for example, for a custodial wallet). 
 
-### Consensus
+### 共识(Consensus)
 
 * **Consensus** is a component of a validator node.  
 * The consensus component is responsible for coordination and agreement amongst all validators on the block of transactions to be executed, their order, and the execution results.
 * The Libra Blockchain is formed with these agreed-upon transactions and their corresponding execution results.
 
-### Consensus Protocol
+### 共识协议(Consensus Protocol)
 
 * A **consensus protocol** is collectively executed by n validator nodes to accept or reject a transaction and to agree on the ordering of transactions and [execution results](#execution-result).
 * See [BFT](#byzantine-fault-tolerance-bft)
@@ -103,7 +103,7 @@ A **client** is a piece of software that has the capability to interact with the
 
 * * *
 
-### Digital currency
+### 数字货币(Digital currency)
 
 * *Alternate name:* Cryptocurrency
 * The type of money Libra is.
@@ -122,22 +122,22 @@ A **client** is a piece of software that has the capability to interact with the
 * An **epoch** is a period of time during which an instance of the consensus protocol runs with a fixed set of validators and voting rights.
 * To change the set of validators and/or their voting rights, the current epoch ends with the commit of a special/administrative smart contract transaction and a new one is started.
 
-### Event
+### 事件(Event)
 
 * An **event** is the user-facing representation of the effects of executing a transaction.
 * A transaction may be designed to emit any number of events as a list. For example, a peer-to-peer payment transaction emits a `SentPaymentEvent` for the sender account and a `ReceivedPaymentEvent` for the recipient account. 
 * In the Libra protocol, events provide evidence that the successful execution of a transaction resulted in a specific effect. The `ReceivedPaymentEvent` (in the above example) allows the recipient to confirm that a payment was received into their account. 
 * Events are persisted on the blockchain and are used to answer queries by [clients](#client).  
 
-### Execution Result
+### 执行结果(Execution Result)
 
-* Execution result of a transaction is a combination of:
-    * The new state of the set of accounts affected by the transaction.
-    * The events emitted by executing the transaction.
-    * The exit code, which indicates either success or a specific error.
-    * The number of gas units consumed while executing the transaction.
+* 一个交易的执行结果是如下的组合:
+    * 受交易影响的账户集的新状态。
+    * 一组被交易执行触发的事件。
+    * 退出代码，用于表明执行结果成功与否，如果失败则表示具体的错误。
+    * 执行交易所消耗的gas单位数量。
 
-### Expiration Time
+### 超时时间(Expiration Time)
 
 A transaction ceases to be valid after its **expiration time**. If it is assumed that:
 
@@ -151,9 +151,9 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * * *
 
-### Faucet
+### 水龙头(Faucet)
 
-* **Faucet** is the way to create Libra currency with no real world value, only on our testnet.
+* 所谓**水龙头**是一种获取免费的Libra数字币的途径，放水，只能用于测试网。 is the way to create Libra currency with no real world value, only on our testnet.
 * The Faucet is a service running along with the testnet. This service only exists to facilitate minting coins for the testnet.
 * You can use the Faucet by sending a request to create coins and transfer them into a given account on your behalf.
 
@@ -177,7 +177,7 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * * *
 
-### Honest (Validator)
+### 诚实验证者(Honest Validator)
 
 * A validator that faithfully executes the consensus protocol and is not Byzantine.
 
@@ -193,11 +193,11 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 ### LBR
 
-* **LBR** is the abbreviation for Libra currency.
+* **LBR**是Libra数字币的缩写。
 
-### Leader
+### 领导者(Leader)
 
-* A **leader** is a validator node that proposes a block of transactions for the consensus protocol.
+* 所谓**领导者**是指为共识协议提交一组（区块）交易建议的验证者节点。 
 * In leader-based protocols, nodes must agree on a leader to make progress.
 * Leaders are selected by a function that takes the current [round number](https://fb.quip.com/LkbMAEBIVNbh#ffYACAO6CzD) as input. 
 
@@ -212,7 +212,7 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * The **Libra Association** is an independent, not-for-profit membership organization, headquartered in Geneva, Switzerland. The association's purpose is to coordinate and provide a framework for governance of the network and reserve. 
 * The association is created by the validator nodes who will run on the Libra network.
-* Refer to the [Libra white paper](https://libra.org/en-us/whitepaper) for a description of the mission, vision, and purview of the Libra Association.
+* Refer to the [Libra white paper](https://libra.org/en-us/whitepaper) for the a description of the mission, vision, and purview of the Libra Association.
 
 ### Libra Association Council
 
@@ -241,6 +241,7 @@ then there is a guarantee that T_N will never be included in the blockchain.
 ### Libra Reserve
 
 * **Libra reserve** is the total monetary holdings that back Libra.
+* To be a validator node for the Libra Association, it is a requirement to invest in the reserve.
 
 ### LibraAccount.T
 
@@ -416,7 +417,7 @@ then there is a guarantee that T_N will never be included in the blockchain.
 * A signed transaction is a raw transaction with the digital signature.
 * An executed transaction changes the state of the Libra Blockchain.
 
-### Transaction script
+### 交易脚本(Transaction script)
 
 * Each transaction submitted by a user includes a **transaction script**.
 * It represents the operation a client submits to a validator node.  
@@ -429,16 +430,16 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * * *
 
-### Validator Node
+### 验证节点(Validator Node)
 
-* *Alternate name*: Validators.
-* A **validator** is an entity of the Libra ecosystem that validates the Libra Blockchain. It receives requests from clients and runs consensus, execution, and storage.
+* *另一个名字*: 验证者。
+* A **validator** is an entity of the Libra ecosystem that validates the Libra Blockchain. 从客户端接收请求并运行共识，执行，存储。
 * A validator maintains the history of all the transactions on the blockchain.
 * Internally, a validator node needs to keep the current state, to execute transactions and to calculate the next state. 
 
-### Version
+### 版本(Version)
 
-* A **version** is also called “height” in blockchain literature. 
+* 所谓**版本**在区块链文化中也被称为“高度”。
 * The Libra Blockchain doesn't have an explicit notion of a block &mdash; it only uses blocks for batching and executing transactions.  
 * A transaction at height 0 is the first transaction (genesis transaction), and a transaction at height 100 is the 101th transaction in the transaction store.
 
@@ -446,14 +447,14 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * * *
 
-### Well Formed Transaction
+### 合法交易 Well Formed Transaction
 
 A Libra transaction is **well formed** if each of the following conditions are true for the transaction:
-* The transaction has a valid signature.
-* An account exists at the sender address.
+* 该交易具有有效的签名。The transaction has a valid signature.
+* 发送者的账户是存在的。An account exists at the sender address.
 * It includes a public key, and the hash of the public key matches the sender account's authentication key. 
-* The sequence number of the transaction matches the sender account's sequence number.
-* The sender account's balance is greater than the [maximum gas amount](#maximum-gas-amount).
-* The expiration time of the transaction has not passed.
+* 交易序列号与发送者账户的序号一致。
+* 发送者的账户余额大于[最大gas量](#maximum-gas-amount)。
+* 交易未超过超时时间。
 
 

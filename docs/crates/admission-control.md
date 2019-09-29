@@ -1,6 +1,6 @@
 ---
 id: admission-control
-title: Admission Control
+title: 准入控制
 custom_edit_url: https://github.com/libra/libra/edit/master/admission_control/README.md
 ---
 

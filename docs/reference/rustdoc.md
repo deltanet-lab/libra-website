@@ -1,6 +1,6 @@
 ---
 id: rustdoc
-title: Public Documentation
+title: 公共文档
 ---
 
 * [Admission Control](${baseUrl}rustdoc/admission_control/)

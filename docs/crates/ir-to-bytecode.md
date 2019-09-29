@@ -1,6 +1,6 @@
 ---
 id: ir-to-bytecode
-title: Move IR Compiler
+title: Move中间码编译器
 custom_edit_url: https://github.com/libra/libra/edit/master/language/compiler/README.md
 ---
 

@@ -1,6 +1,6 @@
 ---
 id: bytecode-verifier
-title: Bytecode Verifier
+title: 字节码验证器
 custom_edit_url: https://github.com/libra/libra/edit/master/language/bytecode_verifier/README.md
 ---
 

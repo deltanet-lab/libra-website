@@ -1,82 +1,81 @@
 ---
 id: welcome-to-libra
-title: Welcome
+title: 欢迎
 ---
 
-**Welcome to the Libra developer site!** Libra’s mission is to enable a simple global currency and financial infrastructure that empowers billions of people.
+**欢迎来到Libra开发者网站！** Libra的使命是为数十亿人口赋能的一种简单的全球货币和金融基础设施。
 
-> The world truly needs a reliable digital currency and infrastructure that together can deliver on the promise of “the internet of money.” Securing your financial assets on your mobile device should be simple and intuitive. Moving money around globally should be as easy and cost-effective as — and even more safe and secure than — sending a text message or sharing a photo, no matter where you live, what you do, or how much you earn. — [Libra White Paper](https://libra.org/en-us/whitepaper)
+> 世界真的需要一种可靠的数字货币和基础设施，这些数字货币和基础设施可以共同实现“货币互联网”的承诺。保护移动设备上的金融资产的安全性应该既简单又直观。无论您身在何处，从事何种工作或赚多少钱，在全球范围内转移资金都应该像发送短信或共享照片一样容易且具有成本效益，甚至比发送短信或共享照片更安全可靠。 — [Libra白皮书](https://libra.org/en-us/whitepaper)
 
-Libra is built on a secure, scalable, and reliable blockchain. It is backed by a reserve of assets designed to give it intrinsic value and is governed by the independent Libra Association tasked with evolving the ecosystem.
+Libra建立在安全，可扩展且可靠的区块链上。它以旨在赋予其内在价值的资产储备为后盾，并由负责发展生态系统的独立天秤座协会管理。
 
-> The goal of the Libra Blockchain is to serve as a solid foundation for financial services, including a new global currency, which could meet the daily financial needs of billions of people. The blockchain has been built from the ground up to prioritize scalability, security, efficiency in storage and throughput, and future adaptability. — [Libra White Paper](https://libra.org/en-us/whitepaper)
+> Libra区块链的目标是为包括新的全球货币在内的金融服务奠定坚实的基础，该货币可以满足数十亿人的日常金融需求。区块链是从头开始构建的，旨在优先考虑可扩展性，安全性，存储和吞吐量的效率以及未来的适应性。 - [Libra白皮书](https://libra.org/en-us/whitepaper)
 
-The Libra currency is built on the Libra Blockchain. This site documents Libra Core, an open source prototype of the Libra protocol, which powers this new blockchain. The site also documents the [testnet](reference/glossary.md#testnet), a demonstration of this new system. In contrast to the forthcoming Libra [mainnet](reference/glossary.md#mainnet), the testnet uses a digital currency _with no real-world value_.
+Libra货币建立在Libra区块链上。该站点记录了Libra Core，这是Libra协议的开源原型，它为这个新的区块链提供了动力。该站点还记录了[testnet](reference/glossary.md#testnet)，此新系统的演示。与即将面世的天秤座[mainnet](reference/glossary.md#mainnet)相反，测试网使用的数字货币_没有真实值。
 
-The documentation discusses:
+该文档讨论：
 
-* How to experiment with the prototype first-hand by [sending transactions](my-first-transaction.md) to the testnet.
-* Where to learn about new technology, such as the Libra protocol, the Move language, and LibraBFT.
-* How to be part of the community built around this new ecosystem.
+* 如何通过[发送交易](my-first-transaction.md)到测试网来获得原型的第一手体验。
+* 在何处了解新技术，例如Libra协议，Move语言和LibraBFT。
+* 如何成为围绕这个新生态系统构建的社区的一部分。
 
 <blockquote class="block_note">
-
-**Note:** This project is at an early prototype stage. The Libra protocol and Libra Core APIs are not final. One of the key tasks in evolving the prototype is formalizing the protocol and APIs. Currently, our focus is on the infrastructure and building the CLI client. A public API and associated libraries are on our immediate roadmap. We welcome experimentation with the software on the testnet, but developers should expect that work may be required to publish applications using these APIs. As part of our regular communication, we will publish our progress towards stable APIs.
+**注意：**该项目处于早期原型阶段。 Libra协议和Libra Core API并非最终版本。 演化原型的关键任务之一是规范协议和API。 当前，我们的重点是基础架构和构建命令行客户端。 公共API和相关的库正在我们的直接路线图上。 我们欢迎在测试网上试用该软件，但开发人员应期望使用这些API发行应用程序可能需要做一些工作。 作为我们定期交流的一部分，我们将发布稳定API的进展。
 </blockquote>
 
-## Move: A New Blockchain Programming Language
+## Move: 一种新的区块链编程语言
 
-“Move” is a new programming language for implementing custom transaction logic and "smart contracts" on the Libra Blockchain. Because of Libra’s goal to serve billions of people one day, Move is designed with safety and security as the highest priorities. 
+“Move”是一种新的编程语言，用于在Libra区块链上实现自定义交易逻辑和“智能合约”。由于Libra的目标是每天为数十亿人提供服务，因此Move的设计以安全性为最高优先事项。
 
-Move takes insights from past security incidents with smart contracts and creates a language that makes it inherently easier to write code that fulfills the author’s intent. This lessens the risk of unintended bugs or security incidents. Specifically, Move is designed to prevent assets from being cloned. It enables “resource types” that constrain digital assets to the same properties as physical assets: a resource has a single owner, it can only be spent once, and the creation of new resources is restricted. 
+Move通过智能合约过去的安全事件中获取见解，并创建了一种语言，使编写符合作者意图的代码从本质上更容易。这样可以减少意外错误或安全事件的风险。特别是，Move旨在防止资产被克隆。它启用了将数字资产约束为与物理资产相同的属性的“资源类型”：资源只有一个所有者，只能使用一次，并且限制了新资源的创建。
 
-Move makes the development of critical transaction code easier. It enables the secure implementation of the Libra ecosystem’s governance policies, such as the management of the Libra currency and the network of validator nodes. We anticipate that the ability for developers to create contracts will be available over time. This will support the evolution and validation of Move. 
+移动使关键交易代码的开发更加容易。它使Libra生态系统的治理政策得以安全实施，例如Libra货币的管理和验证者节点的网络。我们预计，随着时间的推移，开发人员可以创建合同。这将支持Move的发展和验证。
 
-Refer to [Getting Started With Move](move-overview.md) for further information.
+有关更多信息，请参考[Move入门](move-overview.md)。
 
+## Libra生态
 
-## The Libra Ecosystem
+Libra的生态由如下类型的实体组成：
 
-The Libra ecosystem consists of different types of entities:
+* [客户端](#clients)
+* [验证节点](#validator-nodes)
+* [开发者](#developers)
 
-* [Clients](#clients)
-* [Validator Nodes](#validator-nodes)
-* [Developers](#developers)
+### 客户端
 
-### Clients
+Libra客户端：
 
-A Libra client:
+* 是一款具有与Libra区块链进行交互功能的软件。
+* 可以由最终用户运行，也可以代表最终用户运行（例如，对于托管客户端）。
+* 允许用户构造，签名交易并将其提交到[验证者节点](reference/glossary.md#validator-node)。
+* 可以（通过验证者节点）向Libra区块链发出查询，请求交易或帐户的状态，并验证响应。
 
-* Is a piece of software that has the capability to interact with the Libra Blockchain. 
-* Can be run by the end user or on behalf of the end user (for example, for a custodial client). 
-* Allows the user to construct, sign, and submit transactions to a [validator node](reference/glossary.md#validator-node).
-* Can issue queries to the Libra Blockchain (through the validator node), request the status of a transaction or account, and verify the response. 
+Libra核心包含一个客户端，该客户端可以将事务提交到测试网。[我的第一笔交易](my-first-transaction.md)指导您使用Libra命令行客户端在Libra区块链上执行您的第一笔交易。
 
-Libra Core contains a client, which can submit transactions to the testnet. [My First Transaction](my-first-transaction.md) guides you through executing your first transaction on the Libra Blockchain using the Libra CLI client.
+### 验证者节点(Validator Nodes)
 
-### Validator Nodes  
+[验证者节点](reference/glossary.md#validator-node)是Libra生态系统中的实体，共同决定将哪些交易添加到Libra区块链中。 验证者使用[共识协议](reference/glossary.md#consensus-protocol)，以便他们可以容忍恶意验证程序的存在。 验证者节点维护区块链上所有交易的历史记录。在内部，验证器节点需要保留当前状态以执行事务并计算下一个状态。 我们将在[交易的生命周期](life-of-a-transaction)中详细了解验证者节点的组成部分。
 
-[Validator nodes](reference/glossary.md#validator-node) are entities in the Libra ecosystem that collectively decide which transactions will be added to the Libra Blockchain. The validators use a [consensus protocol](reference/glossary.md#consensus-protocol) so that they can tolerate the presence of malicious validators. A validator node maintains the history of all the transactions on the blockchain. Internally, a validator node needs to keep the current state to execute transactions and to calculate the next state. We will learn more about the components of a validator node in [Life of a Transaction](life-of-a-transaction).
+测试网是一组公共可用的验证器节点，可用于尝试系统。 您还可以使用Libra Core自己运行验证程序节点。
 
-The testnet is a publicly available set of validator nodes, which can be used to try the system. You can also run validator nodes yourself using Libra Core.
+### 开发者
 
-### Developers
+Libra生态系统为各种各样的开发人员提供支持，从为Libra Core做出贡献的人到那些构建使用区块链的应用程序的人。 术语“开发人员”涵盖以上所有这些。 开发人员可能会：
 
-The Libra ecosystem supports a wide variety of developers, ranging from people who contribute to Libra Core to those who build applications that use the blockchain. The term “developer” encompasses all of these groups. Developers might:
+* 构建Libra客户端。
+* 构建一个与Libra客户端交互的应用。
+* 写一个在区块链上执行的智能合约。
+* 为Libra区块链贡献代码。
 
-* Build Libra clients.
-* Build applications to interact with a Libra client.
-* Write smart contracts to execute on the blockchain.
-* Contribute to the Libra Blockchain software.
+该网站面向开发者。
 
-This site is intended for developers.
+## 参考
 
-## Reference
+* [Libra协议: 关键概念](libra-protocol.md) &mdash; 向您介绍Libra协议的基本概念。
+* [我的第一个交易](my-first-transaction.md) &mdash; 指导您使用Libra命令行客户端在Libra区块链上执行您的第一笔交易。
+* [Getting Started With Move](move-overview.md) &mdash; 向您介绍一种被称为Move的新区块链编程语言。
+* [交易生命周期](life-of-a-transaction.md) &mdash; 提供提交和执行事务时“幕后”发生的情况。
+* [Libra核心概览](libra-core-overview.md) &mdash; 通过README文件提供Libra核心组件的概念和实现细节。
+* [CLI Guide](reference/libra-cli.md) &mdash; 列出Libra客户端的命令（及其用法）。
+* [Libra词汇表](reference/glossary.md) &mdash; 提供Libra术语的快速参考。
 
-* [Libra Protocol: Key Concepts](libra-protocol.md) &mdash; Introduces you to the fundamental concepts of the Libra protocol.
-* [My First Transaction](my-first-transaction.md) &mdash; Guides you through executing your very first transaction on the Libra Blockchain using the Libra CLI client.
-* [Getting Started With Move](move-overview.md) &mdash; Introduces you to a new blockchain programming language called Move.
-* [Life of a Transaction](life-of-a-transaction.md) &mdash; Provides a look at what happens "under the hood" when a transaction is submitted and executed.
-* [Libra Core Overview](libra-core-overview.md) &mdash; Provides the concept and implementation details of the Libra Core components through READMEs.
-* [CLI Guide](reference/libra-cli.md) &mdash; Lists the commands of the Libra CLI client and their usage.
-* [Libra Glossary](reference/glossary.md) &mdash; Provides a quick reference to Libra terminology.

@@ -1,6 +1,6 @@
 ---
 id: mempool
-title: Mempool
+title: 内存池
 custom_edit_url: https://github.com/libra/libra/edit/master/mempool/README.md
 ---
 

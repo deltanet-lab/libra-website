@@ -1,6 +1,6 @@
 ---
 id: my-first-transaction
-title: My First Transaction
+title: 我的第一笔交易
 ---
 
 This document will guide you through executing your first transaction on the Libra Blockchain. Before you follow the steps to execute your first transaction, we recommend that you read the following documents to familiarize yourself with the key aspects of the Libra ecosystem and the Libra protocol:
@@ -10,42 +10,37 @@ This document will guide you through executing your first transaction on the Lib
 
 We provide a command line interface (CLI) client to interact with the blockchain.
 
-## Assumptions
+## 假设
 
-All commands in this document assume that:
+本文档中的所有命令均假定：
 
-* You are running on a Linux (Red Hat or Debian-based) or macOS system.
-* You have a stable connection to the internet.
-* `git` is installed on your system.
-* Homebrew is installed on a macOS system.
-* `yum`or `apt-get` is installed on a Linux system.
+* 您正在Linux（基于Red Hat或基于Debian的）或macOS系统上运行。
+* 您与互联网的连接稳定。
+* `git`已安装在您的系统上。
+* Homebrew安装在macOS系统上。
+* `yum`或`apt-get`已安装在Linux系统上。
 
-## Steps to Submit a Transaction
+## 提交交易的步骤
 
-In this example, we'll download the necessary Libra components and execute a transaction between two users: Alice and Bob.
+在此示例中，我们将下载必要的Libra组件并在两个用户之间进行交易：Alice和Bob。
 
-Perform the following steps to submit a transaction to a validator node on the Libra testnet:
+执行以下步骤，将交易提交到Libra测试网络上的验证者节点：
 
-1. [Clone and build Libra Core](#clone-and-build-libra-core).
-2. [Build the Libra CLI client and connect to the testnet](#build-libra-cli-client-and-connect-to-the-testnet).
-3. [Create Alice’s and Bob’s accounts](#create-alice-s-and-bob-s-account).
-4. [Mint coins and add to Alice’s and Bob’s accounts](#add-libra-coins-to-alice-s-and-bob-s-accounts).
-5. [Submit a transaction](#submit-a-transaction).
+1. [克隆并构建Libra Core](#clone-and-build-libra-core)。
+2. [构建Libra命令行客户端并连接到测试网](#build-libra-cli-client-and-connect-to-the-testnet)。
+3. [创建Alice和Bob的帐户](#create-alice-s-and-bob-s-account)。
+4. [铸造代币并添加到Alice和Bob的帐户中](#add-libra-coins-to-alice-s-and-bob-s-accounts)。
+5. [提交一个交易](#submit-a-transaction)。
 
-## Clone and Build Libra Core
+## 克隆并构建Libra Core
 
-### Clone the Libra Core Repository
+### 克隆Libra Core代码库
 
 ```bash
 git clone https://github.com/libra/libra.git
 ```
-### Checkout the testnet Branch
 
-```bash
-git checkout testnet
-```
-
-### Install Dependencies
+### 安装Libra Core
 
 To setup Libra Core, change to the `libra` directory and run the setup script to install the dependencies, as shown below:
 
@@ -106,7 +101,7 @@ If you have problems building the client and connecting to the testnet, refer to
 
 </blockquote>
 
-## Create Alice’s and Bob’s Account
+## 创建Alice和Bob的帐户
 
 Once your client is connected to the testnet, you can run CLI commands to create new accounts.  We will walk you through creating accounts for two users (let's call them Alice and Bob).
 
@@ -147,7 +142,7 @@ Sample output on success:
 Created/retrieved account #0 address 3ed8e5fafae4147b2a105a0be2f81972883441cfaaadf93fc0868e7a0253c4a8
 ```
 
-0 is the index of Alice’s account, and the hex string is the address of Alice’s account. The index is just a way to refer to Alice’s account. The account index is a local CLI index that can be used in other CLI commands for users to conveniently refer to the accounts they have created. The index is meaningless to the blockchain. Alice’s account will be created on the blockchain only when either money is added to Alice’s account via minting, or money is transferred to Alice’s account via a transfer from another user. Note that you may also use the hex address in CLI commands. The account index is just a convenience wrapper around the account address.
+#0 is the index of Alice’s account, and the hex string is the address of Alice’s account. The index is just a way to refer to Alice’s account. The account index is a local CLI index that can be used in other CLI commands for users to conveniently refer to the accounts they have created. The index is meaningless to the blockchain. Alice’s account will be created on the blockchain only when either money is added to Alice’s account via minting, or money is transferred to Alice’s account via a transfer from another user. Note that you may also use the hex address in CLI commands. The account index is just a convenience wrapper around the account address.
 
 ### Step 3: Create Bob’s Account
 
@@ -162,7 +157,7 @@ Sample output on success:
 Created/retrieved account #1 address 8337aac709a41fe6be03cad8878a0d4209740b1608f8a81566c9a7d4b95a2ec7
 ```
 
-1 is the index for Bob’s account, and the hex string is the address of Bob’s account.
+#1 is the index for Bob’s account, and the hex string is the address of Bob’s account.
 For more details on index refer to [Create Alice’s Account.](#step-2-create-alice-s-account)
 
 ### Step 4 (Optional): List Accounts
@@ -182,7 +177,7 @@ The sequence number for an account indicates the number of transactions that hav
 
 Minting and adding coins to accounts on testnet is done via Faucet. Faucet is a service that runs along with the testnet. This service only exists to facilitate minting coins for testnet and will not exist for [mainnet](reference/glossary.md#mainnet). It creates Libra with no real-world value. Assuming you have [created Alice’s and Bob’s account](#create-alice-s-and-bob-s-account), with index 0 and index 1 respectively, you can follow the steps below to add Libra to both accounts.
 
-### Step 1: Add 110 LBR to Alice’s Account
+### Step 1: Add 110 Libra to Alice’s Account
 
 To mint Libra and add to Alice’s account, enter this command:
 
@@ -204,7 +199,7 @@ Note that when the request is submitted, it means that it has been added to the 
 If your account mint command did not submit your request successfully, refer to
 [Troubleshooting](#minting-and-adding-money-to-account)
 
-### Step 2: Add 52 LBR to Bob’s Account
+### Step 2: Add 52 Libra to Bob’s Account
 
 To mint Libra and add to Bob’s account, enter this command:
 
@@ -260,7 +255,7 @@ In `query sequence 0`, 0 is the index of Alice’s account. A sequence number of
 
 ### Transfer Money
 
-To submit a transaction to transfer 10 LBR from Alice’s account to Bob’s account, enter this command:
+To submit a transaction to transfer 10 Libra from Alice’s account to Bob’s account, enter this command:
 
 `libra% transfer 0 1 10`
 
@@ -303,7 +298,7 @@ The sequence number of 1 for Alice’s account (index 0) indicates that one tran
 
 ### Check the Balance in Both Accounts After Transfer
 
-To check the final balance in both accounts, query the balance again for each account as you did in [this step](#step-3-check-the-balance). If your transaction (transfer) executed successfully, you should see 100 LBR in Alice’s account and 62 LBR in Bob’s account.
+To check the final balance in both accounts, query the balance again for each account as you did in [this step](#step-3-check-the-balance). If your transaction (transfer) executed successfully, you should see 100 Libra in Alice’s account and 62 Libra in Bob’s account.
 
 ```plaintext
 libra% query balance 0
@@ -312,22 +307,22 @@ libra% query balance 1
 Balance is: 62
 ```
 
-### Congratulations!
+### 恭喜!
 
-You have successfully executed your transaction on the Libra testnet and transferred 10 LBR from Alice’s account to Bob’s account!
+You have successfully executed your transaction on the Libra testnet and transferred 10 Libra from Alice’s account to Bob’s account!
 
-## Troubleshooting
+## 答疑
 
-### Setup
+### 安装
 
-* Update Rust:
+* 更新Rust:
     * Run `rustup update` from your libra directory.
-* Update protoc:
+* 更新protoc:
     * Update `protoc` to version 3.6.0 or above.
 * Re-run setup script from your libra directory:
     * `./scripts/dev_setup.sh`
 
-### Client Build and Run
+### 客户端构建和运行
 
 If you are experiencing build failures, try to remove the cargo lock file from the libra directory:
 
@@ -470,7 +465,7 @@ Last event state: Some(
 )
 ```
 
-### Query Account State
+### 查询账户状态
 
 In this example, we will query for the state of a single account.
 
@@ -496,7 +491,7 @@ Latest account state is:
  Blockchain Version: 3
 ```
 
-## Run a Local Validator Node
+## 运行本地验证者节点
 
 To start a validator node locally on your computer and create your own local blockchain network (not connected to the Libra testnet), ensure that you have run the build script as described in [Setup Libra Core](#setup-libra-core), change to the root directory of the Libra Core repository, and run `libra_swarm` as shown below:
 
@@ -515,14 +510,14 @@ To see additional options for starting a node and connecting to the Libra Blockc
 
 The cargo run command may take some time to run. If the execution of this command completes without errors, an instance of the Libra CLI client and a Libra validator node is running on your system. Upon successful execution, you should see an output containing the CLI client menu and the `libra%` prompt.
 
-## Life of a Transaction
+## 交易的生命周期
 
 Once you have executed your first transaction, you may refer to the document [Life of a Transaction](life-of-a-transaction.md) for:
 
 * A look "under the hood" at the lifecycle of a transaction from submission to execution.
 * An understanding of the interactions between each logical component of a Libra validator as transactions get submitted and executed in the Libra ecosystem.
 
-## Reference
+## 引用
 
 * [Welcome page](welcome-to-libra.md).
 * [Libra Protocol: Key Concepts](libra-protocol.md) &mdash; Introduces you to the fundamental concepts of the Libra protocol.

@@ -1,308 +1,313 @@
 ---
 id: life-of-a-transaction
-title: Life of a Transaction
+title: 交易的生命周期
 ---
 
-To get a deeper understanding of the lifecycle of a Libra transaction, we will follow a transaction on its journey from being submitted to a Libra validator to being committed to the Libra Blockchain. We will then “zoom-in” on each logical component of a validator and take a look at its interactions with other components.
 
-## Client Submits a Transaction
+为了更深入地了解Libra交易的生命周期，我们将跟踪交易从提交到Libra验证程序到提交给Libra区块链的整个过程。 然后，我们将“放大”验证器的每个逻辑组件，并查看其与其他组件的交互。
 
-A Libra **client constructs a raw transaction** (let us call it T~5~raw) to transfer 10 LBR from Alice’s account to Bob’s account. The raw transaction includes the following fields. Each field is linked to its glossary definition.
+## 客户端提交一笔交易
 
-* Alice's [account address](reference/glossary.md#account-address).
-* A program that indicates the actions to be performed on Alice's behalf. It contains:
-    * A Move bytecode [peer-to-peer transaction script](reference/glossary.md#transaction-script).
-    * A list of inputs to the script (for this example, Bob's account address and the amount of payment).
-* [Gas price](reference/glossary.md#gas-price) (in microlibra/gas units) &mdash; The amount Alice is willing to pay per unit of gas, to execute the transaction. Gas is a way to pay for computation and storage. A gas unit is an abstract measurement of computation with no inherent real-world value.
-* [Maximum gas amount](reference/glossary.md#maximum-gas-amount) Alice is willing to pay for this transaction.
-* [Expiration time](reference/glossary.md#expiration-time) of the transaction.
-* [Sequence number](reference/glossary.md#sequence-number) &mdash; 5
-    * A transaction with sequence number 5 can only be applied to an account with sequence number 5.
+**一个Libra客户端构建了一个原始交易** (让我们称之为 T~5~raw)，该交易从Alice的账户中转出10 Libra到Bob的账户中。其包含如下字段，每个字段都链接了它的词汇定义。
 
-The **client signs transaction** T~5~raw with Alice's private key. The signed transaction T~5~ includes the following:
+* Alice的[账户地址](reference/glossary.md#account-address).
+* 一个程序，指示代表Alice执行的操作。它包含：
+    * Move程序的字节码[p2p交易脚本](reference/glossary.md#transaction-script)。
+    * 脚本输入参数列表（例如，Bob的帐户地址和付款金额）。
+    
+* [燃料价格](reference/glossary.md#gas-price) (以 microlibra/gas 为单位) &mdash; Alice愿意为每单位燃料支付的金额，以执行交易。燃料是一种支付计算和存储费用的方式。gas是计算的抽象单位，与真实世界中的燃料无关。
+* Alice愿意为此交易支付的[最大燃料量](reference/glossary.md#maximum-gas-amount)。
+* 交易的[超时时间](reference/glossary.md#expiration-time)。
+* [交易序列号](reference/glossary.md#sequence-number) &mdash; 5
+    * 该交易序列号与Alice的账号地址的组合在系统中是唯一的，并且单调递增。
 
-* The raw transaction.
-* Alice's public key.
-* Alice's signature.
+客户端用Alice的私钥**对交易T~5~raw进行签名**。签名交易T~5~包括以下内容：
 
-### Assumptions
+* 原始交易。
+* Alice的公钥。
+* Alice的签名。
 
-To describe the lifecycle of transaction T~5~, we will assume that:
+### 前提假设
 
-* Alice and Bob have [accounts](reference/glossary.md#accounts) on the Libra Blockchain.
-* Alice's account has 110 LBR.
-* The current [sequence number](reference/glossary.md#sequence-number) of Alice's account is 5 (which indicates that 5 transactions have already been sent from Alice's account).
-* There are a total of 100 validators &mdash; V~1~ to V~100~ on the network.
-* The client submits transaction T~5~ to validator V~1~
-* **Validator V~1~ is a proposer/leader for the current round.**
+为了描述交易 T~5~ 的生命周期，我们假设：
 
-## Lifecycle of the Transaction
+* Alice和Bob在Libra区块链上已经拥有[账户](reference/glossary.md#accounts)。
+* Alice的账户中有110个Libra币。
+* Alice账户当前的[交易序列号](reference/glossary.md#sequence-number)等于5(表明Alice账户中已经发送了5笔交易)。
+* 总共有100个验证器 &mdash; 从V~1~到V~100~。
+* 客户端将交易T~5~提交给验证器V~1~
+* **验证器V~1~是本轮潜在的提议者/领导者。**
 
-In this section, we will describe the lifecycle of transaction T~5~, from being submitted by the client to being committed to the Libra Blockchain.
+## 交易的生命周期
 
-Where relevant, and following a numbered step in the lifecycle, we have provided a link to the corresponding inter-component interactions of the validator node. After you are familiar with all the steps in the lifecycle of the transaction, you may want to refer to the information on the corresponding inter-component interactions for each step.
+在本节中，我们将描述交易T~5~的生命周期，从客户端提交到最终写入到Libra区块链。
+
+在相关的地方，并按照生命周期中的编号步骤进行操作，我们提供了指向验证器节点的相应组件间交互的链接。 熟悉交易生命周期中的所有步骤之后，您可能希望参考有关每个步骤的组件间交互的信息。
 
 <blockquote class="block_note">
-
-**Note:** The arrows in all the graphics in this document originate on the component initiating an interaction/action and terminate on the component on which the action is being performed. The arrows **do not represent** data read, written, or returned.
+**注意：**本文档中所有图形中的箭头起源于启动交互/动作的组件，并终止于在其上执行动作的组件。 箭头**不表示**读取，写入或返回的数据。
 </blockquote>
 
 ![Figure 1.1 Lifecycle of a Transaction](assets/illustrations/validator-sequence.svg)
-<small class="figure">Figure 1.1 Lifecycle of a Transaction</small>
+<small class="figure">Figure 1.1 交易的生命周期</small>
 
-### Accepting the Transaction
+### 接受交易
 
-**1** &mdash; The client submits transaction T~5~ to validator V~1~ whose admission control (AC) component receives the transaction. (Client → AC [AC.1](#client-ac-ac1))
+**1** &mdash; 客户端将交易T~5~提交给验证器V~1~，由其准入控制组件(AC)处理该交易。(Client → AC [AC.1](#client-ac-ac1))
 
-**2** &mdash; AC will use the virtual machine (VM) component to perform validation checks, such as signature verification, checking that Alice's account has sufficient balance, checking that transaction T~5~ is not being replayed, etc. (AC → VM [AC.2](#ac-vm-ac2), [VM.1](#ac-vm-vm1))
+**2** &mdash; 准入控制组件(AC)将使用虚拟机（VM）组件执行合法性检查， 例如签名校验，检查Alice的帐户是否有足够的余额，确保交易T~5~未重放等。(AC → VM [AC.2](#ac-vm-ac2), [VM.1](#ac-vm-vm1))
 
-**3** &mdash; When T~5~ passes the validation checks, AC sends T~5~ to V~1~'s mempool. (AC → Mempool [AC.3](#ac-mempool-ac3), [MP.1](#ac-mempool-mp1))
+**3** &mdash; 当T~5~通过验证检查时，准入控制组件(AC)将T~5~发送到V~1~的内存池组件。(AC → Mempool [AC.3](#ac-mempool-ac3), [MP.1](#ac-mempool-mp1))
 
-### Sharing the Transaction With Other Validators
 
-**4** &mdash; The mempool will hold T~5~ in an in-memory buffer. Mempool may already contain multiple transactions sent from Alice's address.
+### 与其他验证者共享交易（Sharing the Transaction With Other Validators）
 
-**5** &mdash; Using the shared-mempool protocol, V~1~ will share the transactions (including T~5~) in its mempool with other validators (V~2~ to V~100~) and place transactions received from the other validators into its own mempool. (Mempool → Other Validators [MP.2](#mempool-other-validators-mp2))
+**4** &mdash; 内存池组件会将T~5~保留在内存缓冲区中。 内存池组件中可能已经包含多个从Alice的地址发送的交易。
 
-### Proposing the Block
+**5** &mdash; 使用共享内存池协议，V~1~将在其内存池中与其他验证器（V~2~到V~100~）共享交易（包括T~5~）。并将从其他验证器收到的交易放入其自己的内存池。(Mempool → Other Validators [MP.2](#mempool-other-validators-mp2))
 
-**6** &mdash; As validator V~1~ is a proposer/leader, it will pull a block of transactions from its mempool and replicate this block as a proposal to other validators via its consensus component. (Consensus → Mempool [MP.3](#consensus-mempool-mp3), [CO.1](#consensus-mempool-co1))
+### 提名区块（Proposing the Block）
 
-**7** &mdash; The consensus component of V~1~ is responsible for coordinating agreement among all validators on the order of transactions in the proposed block. (Consensus → Other Validators [CO.2](#consensus-other-validators-co2)). Refer to our technical paper [State Machine Replication in the Libra Blockchain](state-machine-replication-paper.md) for details of our proposed consensus protocol LibraBFT.
+**6** &mdash; 由于验证者V~1~是提议者/领导者，它将从其内存池中提取一个区块，并通过其共识组件将该块形成为提议并复制到其他验证器中。(共识 → 内存池 [MP.3](#consensus-mempool-mp3), [CO.1](#consensus-mempool-co1))
 
-### Executing the Block and Reaching Consensus
+**7** &mdash; V~1~的共识组件负责协调所有验证器之间关于拟议区块中交易顺序的协议。(Consensus → Other Validators [CO.2](#consensus-other-validators-co2)). 有关我们提议的共识协议LibraBFT的详细信息，请参阅我们的技术论文[Libra区块链中的状态机复制](state-machine-replication-paper.md)。
 
-**8** &mdash; As part of reaching agreement, the block of transactions (containing T~5~) is passed to the execution component. (Consensus → Execution [CO.3](#consensus-execution-consensus-other-validators-co3), [EX.1](#consensus-execution-ex1))
+### 执行区块并达成共识（Executing the Block and Reaching Consensus）
 
-**9** &mdash; The execution component manages the execution of transactions in the virtual machine (VM). Note that this execution happens speculatively before the transactions in the block have been agreed upon. (Execution → VM [EX.2](#execution-vm-ex2), [VM.3](#execution-vm-vm3))
+**8** &mdash; 作为达成协议的一部分，区块（包含T~5~）被传递给执行组件。 (Consensus → Execution [CO.3](#consensus-execution-consensus-other-validators-co3), [EX.1](#consensus-execution-ex1))
 
-**10** &mdash; After executing the transactions in the block, the execution component appends the transactions in the block (including T~5~) to the [Merkle accumulator](#merkle-accumulators) (of the ledger history). This is an in-memory/temporary version of the Merkle accumulator. The (proposed/speculative) result of executing these transactions is returned to the consensus component. (Consensus → Execution [CO.3](#consensus-execution-consensus-other-validators-co3), [EX.1](#consensus-execution-ex1)). The arrow from "consensus" to "execution" indicates that the request to execute transactions was made by the consensus component. (For consistent use of arrows across this document, we are not using arrows to represent the flow of data).
+**9** &mdash; 执行组件管理虚拟机（VM）中的交易的执行。请注意，在块中的交易已经达成一致之前进行的推测性执行。(Execution → VM [EX.2](#execution-vm-ex2), [VM.3](#execution-vm-vm3))
 
-**11** &mdash; V~1~ (the consensus leader) attempts to reach consensus on the block's execution result with other validators participating in the consensus. (Consensus → Other Validators [CO.3](#consensus-execution-consensus-other-validators-co3))
+**10** &mdash; 在执行块中的交易之后，执行组件将块中的交易（包括T~5~）附加到[默克尔累加器](#merkle-accumulators)（帐本历史记录）中。这是默克尔累加器的内存/临时版本。执行这些交易的（提议/推测）结果返回到共识组件。 (Consensus → Execution [CO.3](#consensus-execution-consensus-other-validators-co3), [EX.1](#consensus-execution-ex1)). 从“consensus”到“execution”的箭头表示执行交易的请求是由共识组件完成的。 （为了在本文档中一致使用箭头，我们不使用箭头来表示数据流）。
 
-### Committing the Block
+**11** &mdash; V~1~（共识领导者）试图与参与共识的其他验证者就该区块的执行结果达成共识。 (Consensus → Other Validators [CO.3](#consensus-execution-consensus-other-validators-co3))
 
-**12** &mdash; If the block's execution result is agreed upon and signed by a set of validators that have the super-majority of votes, validator V~1~'s execution component reads the result of the block execution from the speculative execution cache and commits all the transactions in the block to persistent storage. (Consensus → Execution [CO.4](#consensus-execution-co4), [EX.3](#consensus-execution-ex3)), (Execution → Storage [EX.4](#execution-storage-ex4), [ST.3](#execution-storage-st3))
+### 提交区块（Committing the Block）
 
-**13** &mdash; Alice's account will now have 100 LBR, and its sequence number will be 6. If T~5~ is replayed by Bob, it will be rejected as the sequence number of Alice's account (6) is greater than the sequence number of the replayed transaction (5).
+**12** &mdash; 如果块的执行结果获得超过多数票的验证器达成一致并签名，则验证器V~1~的执行组件从推测性的执行缓存中读取块的执行结果并提交块中的所有交易到持久存储。(Consensus → Execution [CO.4](#consensus-execution-co4), [EX.3](#consensus-execution-ex3)), (Execution → Storage [EX.4](#execution-storage-ex4), [ST.3](#execution-storage-st3))
 
-## Validator Component Interactions
+**13** &mdash; Alice的账号现在有100个Libra币，其交易序列号为6。如果由Bob重播T~5~，则由于Alice的账号的序列号（6）大于重放交易的序列号（5）而被拒绝。
 
-In the [previous section](#lifecycle-of-the-transaction), we described the typical lifecycle of a sample transaction from being submitted to being committed to the blockchain's distributed database. Now let's look in more depth at the inter-component interactions of a validator as the validator processes transactions and responds to queries. This information will be most useful to those who:
+## 验证者内部组件之间的交互（Validator Component Interactions）
 
-* Would like to get an overall idea of how the system works under the covers.
-* Are interested in eventually contributing to the Libra Core software.
+在[上一节](#lifecycle-of-the-transaction)中，我们描述了从提交到写入到区块链的示例交易的典型生命周期。现在让我们更深入地了解验证器的组件间交互，因为验证器处理交易并响应查询。这些信息对以下人员最有用：
 
-For our narrative, we will assume that a client submits a  transaction T~N~ to a validator V~X~. For each validator component, we will describe each of its inter-component interactions in subsections under the respective component's section. Note that subsections describing the inter-component interactions are not listed strictly in the order in which they are performed. Most of the interactions are relevant to the processing of a transaction, and a few are relevant to read queries by the client (queries for existing information on the blockchain).
+* 希望全面了解系统如何在幕后工作。
+* 有兴趣最终为Libra Core项目做出贡献。
 
- Let us look at the core logical components of a validator node:
+对于我们的叙述，我们假设客户端将一个交易T~N~提交给验证器V~X~。对于每个验证器组件，我们将在相应组件部分下的子部分中描述其每个组件间交互。请注意，描述组件间交互的子部分未严格按其执行顺序列出。大多数交互与交易处理相关，少数与客户端读取查询相关（查询区块链上的现有信息）。
 
-* [Admission Control](#admission-control-ac)
-* [Mempool](#mempool)
-* [Consensus](#consensus)
-* [Execution](#execution)
-* [Virtual Machine](#virtual-machine-vm)
-* [Storage](#storage)
+让我们看一下验证器节点的核心逻辑组件：
 
-At the end of each section, we provide the link to the corresponding "README" of [Libra Core](libra-core-overview.md).
+* [准入控制(Admission Control)](#admission-control-ac)
+* [内存池(Mempool)](#mempool)
+* [共识(Consensus)](#consensus)
+* [执行(Execution)](#execution)
+* [虚拟机(Virtual Machine)](#virtual-machine-vm)
+* [存储(Storage)](#storage)
 
-## Admission Control (AC)
+在每个部分的末尾，我们提供了[Libra Core](libra-core-overview.md)的相应"自述"文件的链接。
+
+## 准入控制 Admission Control (AC)
 
 ![Figure 1.2 Admission Control](assets/illustrations/admission-control.svg)
-<small class="figure">Figure 1.2 Admission Control</small>
+<small class="figure">Figure 1.2 准入控制</small>
 
-Admission Control is the _sole external interface_ of the validator. Any request made by a client to the validator goes to AC first.
+准入控制组件（AC）是验证器的唯一外部接口。客户端向验证器发出的任何请求都会先转到AC。
 
-### Client → AC (AC.1)
+### 客户端 → 准入控制 (AC.1)
 
-A client submits a  transaction to the admission control of a validator V~X~. This is done via:
+客户端将交易提交给验证器V~X~的准入控制组件。这通过以下函数完成：
 `AC::SubmitTransaction()`.
 
-### AC → VM (AC.2)
+### 准入控制 → 虚拟机 (AC.2)
 
-Admission control accesses the virtual machine (VM) of the validator to perform preliminary checks on the transaction in order to reject malformed transactions early. This is done via:
+准入控制组件访问验证器的虚拟机（VM）以对交易执行初步检查，以便尽早拒绝格式错误的交易。这通过调用如下函数完成：
  [`VM::ValidateTransaction()`](#virtual-machine-b).
 
-### AC → Mempool (AC.3)
+### 准入控制 → 内存池 (AC.3)
 
-Once `VM::ValidateTransaction()` returns without errors, AC forwards the transaction to validator V~X~'s mempool via `Mempool::AddTransactionWithValidation().` The mempool for validator V~X~ will accept the transaction T~N~ from the AC only if the sequence number of T~N~ is greater than or equal to the current sequence number of the sender's account (note that the transaction will not be passed to consensus until it is the next sequence number).
+一旦`VM::ValidateTransaction()`返回没有错误，准入控制组件通过将交易转发给验证器V~X~的内存池。只有当T~N~的序列号大于或等于发送者帐户的当前序列号时，验证器V~X~的内存池才从准入控制组件中接受交易T~N~（注意，在它是下一个序列号之前，交易不会被传递到共识组件）。
 
-### AC → Storage (AC.4)
 
-When the client performs a read query on the Libra Blockchain (for example, to get the balance of Alice's account), AC interacts with the storage component directly to obtain the requested information.
+### 准入控制 → 存储 (AC.4)
 
-### Admission Control README
+当客户端在Libra区块链上执行读取查询（例如，为了获得Alice帐户的余额）时，准入控制组件直接与存储组件交互以获取所请求的信息。
 
-For implementation details refer to the [Admission Control README](crates/admission-control.md).
+### 准入控制自述文件
 
-## Virtual Machine (VM)
+有关实现细节，请参阅[准入控制组件自述](crates/admission-control.md)。
+
+## 虚拟机组件(VM)
 
 ![Figure 1.3 Virtual Machine](assets/illustrations/virtual-machine.svg)
-<small class="figure">Figure 1.3 Virtual Machine</small>
+<small class="figure">Figure 1.3 虚拟机组件</small>
 
-The [Move virtual machine](move-overview.md) (VM) verifies and executes transaction scripts written in Move bytecode.
+[Move virtual machine](move-overview.md) (VM)验证并执行以Move字节码编码的交易脚本。
 
-### AC → VM (VM.1)
+### 准入控制 → 虚拟机 (VM.1)
 
-When admission control of validator V~X~ receives a transaction from a client, it invokes `VM::ValidateTransaction()` on the VM to validate the transaction.
+当验证器V~X~的许可控制组件从客户端接收交易时，它在虚拟机组件上调用 `VM::ValidateTransaction()` 来验证交易。
 
-### VM → Storage (VM.2)
+### 虚拟机 → 存储 (VM.2)
 
-When AC or mempool request the VM to validate a transaction via `VM::ValidateTransaction()`, the VM loads the transaction sender's account from storage and performs the following verifications:
+当准入控制组件或内存池组件请求虚拟机组件通过 `VM::ValidateTransaction()` 验证交易时，虚拟机组件从存储组件加载交易发送者的帐户并执行以下验证：
 
-* Checks that the input signature on the signed transaction is correct (to reject incorrectly signed transactions).
-* Checks that the sender's account authentication key is the same as the hash of the public key (corresponding to the private key used to sign the transaction).
-* Verifies that the sequence number for the transaction is not less than the current sequence number for the sender's account.  Doing this check prevents the replay of the same transaction against the sender's account.
-* Verifies that the program in the signed transaction is not malformed, as a malformed program cannot be executed by the VM.
-* Verifies that there is sufficient balance in the sender's account to support the max gas amount specified in the transaction, which ensures that the transaction can pay for the resources it uses.
+* 检查签名交易上的输入签名是否正确（以拒绝错误签名的交易）。
+* 检查发件人的帐户身份验证密钥是否与公钥的哈希相同（对应于用于签署交易的私钥）。
+* 验证交易的序列号是否不小于发件人帐户的当前序列号。执行此检查可防止针对发件人帐户重播同一交易。
+* 验证已签名交易中的程序是否格式错误，因为虚拟机组件无法执行格式错误的程序。
+* 验证发件人帐户中是否有足够的余额来支持交易中指定的最大燃料量，从而确保交易可以支付其使用的资源。
 
-### Execution → VM (VM.3)
+### 执行 → 虚拟机 (VM.3)
 
-The execution component utilizes the VM to execute a transaction via `VM::ExecuteTransaction()`.
+执行组件利用虚拟机组件通过 `VM::ExecuteTransaction()` 执行交易。
 
-It is important to understand that executing a transaction is different from updating the state of the ledger and persisting the results in storage. A transaction T~N~ is first executed as part of an attempt to reach agreement on blocks during consensus. If agreement is reached with the other validators on the ordering of transactions and their execution results, the results are persisted in storage and the state of the ledger is updated.
+重要的是要理解执行交易不同于更新分类帐的状态并将结果保存至永久存储中。执行交易T~N~首先被执行组件作为在共识期间达成关于块的协议的尝试的一部分。如果与其他验证者就交易顺序及其执行结果达成协商一致，则结果将保留在存储中，并更新分类帐的状态。
 
-### Mempool → VM (VM.4)
+### 内存池 → 虚拟机 (VM.4)
 
-When mempool receives a transaction from other validators via shared mempool, mempool invokes [`VM::ValidateTransaction()`](#action-b-1) on the VM to validate the transaction.
+当内存池组件通过共享内存池数据的方式从其他验证器接收到一个交易时，内存池会在虚拟机组件上调用[`VM::ValidateTransaction()`](#action-b-1) 来验证交易。
 
-### VM README
+### 虚拟机组件自述
 
-For implementation details refer to the [Virtual Machine README](crates/vm.md).
+有关实现的详细信息，请参阅[虚拟机组件自述](crates/vm.md)。
 
-## Mempool
+## 内存池组件
 
 ![Figure 1.4 Mempool](assets/illustrations/mempool.svg)
-<small class="figure">Figure 1.4 Mempool</small>
+<small class="figure">Figure 1.4 内存池</small>
 
-Mempool is a shared buffer that holds the transactions that are “waiting” to be executed. When a new transaction is added to the mempool, the mempool shares this transaction with other validators in the system. To reduce network consumption in the “shared mempool,” each validator is responsible for delivering its own transactions to other validators. When a validator receives a transaction from the mempool of another validator, the transaction is added to the mempool of the recipient validator.
+内存池是一个共享缓冲区，用于保存“等待”执行的交易。当新交易添加到内存池时，内存池与系统中的其他验证器共享此交易。为了减少“共享内存池”中的网络消耗，每个验证器负责将其自己的交易传递给其他验证器。当验证器从另一个验证器的内存池接收到一个交易时，该交易将被添加到收件人验证器的内存池中。
 
-### AC → Mempool (MP.1)
+### 准入控制 → 内存池 (MP.1)
 
-* After performing initial validation checks, a validator's AC sends the transaction to the validator’s mempool.
-* The mempool for validator V~X~ accepts transaction T~N~ for the sender's account only if the sequence number of T~N~ is greater than or equal to the current sequence number of the sender's account.
+* 执行初始验证检查后，验证器的准入控制组件将交易发送到验证器的内存池。
+* 仅当T~N~的交易序列号大于或等于发送者帐户的当前交易序列号时，验证者V~X~的内存池才接受发送者帐户的交易T~N~。
 
-### Mempool → Other Validators (MP.2)
+### 内存池 → 其他验证器 (MP.2)
 
-* The mempool of validator V~X~ shares transaction T~N~ with the other validators on the same network.
-* Other validators share the transactions in their mempool with V~X~’s mempool.
+* 验证器V~X~的内存池组件与同一网络上的其他验证器共享交易T~N~。
+* 其他验证器将他们的内存池中的交易共享给V~X~的内存池。
 
-### Consensus → Mempool (MP.3)
+### 共识 → 内存池 (MP.3)
 
-* When validator V~X~ becomes the leader, its consensus will pull a block of transactions from its mempool and replicate the block to other validators. It does this to arrive at a consensus on the ordering of transactions and the execution results of the transactions in the block.
-* Note that just because a transaction T~N~ was included in a consensus block, it does not guarantee that T~N~ will eventually be persisted in the distributed database of the blockchain.
+* 当验证器V~X~成为领导者时，其共识将从其内存池中提取一个区块并将该块复制到其他验证器。这样做是为了就交易的排序和块中交易的执行结果达成共识。
+* 注意，仅仅因为交易T~N~被包含在共识块中，它不能保证T~N~最终将被保留在区块链的分布式数据库中。
 
-### Mempool → VM (MP.4)
+### 内存池 → 虚拟机 (MP.4)
 
-When mempool receives a transaction from other validators, mempool invokes [`VM::ValidateTransaction()`](#action-b-1) on the VM to validate the transaction.
+当内存池组件从其他验证器接收到一个交易时，内存池会在虚拟机上调用[`VM::ValidateTransaction()`](#action-b-1)来验证交易。
 
-### Mempool README
+### 内存池组件自述
 
-For implementation details refer to the [Mempool README](crates/mempool).
+有关实现的详细信息，请参阅[内存池组件自述](crates/mempool)。
 
-## Consensus
+## 共识组件(Consensus)
 
 ![Figure 1.5 Consensus](assets/illustrations/consensus.svg)
 <small class="figure">Figure 1.5 Consensus</small>
 
-The consensus component is responsible for ordering blocks of transactions and agreeing on the results of execution by participating in the [consensus protocol](#consensus-protocol) with other validators in the network.
+共识组件负责对区块中的交易进行排序，并通过与网络中的其他验证器一起参与[共识协议](#consensus-protocol)来商定执行结果。
 
-### Consensus → Mempool (CO.1)
+### 共识 → 内存池 (CO.1)
 
-When validator V~X~ is a leader/proposer, the consensus of V~X~ pulls a block of transactions from its mempool via: `Mempool::GetBlock()`, and forms a proposal.
+当验证器V~X~是潜在的领导者/提议者时，V~X~的共识从其内存池通过：`Mempool::GetBlock()` 获取一个区块，并形成一个提议。
 
-### Consensus → Other Validators (CO.2)
+### 共识 → 其他验证者 (CO.2)
 
-If V~X~ is a proposer/leader, its consensus replicates the proposed block of transactions to other validators.
+如果V~X~是提议者/领导者，则其共识组件将提议的区块复制给其他验证器。
 
-### Consensus → Execution, Consensus → Other Validators (CO.3)
+### 共识 → 执行, 共识 → 其他验证器 (CO.3)
 
-* To execute a block of transactions, consensus interacts with the execution component. Consensus executes a block of transactions via `Execution:ExecuteBlock()` (Refer to [Consensus → Execution](#consensus-execution-ex1))
-* After executing the transactions in the block, execution responds to consensus with the result of executing these transactions.
-* Consensus signs the execution results and attempts to reach agreement on this result with other validators participating in consensus.
+* 为了执行一个区块，共识组件与执行组件交互。 共识组件通过`Execution:ExecuteBlock()`执行一个区块(参见[Consensus → Execution](#consensus-execution-ex1))。
+* 执行区块中的交易后，执行组件将执行这些交易的结果返回给共识组件。
+* 共识组件签署执行结果，并试图与参与共识协商的其他验证器就结果达成一致。
 
-### Consensus → Execution (CO.4)
+### 共识 → 执行 (CO.4)
 
-If enough validators vote for the same execution result, the consensus component of V~X~ informs execution via `Execution::CommitBlock()` that this block is ready to be committed.
+如果足够多的验证器为相同的执行结果投票，则V~X~的共识组件通过`Execution::CommitBlock()`通知执行该块已准备好提交。
 
-### Consensus README
+### 共识组件自述
 
-For implementation details refer to the [Consensus README](crates/consensus.md).
+有关实现细节，请参阅[共识组件自述](crates/consensus.md)。
 
-## Execution
+## 执行组件(Execution) 
 
 ![Figure 1.6 Execution](assets/illustrations/execution.svg)
 <small class="figure">Figure 1.6 Execution</small>
 
-Execution's job is to coordinate the execution of a block of transactions and maintain a transient state that can be voted upon by consensus.
+执行组件的工作是协调一个区块中所有交易的执行，并维持一个可以通过投票达成一致的过渡状态。
 
-### Consensus → Execution (EX.1)
+### 共识 → 执行 (EX.1)
 
-*  Consensus requests execution to execute a block of transactions via: `Execution::ExecuteBlock()`.
-* Execution maintains a “scratchpad,” which holds in-memory copies of the relevant portions of the [Merkle accumulators](#merkle-accumulators). This information is used to calculate the root hash of the current state of the blockchain.
-* The root hash of the current state is combined with the information about the transactions in the block to determine the new root hash of the accumulator. This is done prior to persisting any data, and to ensure that no state or transaction is stored until agreement is reached by a quorum of validators.
-* Execution computes the speculative root hash and then consensus of V~X~ signs this root hash and attempts to reach agreement on this root hash with other validators.
+* 共识组件请求执行组件调用如下方法执行区块：`Execution::ExecuteBlock()`。
+* 执行组件会维护一个“暂存器”，它保存[默克尔累积器](#merkle-accumulators)相关部分的内存副本。此信息用于计算区块链当前状态的根哈希值。
+* 当前状态的根哈希与有关块中交易的信息相结合，以确定累加器的最新根哈希值。这是在保留任何数据之前完成的，并确保在法定数量的验证者达成协议之前不会存储任何状态或交易。
+* 执行计算推测的根哈希，然后V~X的共识组件签署此根哈希并尝试与其他验证器达成对此根哈希值的协商一致。
 
-### Execution → VM (EX.2)
+### 执行 → 虚拟机 (EX.2)
 
-When consensus requests execution to execute a block of transactions via `Execution::ExecuteBlock()`, execution uses the VM to determine the results of executing the block of transactions.
+当共识组件请求执行组件通过`Execution::ExecuteBlock()`执行一个区块时，执行组件使用VM组件来确定执行区块的结果。
 
-### Consensus → Execution (EX.3)
+### 共识 → 执行 (EX.3)
 
-If a quorum of validators agrees on the block execution results, consensus of each validator informs its execution component via `Execution::CommitBlock()` that this block is ready to be committed.  This call to the execution component will include the signatures of the agreeing validators to provide proof of their agreement.
+如果法定数量的验证器同意区块执行结果，则每个验证器的共识组件通过`Execution::CommitBlock()`通知其执行组件该块已准备好提交。对执行组件的此调用将包括所有同意验证器的签名，以提供其协议的证明。
 
-### Execution → Storage (EX.4)
+### 执行 → 存储 (EX.4)
 
-Execution takes the values from its “scratchpad” and sends them to storage for persistence via `Storage::SaveTransactions()`. Execution then prunes the old values from the “scratchpad” that are no longer needed (for example, parallel blocks that cannot be committed).
+执行组件从其“暂存器”获取值，并通过`Storage::SaveTransactions()`将它们发送到存储器以进行持久化。执行组件然后把不再需要的“暂存器”中的旧值删除（例如，无法提交的并行区块）。
 
-### Execution README
+### 执行组件自述
 
-For implementation details refer to the [Execution README](crates/execution).
+有关实现的详细信息，请参阅[执行组件自述](crates/execution)。
 
-## Storage
+## 存储组件
 
 ![Figure 1.7 Storage](assets/illustrations/storage.svg)
 <small class="figure">Figure 1.7 Storage</small>
 
-The storage component persists agreed upon blocks of transactions and their execution results. A block/set of transactions (which includes transaction T~N~) will be saved via storage when:
+存储组件持久化保存已经达成共识的交易块及其执行结果。在下列情况下，将通过存储保存一批或一组交易(包括交易 T~N~ )：
 
-* There is agreement between more than 2f+1 of the validators participating in consensus on all of the following:
-    * The transactions to include in a block.
-    * The order of the transactions.
-    * The execution results of the transactions to be included in the block.
+* 超过 2f+1 的验证人就以下所有方面达成一致达成共识：
+    * 哪些交易会被包含在块中。
+    * 交易的先后顺序。
+    * 包含在块中的全部交易的执行结果。
 
-Refer to [Merkle accumulators](reference/glossary.md#merkle-accumulators) for information on how a transaction is appended to the data structure representing the blockchain.
+有关如何将交易附加到表示区块链的数据结构的信息，请参阅[Merkle accumulators](reference/glossary.md#merkle-accumulators)。
 
-### VM → Storage (ST.1)
+### 虚拟机 → 存储 (ST.1)
 
-When AC or mempool invoke `VM::ValidateTransaction()` to validate a transaction, `VM::ValidateTransaction()` loads the sender's account from storage and performs the read-only validity checks on the transaction.
+当准入控制组件或内存池组件调用`VM::ValidateTransaction()`来验证交易时，`VM::ValidateTransaction()`从存储组件加载发送人的帐户并对交易执行只读有效性检查。
 
-### Execution → Storage (ST.2)
+### 执行 → 存储 (ST.2)
 
-When consensus calls `Execution::ExecuteBlock()`, execution reads the current state from storage combined with the in-memory “scratchpad” data to determine the execution results.
+当共识组件调用`Execution::ExecuteBlock()`时，执行组件从存储组件中读取结合了内存中的“暂存器”数据的当前状态来确定执行结果。
 
-### Execution → Storage (ST.3)
+### 执行 → 存储 (ST.3)
 
-* Once consensus is reached on a block of transactions, execution calls storage via `Storage::SaveTransactions()` to save the block of transactions and permanently record them. This will also store the signatures from the validator nodes who agreed on this block of transactions.
-* The in-memory data in “scratchpad” for this block is passed to updated storage and persist the transactions.
-* When the storage is updated, the sequence numbers of all resources modified by each transaction are updated accordingly.
-* Note: The sequence number of an account on the Libra Blockchain increments by one for each committed transaction originating from that account.
+* 一旦一个区块中的交易达成了共识，执行组件就会通过`Storage::SaveTransactions()`调用存储组件来保存区块并永久存储它们。同时还将存储来自同意此区块的验证器节点的签名。
+* 此块的“暂存器”中的内存数据将传递到更新后的存储组件并持久化这些交易。
+* 更新存储组件时，每个交易修改的所有资源的序列号都会相应更新。
+* 注意：对于源自该帐户的每个已提交交易，Libra区块链上的帐户序列号递增1。
 
-### AC → Storage (ST.4)
+### 准入控制 → 存储 (ST.4)
 
-For client queries that read information from the blockchain, AC directly interacts with storage to read the requested information.
+对于从区块链读取信息的客户端查询请求，准入控制组件直接与存储组件交互以读取所请求的信息。
 
-### Storage README
+### 存储组件自述
 
-For implementation details refer to the [Storage README](crates/storage.md).
+有关实现的详细信息，请参阅[存储组件自述](crates/storage.md)。
 
-## Reference
+## 参考资料
 
-* [Welcome page](welcome-to-libra.md).
-* [Libra Protocol: Key Concepts](libra-protocol.md) &mdash; Introduces you to the fundamental concepts of the Libra protocol.
-* [My First Transaction](my-first-transaction.md) &mdash; Guides you through executing your very first transaction on the Libra Blockchain using the Libra CLI client.
-* [Getting Started With Move](move-overview.md) &mdash; Introduces you to a new blockchain programming language called Move.
-* [Libra Core Overview](libra-core-overview.md) &mdash; Provides the concept and implementation details of the Libra Core components through READMEs.
-* [CLI Guide](reference/libra-cli.md) &mdash; Lists the commands (and their usage) of the Libra CLI client.
-* [Libra Glossary](reference/glossary.md) &mdash; Provides a quick reference to Libra terminology.
-* [State Machine Replication in the Libra Blockchain](state-machine-replication-paper.md) &mdash; Provides a detailed look into our consensus protocol **LibraBFT**.
+* [欢迎页](welcome-to-libra.md).
+* [Libra协议: 核心概念](libra-protocol.md) &mdash; 介绍Libra协议的基础概念。
+* [我的第一笔交易](my-first-transaction.md) &mdash; 指导您使用Libra命令行客户端在Libra上执行您的第一笔交易。
+* [Move入门](move-overview.md) &mdash; 向您介绍一种称为Move的新区块链编程语言。
+* [Libra核心概览](libra-core-overview.md) &mdash; 通过README文件提供Libra核心组件的概念和实现细节。
+* [命令行指导](reference/libra-cli.md) &mdash; 列出Libra客户端的命令（及其用法）。
+* [Libra术语表](reference/glossary.md) &mdash; 提供Libra术语的快速参考。
+* [Libra区块链的复制状态机](state-machine-replication-paper.md) &mdash; 详细介绍了Libra的共识协议**LibraBFT**。
+
+
