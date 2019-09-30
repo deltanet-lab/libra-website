@@ -1,81 +1,56 @@
 ---
 id: code-of-conduct
-title: Contributor Covenant Code of Conduct
+title: 贡献者行为准则契约
 ---
 
 <!-- hide the edit button --><style>.edit-page-link {display: none !important; visibility: hidden !important;}</style>
 
-## Our Pledge
+## 我们的承诺
 
-In the interest of fostering an open and welcoming environment, we as
-contributors and maintainers pledge to making participation in our project and
-our community a harassment-free experience for everyone, regardless of age, body
-size, disability, ethnicity, sex characteristics, gender identity and expression,
-level of experience, education, socio-economic status, nationality, personal
-appearance, race, religion, or sexual identity and orientation.
+为了营造开放和热情的环境，作为贡献者和维护者的我们承诺：保证使参与我们的项目和我们的社区的每个人拥有无骚扰体验，无论其年龄、身材、残疾、种族、性别特征、性别认同如何，以及表达方式、经验水平、教育程度、社会经济地位、国籍、个人外貌、种族、宗教或性认同和性取向。
 
 ## 我们的标准
 
-Examples of behavior that contributes to creating a positive environment
-include:
+有助于创造积极环境的行为示例，包括：
 
-* Using welcoming and inclusive language
-* Being respectful of differing viewpoints and experiences
-* Gracefully accepting constructive criticism
-* Focusing on what is best for the community
-* Showing empathy towards other community members
+* 使用欢迎和包容的语言
+* 尊重不同的观点和经验
+* 优雅地接受建设性的批评
+* 关注对社区最有利的事物
+* 对其他社区成员表示同情
 
-Examples of unacceptable behavior by participants include:
+不可接受的参与者行为包括：
 
-* The use of sexualized language or imagery and unwelcome sexual attention or
-  advances
-* Trolling, insulting/derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or electronic
-  address, without explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
-  professional setting
+* 使用与性有关的语言或图像，以及不受欢迎的性关注或进步
+* 拖钓，侮辱性/贬损性评论以及人身或政治攻击
+* 公共或私人骚扰
+* 未经明确许可，发布他人的私人信息，例如物理地址或电子地址
+* 在职业环境中可能被认为不适当的其他行为
 
 ## 我们的职责
 
-Project maintainers are responsible for clarifying the standards of acceptable
-behavior and are expected to take appropriate and fair corrective action in
-response to any instances of unacceptable behavior.
+项目维护者有责任澄清可接受行为的标准，并应针对任何不可接受行为采取适当和公正的纠正措施。
 
-Project maintainers have the right and responsibility to remove, edit, or
-reject comments, commits, code, wiki edits, issues, and other contributions
-that are not aligned to this Code of Conduct, or to ban temporarily or
-permanently any contributor for other behaviors that they deem inappropriate,
-threatening, offensive, or harmful.
+项目维护者有权并有责任删除，编辑或拒绝与本行为准则不符的评论，提交，代码，Wiki编辑，问题和其他贡献，或暂时或永久禁止任何贡献者从事他们认为不适当、威胁、冒犯或有害的其他行为。
 
 ## 范围
 
-This Code of Conduct applies within all project spaces, and it also applies when
-an individual is representing the project or its community in public spaces.
-Examples of representing a project or community include using an official
-project e-mail address, posting via an official social media account, or acting
-as an appointed representative at an online or offline event. Representation of
-a project may be further defined and clarified by project maintainers.
+本行为准则适用于所有项目空间，当个人在公共空间代表项目或其社区时也适用。
+代表一个项目或社区的例子包括使用官方项目电子邮件地址、通过官方社交媒体帐户张贴或在在线或离线事件中充当指定代表。项目的代表性可以由项目维护者进一步定义和澄清。
 
-## Enforcement
+## 强制
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at conduct@libra.org. All
-complaints will be reviewed and investigated and will result in a response that
-is deemed necessary and appropriate to the circumstances. The project team is
-obligated to maintain confidentiality with regard to the reporter of an incident.
-Further details of specific enforcement policies may be posted separately.
+虐待，骚扰或其他不可接受的行为可通过联系邮箱：conduct@libra.org，向项目团队进行报告。 所有
+投诉将得到审查和调查，并会做出回应，被认为是必要且适合情况的。 项目团队是有责任对事件的举报人保密。
+具体实施政策的更多详细信息可能会单独发布。
 
-Project maintainers who do not follow or enforce the Code of Conduct in good
-faith may face temporary or permanent repercussions as determined by other
-members of the project's leadership.
+不遵守或严格遵守行为准则的项目维护者信仰可能会面临其他人确定的暂时或永久性影响
+项目负责人。
 
 ## 属性
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
-available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+本行为准则改编自[贡献者契约][主页]，版本1.4，该文档可在 https://www.contributor-convention.org/version/1/4/code-of-conduct.html 上获得。
 
-[homepage]: https://www.contributor-covenant.org
+[主页]: https://www.contributor-covenant.org
 
-For answers to common questions about this code of conduct, see
-https://www.contributor-covenant.org/faq
+有关本行为准则常见问题的解答，请参见 https://www.contributor-convention.org/faq

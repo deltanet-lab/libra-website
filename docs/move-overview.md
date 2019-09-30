@@ -3,17 +3,16 @@ id: move-overview
 title: Move入门
 ---
 
-Move is a new programming language developed to provide a safe and programmable foundation for the Libra Blockchain. An account in the Libra Blockchain is a container for an arbitrary number of Move resources and Move modules. Every transaction submitted to the Libra Blockchain uses a transaction script written in Move to encode its logic. The transaction script can call procedures declared by a module to update the global state of the blockchain.
+Move是一种新的编程语言，为Libra区块链提供了一个安全和可编程的基础。Libra区块链中的帐户是一个容器，其可以包含任意数量的Move资源和Move模块。提交到Libra区块链的每个交易都使用在Move中编写的交易脚本对其逻辑进行编码。交易脚本可以调用模块声明的过程来更新区块链的全局状态。
 
-In the first part of this guide, we will provide a high-level introduction to the key features of the Move language:
+在本指南的第一部分中，我们将对move语言的主要功能进行概要介绍：
 
-1. [Move Transaction Scripts Enable Programmable Transactions](#move-transaction-scripts-enable-programmable-transactions)
-2. [Move Modules Allow Composable Smart Contracts](#move-modules-allow-composable-smart-contracts)
-3. [Move Has First Class Resources](#move-has-first-class-resources)
+1. [Move交易脚本使交易可编程](#move-transaction-scripts-enable-programmable-transactions)
+2. [Move模块允许组合智能合约](#move-modules-allow-composable-smart-contracts)
+3. [Move拥有头等资源](#move-has-first-class-resources)
 
-For the curious reader, the [Move technical paper](move-paper.md) contains much more detail about the language.
-
-In the second part of this guide, we will “look under the hood” and show you how to write your own Move programs in the [Move intermediate representation](#move-intermediate-representation). Custom Move programs are not supported in the initial testnet release, but these features are available for you to try out locally.
+对于好奇的读者来说，[Move技术论文](move-paper.md)包含了关于语言的更多细节。
+在本指南的第二部分中，我们将“内部揭秘”并向您展示如何使用[Move中间表示码](#move-intermediate-representation)编写自己的Move程序。在最初的测试网络版本中不支持自定义Move程序，但这些功能可供您在本地试用。
 
 ## Move的关键特性
 
@@ -24,6 +23,11 @@ In the second part of this guide, we will “look under the hood” and show you
 * A transaction script is not stored in the global state, and it cannot be invoked by other transaction scripts. It is a single-use program.
 * We present several examples of transaction scripts in [Writing Transaction Scripts](#writing-transaction-scripts).
 
+* 每个Libra交易包括一个**Move交易脚本**，它编码一个验证器应该在客户端上执行的逻辑（例如，将Libra从Alice的帐户转移到Bob的帐户）。
+* 交易脚本通过调用一个或多个[Move模块](#move-modules-allow-composable-smart-contracts)的过程与Libra区块链的全局存储中发布的[Move资源](#move-has-first-class-resources)交互。
+* 交易脚本未存储在全局状态中，其他交易脚本无法调用它。这是一个一次性程序。
+* 我们在[编写交易脚本](#writing-transaction-scripts)中介绍了几个交易脚本的例子。
+
 ### Move模块允许实现可组合的智能合约
 
 Move modules define the rules for updating the global state of the Libra Blockchain. Modules fill the same niche as smart contracts in other blockchain systems. Modules declare [resource](#move-has-first-class-resources) types that can be published under user accounts. Each account in the Libra Blockchain is a container for an arbitrary number of resources and modules.
@@ -33,12 +37,20 @@ Move modules define the rules for updating the global state of the Libra Blockch
 * Modules are reusable. A struct type declared in one module can use struct types declared in another module, and a procedure declared in one module can invoke public procedures declared in another module. A module can invoke procedures declared in other Move modules. Transaction scripts can invoke any public procedure of a published module.
 * Eventually, Libra users will be able to publish modules under their own accounts.
 
-### Move有一级资源
+Move模块定义更新Libra区块链全局状态的规则。模块与其他区块链系统中的智能合约填补了相同的利基。模块声明可以在用户帐户下发布的[资源]（移动具有一级资源）类型。Libra区块链中的每个帐户都是任意数量资源和模块的容器。
 
-* The key feature of Move is the ability to define custom resource types. Resource types are used to encode safe digital assets with rich programmability.
-* Resources are ordinary values in the language. They can be stored as data structures, passed as arguments to procedures, returned from procedures, and so on. 
-* The Move type system provides special safety guarantees for resources. Move resources can never be duplicated, reused, or discarded. A resource type can only be created or destroyed by the module that defines the type. These guarantees are enforced statically by the [Move virtual machine](reference/glossary.md#move-virtual-machine-mvm) via bytecode verification. The Move virtual machine will refuse to run code that has not passed through the bytecode verifier.
-* The Libra currency is implemented as a resource type named `LibraCoin.T`. `LibraCoin.T` has no special status in the language; every Move resource enjoys the same protections.
+* 模块声明结构类型（包括资源，这是一种特殊的结构）和过程。
+* Move模块的过程定义了创建、访问和销毁其声明的类型的规则。
+* 模块是可重用的。在一个模块中声明的结构类型可以使用在另一个模块中声明的结构类型，而在一个模块中声明的过程可以调用在另一个模块中声明的公共过程。模块可以调用在其他移动模块中声明的过程。事务脚本可以调用已发布模块的任何公共过程。
+* 最终，Libra用户将能够在自己的帐户下发布模块。
+
+### Move的资源是一级类型
+
+* Move的关键特性是能够定义自定义资源类型。资源类型用于编码具有丰富可编程特性的安全数字资产。
+* 资源是语言中的常见值，它们可以存储为数据结构，作为参数传递给过程，从过程返回，等等。
+* Move的类型系统为资源提供了特殊的安全保障。Move资源永远不能复制、重用或丢弃。资源类型只能由定义该类型的模块创建或销毁。这些保证是通过[Move虚拟机](reference/glossary.md#move-virtual-machine-mvm)静态执行字节码验证器来实现的，Move虚拟机将拒绝运行未通过字节码验证器验证的程序代码。
+* Libra币是作为名为`LibraCoin.T`的资源类型实现的。`LibraCoin.T`在语言中没有特殊的地位；每个Move资源都享有相同的保护。
+
 
 ## Move揭秘
 
@@ -47,6 +59,10 @@ Move modules define the rules for updating the global state of the Libra Blockch
 This section describes how to write [transaction scripts](#writing-transaction-scripts) and [modules](#writing-modules) in the Move intermediate representation (IR). We caution the reader that the IR is an early (and unstable) precursor to a forthcoming Move source language (see [Future Developer Experience](#future-developer-experience) for more details). Move IR is a thin syntactic layer over Move bytecode that is used to test the bytecode verifier and virtual machine, and it is not particularly developer-friendly. It is high level enough to write human-readable code, yet low level enough to compile directly to Move bytecode. Nevertheless, we are excited about the Move language and hope that developers will give the IR a try, despite the rough edges. 
 
 We will proceed by presenting snippets of heavily-commented Move IR. We encourage readers to follow along with the examples by compiling, running, and modifying them locally. The README files `libra/language/README.md` and `libra/language/compiler/README.md` explain how to do this.
+
+本节描述如何使用Move中间表示（IR）中编写[交易脚本](#writing-transaction-scripts)和[模块](#writing-modules)。我们警告读者，IR是即将到来的移动源语言的早期（且不稳定）先驱（参见[未来开发者体验]（“未来开发者体验”）以获得更多细节）。move-ir是move字节码之上的一个很薄的语法层，用于测试字节码验证程序和虚拟机，它对开发人员不是特别友好。它是高水平的，足以编写人类可读代码，但低水平足以直接编译来移动字节码。尽管如此，我们仍然对move语言感到兴奋，并希望开发人员能够尝试一下ir，尽管它有一些粗糙的边缘。
+
+我们将通过展示大量评论Move IR片段。我们鼓励读者通过在本地编译、运行和修改示例来遵循这些示例。自述文件`libra/language/README.md`和`libra/language/compiler/README.md`解释了如何执行此操作。
 
 ### 编写交易脚本
 
@@ -59,6 +75,14 @@ The account balance is a resource of type `LibraCoin.T`. As we explained in [Mov
 We encourage the interested reader to examine the Move IR definitions of these two key resources in the `LibraAccount` and `LibraCoin` modules under the `libra/language/stdlib/modules/` directory.
 
 Now let us see how a programmer can interact with these modules and resources in a transaction script.
+
+正如我们在[Move交易脚本使交易可编程](#move-transaction-scripts-enable-programmable-transactions)中所解释的，用户编写交易脚本以请求对Libra区块链的全局存储进行更新。在几乎所有的交易脚本中都有两个重要的构建块：`LibraAccount.T`和`LibraCoin.T`资源类型。`LibraAccount`是模块的名称，`T`是由该模块声明的资源的名称。这是Move中常用的命名约定；由模块声明的“主”类型通常称为‘t’。
+
+当我们说用户“在Libra区块链上的地址'0xff'有一个帐户”时，我们的意思是地址'0xff'拥有一个'LibraAccount.t'资源的实例。每个非空地址都有一个“libraaccount.t”资源。该资源存储帐户数据，例如序列号、认证密钥和余额。与帐户交互的天秤系统的任何一个部分都必须通过从“天秤帐号”资源读取数据或调用“库帐户”模块的过程来完成。
+
+帐户余额是“LeavaCoin .t”类型的资源。正如我们在[移动拥有一等资源]（移动拥有一等资源）中所解释的，这是Libra硬币的类型。这种类型的人在语言上是“一等公民”，就像其他的移动资源一样。类型“RealCuoin .t”的资源可以存储在程序变量中，在程序之间传递，等等。
+我们鼓励感兴趣的读者在“天秤/语言/STDLIB／模块/目录”下，研究“库帐户”和“图书馆”模块中的这两个关键资源的移动IR定义。
+现在让我们看看程序员如何在事务脚本中与这些模块和资源交互。
 
 ```move
 // Simple peer-peer payment example.
@@ -153,7 +177,7 @@ main(payee1: address, amount1: u64, payee2: address, amount2: u64) {
 
 This concludes our "tour" of transaction scripts. For more examples, including the transaction scripts supported in the initial testnet, refer to `libra/language/stdlib/transaction_scripts`.
 
-### Writing Modules
+### 编写模块
 
 We will now turn our attention to writing our own Move modules instead of just reusing the existing `LibraAccount` and `LibraCoin` modules. Consider this situation:
 Bob is going to create an account at address *a* at some point in the future. Alice wants to "earmark" some funds for Bob so that he can pull them into his account once it is created. But she also wants to be able to reclaim the funds for herself if Bob never creates the account.
@@ -247,8 +271,12 @@ Alice can create an earmarked coin for Bob by creating a transaction script that
 
 The observant reader may have noticed that the code in this module is agnostic to the internal structure of `LibraCoin.T`. It could just as easily be written using generic programming (e.g., `resource T<AnyResource: R> { coin: AnyResource, ... }`). We are currently working on adding support for exactly this sort of parametric polymorphism to Move.
 
-### Future Developer Experience
+### 未来开发者体验
 
 In the near future, the IR will stabilize, and compiling and verifying programs will become more user-friendly. Additionally, location information from the IR source will be tracked and passed to the verifier to make error messages easier to debug. However, the IR will continue to remain a tool for testing Move bytecode. It is meant to be a semantically transparent representation of the underlying bytecode. To allow effective tests, the IR compiler must produce bad code that will be rejected by the bytecode verifier or fail at runtime in the compiler. A user-friendly source language would make different choices; it should refuse to compile code that will fail at a subsequent step in the pipeline.
 
 In the future, we will have a higher-level Move source language. This source language will be designed to express common Move idioms and programming patterns safely and easily. Since Move bytecode is a new language and the Libra Blockchain is a new programming environment, our understanding of the idioms and patterns we should support is still evolving. The source language is in the early stages of development, and we do not have a timetable for its release yet.
+
+在不久的将来，IR将稳定，编译和验证程序将变得更加友好。此外，来自IR源的位置信息将被跟踪并传递给验证器，以使错误消息更易于调试。然而，IR将继续作为测试move字节码的工具。它意味着底层字节码的语义透明表示。为了允许有效的测试，IR编译器必须产生由字节码验证器拒绝的错误代码或编译器中运行时失败的代码。用户友好的源语言会做出不同的选择；它应该拒绝编译在流水线的后续步骤中失败的代码。
+
+在未来，我们将有一个更高级的Move源语言。该源语言将被设计成更安全和更容易地表达常见的Move习惯用法和编程模式。由于Move字节码是一种新的语言，而Libra区块链是一种新的编程环境，我们对应该支持的习惯用法和编程模式的理解仍在不断发展。源语言处于开发的早期阶段，我们还没有它的发布时间表。

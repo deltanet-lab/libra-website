@@ -86,8 +86,8 @@ A **client** is a piece of software that has the capability to interact with the
 
 ### 共识(Consensus)
 
-* **Consensus** is a component of a validator node.  
-* The consensus component is responsible for coordination and agreement amongst all validators on the block of transactions to be executed, their order, and the execution results.
+* **共识**是验证器节点的一个组件。
+* 共识组件负责协商所有验证器节点The consensus component is responsible for coordination and agreement amongst all validators on the block of transactions to be executed, their order, and the execution results.
 * The Libra Blockchain is formed with these agreed-upon transactions and their corresponding execution results.
 
 ### 共识协议(Consensus Protocol)
@@ -105,8 +105,8 @@ A **client** is a piece of software that has the capability to interact with the
 
 ### 数字货币(Digital currency)
 
-* *Alternate name:* Cryptocurrency
-* The type of money Libra is.
+* *别名*：加密货币
+* Libra就是一种数字货币。
 
 ## E
 
@@ -114,22 +114,22 @@ A **client** is a piece of software that has the capability to interact with the
 
 ### Ed25519
 
-* **Ed25519** is our supported digital signature scheme. 
+* **Ed25519**是我们支持的数字签名方案。
 * More specifically, Libra uses the PureEdDSA scheme over the Ed25519 curve, as defined in RFC 8032.
 
-### Epoch
+### 世代（Epoch）
 
 * An **epoch** is a period of time during which an instance of the consensus protocol runs with a fixed set of validators and voting rights.
 * To change the set of validators and/or their voting rights, the current epoch ends with the commit of a special/administrative smart contract transaction and a new one is started.
 
-### 事件(Event)
+### 事件（Event）
 
 * An **event** is the user-facing representation of the effects of executing a transaction.
 * A transaction may be designed to emit any number of events as a list. For example, a peer-to-peer payment transaction emits a `SentPaymentEvent` for the sender account and a `ReceivedPaymentEvent` for the recipient account. 
 * In the Libra protocol, events provide evidence that the successful execution of a transaction resulted in a specific effect. The `ReceivedPaymentEvent` (in the above example) allows the recipient to confirm that a payment was received into their account. 
 * Events are persisted on the blockchain and are used to answer queries by [clients](#client).  
 
-### 执行结果(Execution Result)
+### 执行结果（Execution Result）
 
 * 一个交易的执行结果是如下的组合:
     * 受交易影响的账户集的新状态。
@@ -151,23 +151,23 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * * *
 
-### 水龙头(Faucet)
+### 水龙头（Faucet）
 
-* 所谓**水龙头**是一种获取免费的Libra数字币的途径，放水，只能用于测试网。 is the way to create Libra currency with no real world value, only on our testnet.
-* The Faucet is a service running along with the testnet. This service only exists to facilitate minting coins for the testnet.
+* 所谓**水龙头**是一种获取免费的Libra数字币的途径，就是“放水”的意思，该币没有实际价值，只能用于测试网。 
+* Faucet是一种运行于测试网络的服务。 This service only exists to facilitate minting coins for the testnet.
 * You can use the Faucet by sending a request to create coins and transfer them into a given account on your behalf.
 
 ## G
 
 * * *
 
-### Gas
+### 燃料（Gas）
 
-* **Gas** is a way to pay for computation and storage on a blockchain network.  All transactions on the Libra network cost a certain amount of gas.
+* **燃料** is a way to pay for computation and storage on a blockchain network.  All transactions on the Libra network cost a certain amount of gas.
 * The gas required for a transaction depends on the size of the transaction, the computational cost of executing the transaction, and the amount of additional global state created by the transaction (e.g., if new accounts are created).
 * The purpose of gas is regulating demand for the limited computational and storage resources of the validators, including preventing denial of service (DoS) attacks.
 
-### Gas Price
+### 燃料价格（Gas Price）
 
 * Each transaction specifies the **gas price** (in microlibra/gas units) it is willing to pay. 
 * The price of gas required for a transaction depends on the current demand for usage of the network.
@@ -181,7 +181,7 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * A validator that faithfully executes the consensus protocol and is not Byzantine.
 
-### HotStuff
+### 尤物（HotStuff）
 
 * **HotStuff** is a recent proposal for a [BFT](#byzantine-fault-tolerance-bft) consensus protocol. 
 * LibraBFT, Libra's consensus algorithm, is based on HotStuff.
@@ -208,25 +208,25 @@ then there is a guarantee that T_N will never be included in the blockchain.
 * It is backed by a reserve of assets.
 * It is governed by the independent Libra Association.
 
-### Libra Association
+### Libra协会
 
-* The **Libra Association** is an independent, not-for-profit membership organization, headquartered in Geneva, Switzerland. The association's purpose is to coordinate and provide a framework for governance of the network and reserve. 
+* The **Libra协会** is an independent, not-for-profit membership organization, headquartered in Geneva, Switzerland. The association's purpose is to coordinate and provide a framework for governance of the network and reserve. 
 * The association is created by the validator nodes who will run on the Libra network.
 * Refer to the [Libra white paper](https://libra.org/en-us/whitepaper) for the a description of the mission, vision, and purview of the Libra Association.
 
-### Libra Association Council
+### Libra协会委员会
 
-* Libra Association Council is the governing body of the Libra Association.
-* Libra Association Council is part of the Libra Association.
+* Libra协会委员会是Libra协会的治理主体。
+* Libra协会委员会是Libra协会的一部分。
 
 ### LibraBFT
 
-* LibraBFT is the Libra protocol's BFT consensus algorithm.
-* LibraBFT is based on HotStuff.
+* LibraBFT是Libra协议的拜占庭共识算法。
+* LibraBFT是基于HotStuff的。
 
-### Libra Blockchain
+### Libra区块链
 
-* The **Libra Blockchain** is a ledger of immutable transactions agreed upon by the validator nodes on the Libra network (the network of validator nodes).
+* The **Libra区块链** is a ledger of immutable transactions agreed upon by the validator nodes on the Libra network (the network of validator nodes).
 
 ### Libra Core
 
@@ -234,11 +234,11 @@ then there is a guarantee that T_N will never be included in the blockchain.
 * This software is the first implementation of the Libra protocol and the Move language. 
 * Libra Core includes both validator and client functionalities.
 
-### Libra Protocol
+### Libra协议
 
 * **Libra protocol** is the specification of how transactions are submitted, ordered, executed, and recorded within the Libra ecosystem.
 
-### Libra Reserve
+### Libra保证金
 
 * **Libra reserve** is the total monetary holdings that back Libra.
 * To be a validator node for the Libra Association, it is a requirement to invest in the reserve.
@@ -253,14 +253,14 @@ then there is a guarantee that T_N will never be included in the blockchain.
 * **The LibraAccount module** is a Move module that contains the code for manipulating the administrative data held in a particular `LibraAccount.T` resource.
 * Code for checking or incrementing sequence numbers, withdrawing or depositing currency, and extracting gas deposits is included in the LibraAccount module. 
 
-### Libra testnet 
+### Libra测试网络 
 
-* See [testnet](#testnet).
+* 请查看[测试网络](#testnet).
 
 ## M
 
 * * *
-### mainnet
+### 主网
 
 * The Libra mainnet is the main network of the Libra Blockchain with a digital currency known as [Libra](#libra). 
 * The Libra currency on mainnet will be backed by a reserve of assets.
@@ -272,13 +272,13 @@ then there is a guarantee that T_N will never be included in the blockchain.
 * The gas charged is equal to the gas price multiplied by units of work required to process this transaction. If the result is less than the max gas amount, the transaction has been successfully executed.
 * If the transaction runs out of gas while it is being executed or the account runs out of balance during execution, then the sender will be charged for gas used and the transaction will fail. 
 
-### Mempool
+### 内存池（Mempool）
 
-* **Mempool** is one of the components of the validator node. It holds an in-memory buffer of transactions that have been submitted but not yet agreed upon and executed. Mempool receives transactions from [admission control](#admission-control).
+* **内存池（Mempool）** is one of the components of the validator node. It holds an in-memory buffer of transactions that have been submitted but not yet agreed upon and executed. Mempool receives transactions from [admission control](#admission-control).
 * Transactions in the mempool of a validator are added from the admission control (AC) of the current validator and from the mempool of other validators.
 * When the current validator is the leader, its consensus pulls the transactions from its mempool and proposes the order of the transactions that form a block. The validator quorum then votes on the proposal. 
 
-### Merkle Trees
+### 默克尔树（Merkle Trees）
 
 * **Merkle tree** is a type of authenticated data structure that allows for efficient verification of data integrity and updates.
 * Libra network treats the entire blockchain as a single data structure that records the history of transactions and states over time.
@@ -286,10 +286,10 @@ then there is a guarantee that T_N will never be included in the blockchain.
     * Read any data from any point in time. 
     * Verify the integrity of the data using a unified framework.
 
-### Merkle Accumulator
+### 默克尔累加器（Merkle Accumulator）
 
-* The [Merkle Accumulator](https://www.usenix.org/legacy/event/sec09/tech/full_papers/crosby.pdf) is an _append-only_ Merkle tree that the Libra Blockchain uses to store the ledger.
-* Merkle accumulators can provide proofs that a transaction was included in the chain (“proof of inclusion”).
+* [默克尔累加器（Merkle Accumulator）](https://www.usenix.org/legacy/event/sec09/tech/full_papers/crosby.pdf) is an _append-only_ Merkle tree that the Libra Blockchain uses to store the ledger.
+* 默克尔累加器 can provide proofs that a transaction was included in the chain (“proof of inclusion”).
 * They are also called [history trees](http://people.cs.vt.edu/danfeng/courses/cs6204/sp10-papers/crosby.pdf) in literature.
 
 ### Move
@@ -298,23 +298,23 @@ then there is a guarantee that T_N will never be included in the blockchain.
 * It has two different kinds of code &mdash; [transaction scripts](#transaction-script) and [Move modules](#move-module).
 * For further information on “Move,” refer to the [Move technical paper](../move-paper.md)
 
-### Move Bytecode
+### Move字节码
 
-* Move programs are compiled into Move bytecode.
-* Move bytecode is used to express transaction scripts and Move modules.
+* Move程序可以编译为Move字节码。
+* Move字节码 is used to express transaction scripts and Move modules.
 
-### Move Module
+### Move模块
 
 * A **Move module** defines the rules for updating the global state of the Libra Blockchain. 
 * In the Libra protocol, a Move module is a **smart contract**.
 * Each user-submitted transaction includes a transaction script. The transaction script invokes procedures of one or more Move modules to update the global state of the blockchain according to the rules.
 
-### Move Resources
+### Move资源
 
-* **Move resources** contain data that can be accessed according to the **procedures** declared in a Move **module.**
+* **Move资源** contain data that can be accessed according to the **procedures** declared in a Move **module.**
 * Move resources can never be copied, reused, or lost. This protects Move programmers from accidentally or intentionally losing track of a resource.
 
-### Move Virtual Machine (MVM)
+### Move虚拟机(MVM)
 
 * The **Move virtual machine** executes transaction scripts written in [Move bytecode](#move-bytecode) to produce an [execution result](#execution-result). This result is used to update the blockchain **state**.
 * The virtual machine is part of a [validator node](#validator-node).
@@ -417,7 +417,7 @@ then there is a guarantee that T_N will never be included in the blockchain.
 * A signed transaction is a raw transaction with the digital signature.
 * An executed transaction changes the state of the Libra Blockchain.
 
-### 交易脚本(Transaction script)
+### 交易脚本（Transaction script）
 
 * Each transaction submitted by a user includes a **transaction script**.
 * It represents the operation a client submits to a validator node.  
@@ -430,9 +430,9 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * * *
 
-### 验证节点(Validator Node)
+### 验证节点（Validator Node）
 
-* *另一个名字*: 验证者。
+* *别名*: 验证者。
 * A **validator** is an entity of the Libra ecosystem that validates the Libra Blockchain. 从客户端接收请求并运行共识，执行，存储。
 * A validator maintains the history of all the transactions on the blockchain.
 * Internally, a validator node needs to keep the current state, to execute transactions and to calculate the next state. 
@@ -447,7 +447,7 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * * *
 
-### 合法交易 Well Formed Transaction
+### 合法交易（Well Formed Transaction）
 
 A Libra transaction is **well formed** if each of the following conditions are true for the transaction:
 * 该交易具有有效的签名。The transaction has a valid signature.

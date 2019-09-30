@@ -11,7 +11,7 @@ Libra建立在安全，可扩展且可靠的区块链上。它以旨在赋予其
 
 > Libra区块链的目标是为包括新的全球货币在内的金融服务奠定坚实的基础，该货币可以满足数十亿人的日常金融需求。区块链是从头开始构建的，旨在优先考虑可扩展性，安全性，存储和吞吐量的效率以及未来的适应性。 - [Libra白皮书](https://libra.org/en-us/whitepaper)
 
-Libra货币建立在Libra区块链上。该站点记录了Libra Core，这是Libra协议的开源原型，它为这个新的区块链提供了动力。该站点还记录了[testnet](reference/glossary.md#testnet)，此新系统的演示。与即将面世的天秤座[mainnet](reference/glossary.md#mainnet)相反，测试网使用的数字货币_没有真实值。
+Libra货币建立在Libra区块链上。该站点记录了Libra Core，这是Libra协议的开源原型，它为这个新的区块链提供了动力。该站点还记录了[测试网络](reference/glossary.md#testnet)，此新系统的演示。与即将面世的Libra[主网](reference/glossary.md#mainnet)相反，测试网使用的数字货币**没有真实价值**。
 
 该文档讨论：
 
@@ -20,7 +20,9 @@ Libra货币建立在Libra区块链上。该站点记录了Libra Core，这是Lib
 * 如何成为围绕这个新生态系统构建的社区的一部分。
 
 <blockquote class="block_note">
-**注意：**该项目处于早期原型阶段。 Libra协议和Libra Core API并非最终版本。 演化原型的关键任务之一是规范协议和API。 当前，我们的重点是基础架构和构建命令行客户端。 公共API和相关的库正在我们的直接路线图上。 我们欢迎在测试网上试用该软件，但开发人员应期望使用这些API发行应用程序可能需要做一些工作。 作为我们定期交流的一部分，我们将发布稳定API的进展。
+
+**注意**：该项目处于早期原型阶段。 Libra协议和Libra Core API并非最终版本。 演化原型的关键任务之一是规范协议和API。 当前，我们的重点是基础架构和构建命令行客户端。 公共API和相关的库正在我们的直接路线图上。 我们欢迎在测试网上试用该软件，但开发人员应期望使用这些API发行应用程序可能需要做一些工作。 作为我们定期交流的一部分，我们将发布稳定版本API的进展。
+
 </blockquote>
 
 ## Move: 一种新的区块链编程语言
