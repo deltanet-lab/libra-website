@@ -79,25 +79,25 @@ class Footer extends React.Component {
             </a>
           )}
           <div className="footerSection">
-            <h5>Learn About Libra</h5>
-            <a href={this.docUrl('welcome-to-libra')}>Welcome to Libra</a>
-            <a href={this.docUrl('libra-protocol')}>Libra Protocol</a>
-            <a href={this.docUrl('the-libra-blockchain-paper')}>Libra Blockchain</a>
-            <a href={this.docUrl('life-of-a-transaction')}>Life of a Transaction</a>
+            <h5>学习Libra</h5>
+            <a href={this.docUrl('welcome-to-libra')}>欢迎来到Libra开发者网站</a>
+            <a href={this.docUrl('libra-protocol')}>Libra协议</a>
+            <a href={this.docUrl('the-libra-blockchain-paper')}>Libra区块链</a>
+            <a href={this.docUrl('life-of-a-transaction')}>交易的生命周期</a>
             <p />
-            <h5>Try Libra Core </h5>
-            <a href={this.docUrl('my-first-transaction')}>My First Transaction</a>
-            <a href={this.docUrl('move-overview')}>Getting Started With Move</a>
+            <h5>体验Libra Core</h5>
+            <a href={this.docUrl('my-first-transaction')}>我的第一笔交易</a>
+            <a href={this.docUrl('move-overview')}>Move入门</a>
           </div>
           <div className="footerSection">
-            <h5>Policies</h5>
-            <a href={this.docUrl('policies/privacy-policy')}>Privacy Policy</a>
-            <a href={this.docUrl('policies/terms-of-use')}>Terms of Use</a>
-            <a href={this.docUrl('policies/cookies-policy')}>Cookies Policy</a>
-            <a href={this.docUrl('policies/code-of-conduct')}>Code of Conduct</a>
+            <h5>政策条款</h5>
+            <a href={this.docUrl('policies/privacy-policy')}>隐私条款</a>
+            <a href={this.docUrl('policies/terms-of-use')}>使用条款</a>
+            <a href={this.docUrl('policies/cookies-policy')}>Cookies条款</a>
+            <a href={this.docUrl('policies/code-of-conduct')}>行为准则</a>
             <p />
-            <h5>Community</h5>
-            <a href="https://community.libra.org/">Developer Forum</a>
+            <h5>社区</h5>
+            <a href="https://community.libra.org/">开发者论坛</a>
             <a href="https://developers.libra.org/newsletter_form">Newsletter</a>
           </div>
           <SocialFooter config={this.props.config} />

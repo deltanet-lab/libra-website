@@ -1,6 +1,6 @@
 ---
 id: move-language
-title: Move Language
+title: Move语言
 custom_edit_url: https://github.com/libra/libra/edit/master/language/README.md
 ---
 

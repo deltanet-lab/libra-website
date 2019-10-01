@@ -1,6 +1,6 @@
 ---
 id: storage
-title: Storage
+title: 存储
 custom_edit_url: https://github.com/libra/libra/edit/master/storage/README.md
 ---
 

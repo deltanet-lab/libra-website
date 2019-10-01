@@ -63,9 +63,9 @@ class HomeSplash extends React.Component {
           <Logo img_src={baseUrl + 'img/libra-header-logo-white.png'} />
           <ProjectTitle siteConfig={siteConfig} />
           <PromoSection>
-            <Button href={docUrl('welcome-to-libra')}>Welcome to the Developer Site</Button>
-            <Button href={docUrl('the-libra-blockchain-paper.html')}>Libra Blockchain Technical Paper</Button>
-            <Button href={docUrl('move-overview.html')}>Getting Started With Move</Button>
+            <Button href={docUrl('welcome-to-libra')}>欢迎来到开发者网站</Button>
+            <Button href={docUrl('the-libra-blockchain-paper.html')}>Libra区块链技术论文</Button>
+            <Button href={docUrl('move-overview.html')}>Move入门</Button>
           </PromoSection>
         </div>
       </SplashContainer>
@@ -129,29 +129,29 @@ class Index extends React.Component {
         className="productShowcaseSection"
         id="quickstart"
         style={{textAlign: 'center', marginBottom:'30px'}}>
-        <h2>Try Libra</h2>
-        <p>Currently available for macOS and Linux.</p>
+        <h2>快来体验Libra</h2>
+        <p>当前只支持macOS和Linux系统。</p>
         <Container>
-          <h4>1. Clone Libra:</h4>
+          <h4>1. 克隆Libra代码：</h4>
           <div style={{marginLeft:"30px"}}>
             <MarkdownBlock>{
 bash`git clone https://github.com/libra/libra.git && cd libra`}</MarkdownBlock>
           </div>
-          <h4>2. Checkout the Testnet Branch:</h4>
+          <h4>2. 检出Testnet分支：</h4>
           <div style={{marginLeft:"30px"}}>
             <MarkdownBlock>{bash`git checkout testnet`}</MarkdownBlock>
           </div>
-          <h4>3. Install Dependencies:</h4>
+          <h4>3. 安装依赖项：</h4>
           <div style={{marginLeft:"30px"}}>
             <MarkdownBlock>{bash`./scripts/dev_setup.sh`}</MarkdownBlock>
           </div>
-            <h4>4. Run the CLI:</h4>
+            <h4>4. 执行命令行：</h4>
           <div style={{marginLeft:"30px"}}>
             <MarkdownBlock>{bash`./scripts/cli/start_cli_testnet.sh`}</MarkdownBlock>
           </div>
-            <h4>5. Run Your First Transaction:</h4>
+            <h4>5. 执行您的第一笔交易：</h4>
           <div style={{marginLeft:"30px"}}>
-                <Button href={'docs/my-first-transaction'}>My First Transaction</Button>
+                <Button href={'docs/my-first-transaction'}>我的第一笔交易</Button>
           </div>
         </Container>
       </div>

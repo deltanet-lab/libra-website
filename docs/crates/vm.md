@@ -1,6 +1,6 @@
 ---
 id: vm
-title: Virtual Machine
+title: 虚拟机
 custom_edit_url: https://github.com/libra/libra/edit/master/language/vm/README.md
 ---
 

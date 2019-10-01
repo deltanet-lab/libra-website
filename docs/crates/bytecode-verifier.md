@@ -1,6 +1,6 @@
 ---
 id: bytecode-verifier
-title: Bytecode Verifier
+title: 字节码验证器
 custom_edit_url: https://github.com/libra/libra/edit/master/language/bytecode_verifier/README.md
 ---
 
@@ -11,19 +11,27 @@ The bytecode verifier contains a static analysis tool for rejecting invalid Move
 
 The body of each function in a compiled module is verified separately while trusting the correctness of function signatures in the module. Checking that each function signature matches its definition is a separate responsibility. The body of a function is a sequence of bytecode instructions. This instruction sequence is checked in several phases described below.
 
-## CFG Construction
+字节码验证器包含一个静态分析工具，用于拒绝无效的Move字节码。它检查堆栈使用、类型、资源和引用的安全性。
+
+因为检查每个函数签名与其定义是否匹配是一项单独的职责，所以在对编译后的模块中每个函数主体分别进行验证时，我们会信任模块中函数签名的正确性。函数体是字节码指令序列。这个指令序列在下面描述的几个阶段中被检查。
+
+## 构建控制流程图（CFG Construction）
 
 A control-flow graph is constructed by decomposing the instruction sequence into a collection of basic blocks. Each basic block contains a contiguous sequence of instructions; the set of all instructions is partitioned among the blocks. Each block ends with a branch or return instruction. The decomposition into blocks guarantees that branch targets land only at the beginning of some block. The decomposition also attempts to ensure that the generated blocks are maximal. However, the soundness of the analysis does not depend on maximality.
 
-## Stack Safety
+通过将指令序列分解为基本块的集合来构造控制流图。每个基本块包含一个连续的指令序列；所有指令的集合在块之间进行分区。每个块以分支或返回指令结束。分解成块保证分支目标只在某个块的开始处着陆。分解还试图确保生成的块是最大的。然而，分析的合理性并不取决于最大化。
+
+## 栈安全（Stack Safety）
 
 The execution of a block happens in the context of a stack and an array of local variables. The parameters of the function are a prefix of the array of local variables. Arguments and return values are passed across function calls via the stack. When a function starts executing, its arguments are already loaded into its parameters. Suppose the stack height is *n* when a function starts executing; then valid bytecode must enforce the invariant that when execution lands at the beginning of a basic block, the stack height is *n*. Furthermore, at a return instruction, the stack height must be *n*+*k* where *k*, s.t. *k*>=0 is the number of return values. The first phase of the analysis checks that this invariant is maintained by analyzing each block separately, calculating the effect of each instruction in the block on the stack height, checking that the height does not go below *n*, and that is left either at *n* or *n*+*k* (depending on the final instruction of the block and the return type of the function) at the end of the block.
 
-## Type Safety
+块的执行发生在堆栈和局部变量数组的上下文中。函数的参数是局部变量数组的前缀。参数和返回值通过堆栈遍历函数调用。当函数开始执行时，其参数已被加载到其参数中。假设当函数开始执行时堆栈高度为*n*；那么有效字节码必须强制执行，当执行在基本块的开始时，堆栈高度为*n*。此外，在返回指令中，堆栈高度必须是*n*+*k*，其中*k*，s.t.*k*>=0是返回值的个数。分析的第一阶段通过分析每个块来维护该不变量，计算块中的每个指令对堆栈高度的影响，检查高度不低于*N*，在块的末尾，它要么留在*n*或*n*+*k*（取决于块的最终指令和函数的返回类型）。
+
+## 类型安全（Type Safety）
 
 The second phase of the analysis checks that each operation, primitive or defined function, is invoked with arguments of appropriate types. The operands of an operation are values located either in a local variable or on the stack. The types of local variables of a function are already provided in the bytecode. However, the types of stack values are inferred. This inference and the type checking of each operation can be done separately for each block. Since the stack height at the beginning of each block is *n* and does not go below *n* during the execution of the block, we only need to model the suffix of the stack starting at *n* for type checking the block instructions. We model this suffix using a stack of types on which types are pushed and popped as the instruction stream in a block is processed. Only the type stack and the statically-known types of local variables are needed to type check each instruction.
 
-## Resource Safety
+## 资源安全（Resource Safety）
 
 Resources represent the assets of the blockchain. As such, there are certain restrictions on these types that do not apply to normal values. Intuitively, resource values cannot be copied and must be used by the end of the transaction (this means that they are moved to global storage or destroyed). Concretely, the following restrictions apply:
 
@@ -38,7 +46,7 @@ As mentioned above, this last rule around `Ret` implies that the resource *must*
 
 Both `MoveToSender` and `Unpack` are internal to the module in which the resource is declared.
 
-## Reference Safety
+## 引用安全（Reference Safety）
 
 References are first-class in the bytecode language. Fresh references become available to a function in several ways:
 
@@ -83,7 +91,7 @@ The current implementation stores this information as two separate maps with dis
       * If *n2* in *fields_borrowed_by*[*n1*][*f*], it means that the reference represented by *n2* is an extension of the *f*-extension of the reference represented by *n1*. Based on this intuition, it is a sound overapproximation to move a nonce *n* from the domain of *fields_borrowed_by* to the domain of *borrowed_by* by taking the union of all nonce sets corresponding to all fields in the domain of *fields_borrowed_by*[*n*].
 * To propagate an abstract state across the instructions in a block, the values and references on the stack must also be modeled. We had earlier described how we model the usable stack suffix as a stack of types. We now augment the contents of this stack to be a structure containing a type and an abstract value. We maintain the invariant that non-reference values on the stack cannot have pending borrows on them. Therefore, if there is an abstract value *Value*(*ns*) on the stack, then *ns* is empty.
 
-### Values and References
+### 值与引用（Values and References）
 
 Let us take a closer look at how values and references, shared and exclusive, are modeled.
 
@@ -102,17 +110,17 @@ Let us take a closer look at the second reason for error reporting above. Note t
 * The set of nonces used in the abstract states along the two edges may not have any connection to each other. Since the actual nonce values are immaterial, the nonces are canonically mapped to fixed integers (indices of local variables containing the nonces) before performing the join.
 * During the join, if a nonce *n* is in the domain of borrowed_by on one side and in the domain of fields_borrowed_by on the other side, *n* is moved from fields_borrowed_by to borrowed_by before doing the join.
 
-### Borrowing References
+### 借用引用（Borrowing References）
 
 Each of the reference constructors ---`BorrowLoc`, `BorrowField`, `BorrowGlobal`, `FreezeRef`, and `CopyLoc`--- is modeled via the generation of a fresh nonce. While `BorrowLoc` borrows from a value in a local variable, `BorrowGlobal` borrows from the global pool of values. `BorrowField`, `FreezeRef`, and `CopyLoc` (when applied to a local containing a reference) borrow from the source reference. Since each fresh nonce is distinct from all previously-generated nonces, the analysis maintains the invariant that all available local variables and stack locations of reference type have distinct nonces representing their abstract value. Another important invariant is that every nonce referred to in the borrow information must reside in some abstract value representing a local variable or a stack location.
 
-### Releasing References.
+### 释放引用（Releasing References）
 
 References, both global and local, are released by the `ReleaseRef` operation. It is an error to return from a function with unreleased references in a local variable of the function. All references must be explicitly released. Therefore, it is an error to overwrite an available reference using the `StLoc` operation.
 
 References are implicitly released when consumed by the operations `ReadRef`, `WriteRef`, `Eq` and `Neq`.
 
-### Global References
+### 全局引用（Global References）
 
 The safety of global references depends on a combination of static and dynamic analysis. The static analysis does not distinguish between global and local references. But the dynamic analysis distinguishes between them and performs reference counting on the global references as follows: the bytecode interpreter maintains a map `M` from an address and fully-qualified resource type pair to a union (Rust enum) comprising the following values:
 
@@ -166,7 +174,7 @@ ReleaseRef(ref) {
 
 A subtle point not explicated by the rules above is that `BorrowField` and `FreezeRef`, when applied to a global reference, leave the reference count unchanged. This is because these instructions consume the reference at the top of the stack while producing an extension of it at the top of the stack. Similarly, since `ReadRef`, `WriteRef`, `Eq`, and `Neq` consume the reference at the top of the stack, they will reduce the reference count by 1.
 
-## How is this module organized?
+## 模块的代码组织?
 
 ```text
 *

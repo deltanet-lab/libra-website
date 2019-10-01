@@ -42,7 +42,7 @@ on server:
 unzip libra.zip
 ```
 
-## Publishing
+## 发布
 
 The site is hosted on GitHub pages, via the `gh-pages` branch of the `website'
 [GitHub repo](https://github.com/libra/website).

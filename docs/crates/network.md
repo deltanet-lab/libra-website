@@ -1,6 +1,6 @@
 ---
 id: network
-title: Network
+title: 网络
 custom_edit_url: https://github.com/libra/libra/edit/master/network/README.md
 ---
 
