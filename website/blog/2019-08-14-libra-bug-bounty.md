@@ -1,6 +1,6 @@
 ---
 author: Michael Engle, Libra Association
-title: Libra Bug Bounty Open to All
+title: Libra的错误赏金计划对所有人开放
 ---
 
 <script>

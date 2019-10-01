@@ -1,6 +1,6 @@
 ---
 author: Libra Engineering Team
-title: Libra: The Path Forward
+title: Libra: 前进的道路
 ---
 
 Today we are announcing the **Libra testnet**, a live demonstration of an early prototype of the technology behind [Libra](https://libra.org/) — a simple global currency and financial infrastructure that can empower billions of people.

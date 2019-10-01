@@ -202,38 +202,38 @@ Mint request submitted
 
 ### 步骤2：将52个Libra添加到Bob的帐户中
 
-To mint Libra and add to Bob’s account, enter this command:
+要铸造Libra并添加到Bob的帐户，请输入以下命令：
 
 `libra% account mint 1 52`
 
-* 1 is the index of Bob’s account.
-* 52 is the amount of Libra to be added to Bob’s account.
-* A successful account mint command will also create Bob’s account on the blockchain. Another way to create Bob’s account on the blockchain is to transfer money from Alice’s account to Bob’s account.
+* 1是Bob帐户的索引。
+* 52是要加到Bob帐户上的Libra币的数目。
+* 成功的"account mint"命令还将在区块链上创建Bob的帐户。在区块链上创建Bob帐户的另一种方法是将Alice帐户中的钱转到Bob帐户。
 
-Sample output on success:
+成功的示例输出：
 
 ```plaintext
 >> Minting coins
 Mint request submitted
 ```
-If your account mint command did not submit your request successfully, refer to
-[Troubleshooting](#minting-and-adding-money-to-account)
 
-### Step 3: Check the Balance
+如果"account mint"命令未成功执行，请参阅[故障排除](#minting-and-adding-money-to-account)
 
-To check the balance in Alice’s account, enter this command:
+### 步骤3: 查看余额
+
+为了查看Alice的账户余额，请输入如下命令：
 
 `libra% query balance 0`
 
-Sample output on success:
+成功的示例输出：
 
 `Balance is: 110`
 
-To check the balance in Bob’s account, enter this command:
+为了查看Bob的账户余额，请输入如下命令：
 
 `libra% query balance 1`
 
-Sample output on success:
+成功的示例输出：
 
 `Balance is: 52`
 
@@ -283,6 +283,18 @@ To troubleshoot the transfer command, refer to [Troubleshooting](#the-transfer-c
 `libra% transferb 0 1 10`
 
 Refer to [Life of a Transaction](life-of-a-transaction.md) for an understanding of the lifecycle of a transaction from submission to execution and storage.
+
+您可以使用命令`query txn_acc_seq 0 0 true`（按帐户和序列号进行交易）来检索您刚才提交的交易的信息。第一个参数是发送方帐户的本地索引，第二个参数是帐户的序列号。若要查看此命令的示例输出，请参考[示例输出](#query-transaction-by-account-and-sequence-number)。
+
+您刚刚将交易提交给了测试网络上的验证节点，它被放在验证器的[内存池](reference/glossary.md#mempool)中。这并不一定意味着你的交易已经被执行。理论上，如果系统是慢的或超载的，则需要一些时间来查看结果，并且您可能需要通过查询帐户多次检查。若要查询索引为0的帐户，可以使用命令`query account_state 0`。预期输出显示在[示例输出](#query-events)部分
+
+要对传输命令进行故障排除，请参阅[故障排除](#the-transfer-command)。
+
+**阻塞式转账命令**：您可以使用`transferb`命令（如下所示），而不是`transfer`命令。` transferb`只有在交易已经写入到区块链后，才会提交交易并返回到客户端提示。示例如下所示：
+
+`libra% transferb 0 1 10`
+
+有关从提交到执行和存储的整个交易生命周期的了解，请参阅[交易生命周期](life-of-a-transaction.md)。
 
 ### 转账后查询交易序列号
 
@@ -405,9 +417,11 @@ ContractEvent { access_path: AccessPath { address: 8337aac709a41fe6be03cad8878a0
 
 Note that the transaction amount is shown in microlibra.
 
-### Query Events
+### 事件查询
 
 In the following example, we will query for “sent” events from the account at reference index 0.  You will notice there is a single event since we sent one transaction from this account.  The proof of the current state is also returned so that verification can be performed that no events are missing - this is done when the query does not return “limit” events.
+
+在下面的示例中，我们将在引用索引0处查询来自帐户的“sent”事件。您会注意到有一个事件，因为我们从这个帐户发送了一个交易。还将返回当前状态的证明，以便可以执行验证，确保不缺少任何事件—当查询不返回“limit”事件时，将执行此操作。
 
 ```plaintext
 libra% query event 0 sent 0 true 10
@@ -496,6 +510,8 @@ Latest account state is:
 
 To start a validator node locally on your computer and create your own local blockchain network (not connected to the Libra testnet), ensure that you have run the build script as described in [Setup Libra Core](#setup-libra-core), change to the root directory of the Libra Core repository, and run `libra_swarm` as shown below:
 
+要在你的计算上启动一个本地验证节点并创建你自己的本地区块链网络（未连接到Libra测试网络），请确保已按照[安装Libra Core](#setup-libra-core)中的说明运行构建脚本，先进入到Libra Core代码库的根目录，然后运行`libra_swarm`，如下所示：
+
 ```bash
 $ cd ~/libra
 $ cargo run -p libra_swarm -- -s
@@ -505,25 +521,25 @@ $ cargo run -p libra_swarm -- -s
 
 `-s` option starts a local client to connect to the local blockchain.
 
-To see additional options for starting a node and connecting to the Libra Blockchain, run:
+要查看启动节点和连接Libra区块链的其他选项，请运行：
 
 `$ cargo run -p libra_swarm -- -h`
 
-The cargo run command may take some time to run. If the execution of this command completes without errors, an instance of the Libra CLI client and a Libra validator node is running on your system. Upon successful execution, you should see an output containing the CLI client menu and the `libra%` prompt.
+"cargo run"命令可能需要一些时间才能运行完。如果此命令零错误的执行完，则一个Libra命令行客户端和libra验证器节点实例将会运行在您的系统中。成功执行后，您将看到包含CLI客户端菜单和`libra%`提示符的输出。
 
 ## 交易的生命周期
 
-Once you have executed your first transaction, you may refer to the document [Life of a Transaction](life-of-a-transaction.md) for:
+一旦您执行了第一笔交易，您可以参考文档[交易的生命周期](life-of-a-transaction.md)了解：
 
-* A look "under the hood" at the lifecycle of a transaction from submission to execution.
-* An understanding of the interactions between each logical component of a Libra validator as transactions get submitted and executed in the Libra ecosystem.
+* 查看交易从提交到执行的生命周期。
+* 在Libra生态系统中提交和执行交易时，了解Libra验证器的每个逻辑组件之间的交互。
 
 ## 参考资料
 
 * [欢迎页](welcome-to-libra.md)。
-* [Libra Protocol: Key Concepts](libra-protocol.md) &mdash; Introduces you to the fundamental concepts of the Libra protocol.
-* [Getting Started With Move](move-overview.md) &mdash; Introduces you to a new blockchain programming language called Move.
-* [Life of a Transaction](life-of-a-transaction.md) &mdash; Provides a look at what happens "under the hood" when a transaction is submitted and executed.
-* [Libra Core Overview](libra-core-overview.md) &mdash; Provides the concept and implementation details of the Libra Core components through READMEs.
-* [CLI Guide](reference/libra-cli.md) &mdash; Lists the commands (and their usage) of the Libra CLI client.
-* [Libra Glossary](reference/glossary.md) &mdash; Provides a quick reference to Libra terminology.
+* [Libra协议: 核心概念](libra-protocol.md) &mdash; 介绍Libra协议的基础概念。
+* [Move入门](move-overview.md) &mdash; 向您介绍一种称为Move的新区块链编程语言。
+* [交易的生命周期](life-of-a-transaction.md) &mdash; 提供提交和执行交易时“幕后”发生的情况。
+* [Libra核心概览](libra-core-overview.md) &mdash; 通过自述文件提供Libra核心组件的概念和实现细节。
+* [命令行指导](reference/libra-cli.md) &mdash; 列出Libra命令行客户端的命令（及其用法）。
+* [Libra术语表](reference/glossary.md) &mdash; 提供Libra术语的快速参考。

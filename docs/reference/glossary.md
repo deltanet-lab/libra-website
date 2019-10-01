@@ -8,29 +8,29 @@ title: 词汇表
 
 * * *
 
-### 累加器根哈希(accumulator root hash)
+### 累加器根哈希（accumulator root hash）
 
 * 所谓**累加器根哈希**是一颗[默克尔累加器]树的根哈希(https://eprint.iacr.org/2009/625.pdf)。 
 
-### 存取路径(Access path)
+### 存取路径（Access path）
 
 * 所谓**存取路径**指定了资源或Move模块在某个账户下的位置。
 * In a state of the Libra Blockchain, 一个账户(account)表现为一组存取路径(access paths)到值(values)的映射(map)。 an account is represented as a map of access paths to values. The Move VM deserializes this representation into modules and resources.
 * Clients can use access paths to request a resource or a specific piece of data stored inside a resource.
 
-### 账户(Account)
+### 账户（Account）
 
 * An **account** in the Libra Blockchain is a container for an arbitrary number of [Move modules](#move-module) and [Move resources](#move-resources). This essentially means that the state of each account is comprised of both code and data.
 * The account is identified by an [account address](#account-address).
 
-### 账户地址(Account Address)
+### 账户地址（Account Address）
 
 * The **address** of a Libra account is a 256-bit value.
 * Users can create an address by generating a cryptographic key-pair.
 * The account address is a cryptographic hash of a user's public verification key.
 * There is no limit on the number of addresses a Libra user can create. 
 
-### 准入控制(Admission Control) (AC)
+### 准入控制（Admission Control (AC)）
 
 * In Libra Core, **admission control** is the sole external interface to the validator.  Any incoming request (transaction submission or queries) from a client goes through admission control. A client does not have the ability to access the storage, or any other component in the system, without going through AC.  This filters requests and protects the system.
 
@@ -38,7 +38,7 @@ title: 词汇表
 
 * A client will use AC for submitting transactions and performing queries (reads).
 
-### 认证钥匙(Authentication Key)
+### 认证钥匙（Authentication Key）
 
 * An **authentication key** is used to authenticate the cryptographic key used to sign a transaction. 
 * It is a piece of data stored in the user's account on the blockchain. 
@@ -48,22 +48,22 @@ title: 词汇表
 
 * * *
 
-### 区块(Block)
+### 区块（Block）
 
 * A **block** is an ordered list of one or more transactions. It is used by validators to reach consensus on the ordering and execution results of the transactions. 
 * Blocks are an internal implementation concept in the Libra Blockchain, i.e., they are not visible to the client. All transactions that are committed to the Libra ledger were part of a block at some point in time, however the blockchain is represented as a sequence of transactions.
 
-### 区块链(Blockchain)
+### 区块链（Blockchain）
 
-* A **blockchain** is a distributed public ledger.
-* The Libra Blockchain is formed with approved transactions and the execution results of those transactions.
+* 所谓**区块链**是一个分布式公开账本。
+* Libra区块链由核准的交易集合和所有交易的执行结果组成。 
 
-### 拜占庭验证者(Byzantine Validator）
+### 拜占庭验证者（Byzantine Validator）
 
 * 所谓**拜占庭验证者**是指那些不遵循共识协议并企图损害协议的正确执行。 that does not follow the specification of the consensus protocol, and wishes to compromise the correct execution of the protocol.
 * BFT算法通常支持至多三分之一的算法投票权被拜占庭验证者持有。
 
-### 拜占庭容错(Byzantine Fault Tolerance) (BFT)
+### 拜占庭容错（Byzantine Fault Tolerance (BFT)）
 
 * **Byzantine Fault Tolerance** (BFT) is the ability of a distributed system to provide safety and liveness guarantees in the presence of faulty, or “[Byzantine](#byzantine-validator),”  members below a certain threshold. 
 * The Libra Blockchain uses LibraBFT, a consensus protocol based on [HotStuff.](#hotstuff)
@@ -76,7 +76,7 @@ title: 词汇表
 
 * * *
 
-### 客户端(Client)
+### 客户端（Client）
 
 A **client** is a piece of software that has the capability to interact with the Libra Blockchain.
 
@@ -84,20 +84,20 @@ A **client** is a piece of software that has the capability to interact with the
 * It can issue queries to the Libra Blockchain and request the status of a transaction or account.
 * A client can be run by the end-user or on behalf of the end user (for example, for a custodial wallet). 
 
-### 共识(Consensus)
+### 共识（Consensus）
 
 * **共识**是验证器节点的一个组件。
 * 共识组件负责协商所有验证器节点The consensus component is responsible for coordination and agreement amongst all validators on the block of transactions to be executed, their order, and the execution results.
 * The Libra Blockchain is formed with these agreed-upon transactions and their corresponding execution results.
 
-### 共识协议(Consensus Protocol)
+### 共识协议（Consensus Protocol）
 
 * A **consensus protocol** is collectively executed by n validator nodes to accept or reject a transaction and to agree on the ordering of transactions and [execution results](#execution-result).
 * See [BFT](#byzantine-fault-tolerance-bft)
 
-### Custodial Wallet
+### 托管钱包（Custodial Wallet）
 
-* In a **custodial wallet** model, the  wallet product takes custody of customers' funds and private keys. 
+* 在**托管钱包**模型中，钱包产品负责保管客户的资金和私钥。
 
 ## D
 
@@ -117,10 +117,13 @@ A **client** is a piece of software that has the capability to interact with the
 * **Ed25519**是我们支持的数字签名方案。
 * More specifically, Libra uses the PureEdDSA scheme over the Ed25519 curve, as defined in RFC 8032.
 
-### 世代（Epoch）
+### 纪元（Epoch）
 
 * An **epoch** is a period of time during which an instance of the consensus protocol runs with a fixed set of validators and voting rights.
 * To change the set of validators and/or their voting rights, the current epoch ends with the commit of a special/administrative smart contract transaction and a new one is started.
+
+* **纪元**是一段时间，在此期间，共识协议的实例使用一组固定的验证器和投票权运行。
+* 要更改验证器和/或其投票权，当前纪元以提交一个特殊/管理智能合约交易作为结束，并启动新的纪元。
 
 ### 事件（Event）
 
@@ -128,6 +131,12 @@ A **client** is a piece of software that has the capability to interact with the
 * A transaction may be designed to emit any number of events as a list. For example, a peer-to-peer payment transaction emits a `SentPaymentEvent` for the sender account and a `ReceivedPaymentEvent` for the recipient account. 
 * In the Libra protocol, events provide evidence that the successful execution of a transaction resulted in a specific effect. The `ReceivedPaymentEvent` (in the above example) allows the recipient to confirm that a payment was received into their account. 
 * Events are persisted on the blockchain and are used to answer queries by [clients](#client).  
+
+
+* 所谓**事件**是执行交易的效果的面向用户的表示。
+* 一个交易可以设计为以列表的形式发出任意数量的事件。例如，在点对点支付交易中为发件人帐户发出`SentPaymentEvent`，为收件人帐户发出`ReceivedPaymentEvent`。
+* 在libra协议中，事件提供了成功执行交易导致特定效果的证据。`ReceivedPaymentEvent`（在上面的示例中）允许收件人确认他们的帐户中收到了付款。
+* 事件在区块链上持久化，用于回答[客户端](#client)的查询。
 
 ### 执行结果（Execution Result）
 
@@ -236,12 +245,15 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 ### Libra协议
 
-* **Libra protocol** is the specification of how transactions are submitted, ordered, executed, and recorded within the Libra ecosystem.
+* **Libra协议**是关于Libra生态系统中如何提交、排序、执行和记录交易的规范。
 
-### Libra保证金
+### Libra储备
 
 * **Libra reserve** is the total monetary holdings that back Libra.
 * To be a validator node for the Libra Association, it is a requirement to invest in the reserve.
+
+* **Libra储备**是支持Libra的总货币持有量的保证金。
+* 要成为Libra协会的验证节点，需要投资于储备。
 
 ### LibraAccount.T
 
@@ -332,7 +344,7 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * * *
 
-### Open Source Community
+### 开源社区（Open Source Community）
 
 * **Open source community** is a term used for a group of developers who work on open-source software. If you're reading this glossary, then you're part of the Libra developer community.
 
@@ -340,14 +352,14 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * * *
 
-### Permissioned vs. Permissionless 
+### 许可与非许可（Permissioned vs. Permissionless）
 
 * Permissioned and permissionless are attributes of the way by which nodes join the set of validators in a blockchain.
 * If only the nodes chosen by a single entity or organization are allowed to join the committee, it's a **permissioned** system.
 * If any node can join the committee, it's a **permissionless** system.
 * Libra starts as a permissioned system and will transition to permissionless.
 
-### Proof
+### 证据（Proof）
 
 * A **proof** is a way to verify the accuracy of data in the blockchain. 
 * Every operation in the Libra Blockchain can be verified cryptographically that it is indeed correct and that data has not been omitted.
@@ -382,30 +394,30 @@ then there is a guarantee that T_N will never be included in the blockchain.
 * *Alternate name*: Sender address.
 * **Sender** is the address of the originator account for a transaction. A transaction must be signed by the originator.
 
-### Smart Contract
+### 智能合约（Smart Contract）
 
-* See [Move Module](#move-module).
+* 请查看[Move模块](#move-module).
 
-### State
+### 状态（State）
 
 * A **state** in the Libra protocol is a snapshot of the distributed database. 
 * A transaction modifies the database and produces a new and updated state.
 
-### State Root Hash
+### 状态根哈希（State Root Hash）
 
 * **State root hash** is a [Merkle hash](https://en.wikipedia.org/wiki/Merkle_tree) over all keys and values the state of the Libra Blockchain at a given version.
 
 ## T
 
 * * *
-### testnet
+### 测试网络（testnet）
 
 * The **testnet** is a live demonstration of an early prototype of the Libra Blockchain software, also known as **Libra Core**. 
 * The Libra testnet is comprised of test [validator nodes](#validator-node) running [Libra Core](#libra-core), the software which maintains the Libra cryptocurrency. 
 * The testnet is built for experimenting with new ideas without disturbing or breaking the main cryptocurrency software. 
 * testnet is the predecessor to the Libra [mainnet](#mainnet), but testnet has a digital currency _with no real world value_.
 
-### Transaction
+### 交易（Transaction）
 
 * A raw **transaction** contains the following fields:
     * [Sender (account address)](#account-address)
@@ -432,12 +444,12 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 ### 验证节点（Validator Node）
 
-* *别名*: 验证者。
+* *别名*: 验证者，验证器。
 * A **validator** is an entity of the Libra ecosystem that validates the Libra Blockchain. 从客户端接收请求并运行共识，执行，存储。
 * A validator maintains the history of all the transactions on the blockchain.
 * Internally, a validator node needs to keep the current state, to execute transactions and to calculate the next state. 
 
-### 版本(Version)
+### 版本（Version）
 
 * 所谓**版本**在区块链文化中也被称为“高度”。
 * The Libra Blockchain doesn't have an explicit notion of a block &mdash; it only uses blocks for batching and executing transactions.  
