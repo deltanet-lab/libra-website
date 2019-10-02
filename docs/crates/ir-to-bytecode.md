@@ -9,7 +9,7 @@ custom_edit_url: https://github.com/libra/libra/edit/master/language/compiler/RE
 
 The Move IR compiler compiles the Move IR down to its bytecode representation. 
 
-## Overview
+## 概览
 
 The Move IR compiler compiles modules and scripts written in Move down to
 their respective bytecode representations. The two data types used to

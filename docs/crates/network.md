@@ -8,7 +8,7 @@ custom_edit_url: https://github.com/libra/libra/edit/master/network/README.md
 The network component provides peer-to-peer communication primitives to other
 components of a validator.
 
-## Overview
+## 概览
 
 The network component is specifically designed to facilitate the consensus and
 shared mempool protocols. Currently, it provides these consumers with two
@@ -102,7 +102,7 @@ In addition to the subcomponents described above, the network component
 consists of utilities to perform encryption, transport multiplexing, protocol
 negotiation, etc.
 
-## How is this module organized?
+## 模块的代码组织
 
     network
     ├── benches                       # network benchmarks

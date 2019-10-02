@@ -5,7 +5,7 @@ custom_edit_url: https://github.com/libra/libra/edit/master/language/bytecode_ve
 ---
 
 
-## Overview
+## 概览
 
 The bytecode verifier contains a static analysis tool for rejecting invalid Move bytecode. It checks the safety of stack usage, types, resources, and references.
 

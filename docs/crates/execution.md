@@ -5,7 +5,7 @@ custom_edit_url: https://github.com/libra/libra/edit/master/execution/README.md
 ---
 
 
-## Overview
+## 概览
 
 The Libra Blockchain is a replicated state machine. Each validator is a replica
 of the system. Starting from genesis state S<sub>0</sub>, each transaction

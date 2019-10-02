@@ -335,7 +335,7 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * * *
 
-### Node
+### 节点（Node）
 
 * A **node** is a peer entity of the Libra ecosystem that tracks the state of the Libra Blockchain.
 * A Libra node comprises of logical components. [Mempool](#mempool), [consensus](#consensus), and [virtual machine](#virtual-machine) are examples of node components. 
@@ -381,7 +381,7 @@ then there is a guarantee that T_N will never be included in the blockchain.
 
 * * *
 
-### Sequence Number
+### 序列号（Sequence Number）
 
 * The **sequence number** for an account indicates the number of transactions that have been sent from that account. It is incremented every time a transaction sent from that account is executed and stored in the blockchain.
 * A transaction is executed only if it matches the current sequence number for the sender account. This helps sequence multiple transactions from the same sender and prevents replay attacks.

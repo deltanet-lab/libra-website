@@ -363,7 +363,7 @@ If your client did not connect to the testnet:
 
   `libra% query account_state 0`
 
-### The Transfer Command
+### Transfer命令
 
 If the testnet validator node (your client was connected to) is unavailable or your connection to the testnet has timed-out, you will see this error:
 
@@ -508,9 +508,7 @@ Latest account state is:
 
 ## 运行本地验证者节点
 
-To start a validator node locally on your computer and create your own local blockchain network (not connected to the Libra testnet), ensure that you have run the build script as described in [Setup Libra Core](#setup-libra-core), change to the root directory of the Libra Core repository, and run `libra_swarm` as shown below:
-
-要在你的计算上启动一个本地验证节点并创建你自己的本地区块链网络（未连接到Libra测试网络），请确保已按照[安装Libra Core](#setup-libra-core)中的说明运行构建脚本，先进入到Libra Core代码库的根目录，然后运行`libra_swarm`，如下所示：
+要在你的计算上启动一个本地验证节点并创建你自己的本地区块链网络（未连接到Libra的测试网络），请确保已按照[安装Libra Core](#setup-libra-core)中的说明运行构建脚本，先进入到Libra Core代码库的根目录，然后运行`libra_swarm`，如下所示：
 
 ```bash
 $ cd ~/libra

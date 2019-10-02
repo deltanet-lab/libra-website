@@ -6,7 +6,7 @@ custom_edit_url: https://github.com/libra/libra/edit/master/mempool/README.md
 
 Mempool is a memory-buffer that holds the transactions that are waiting to be executed.
 
-## Overview
+## 概览
 
 Admission control (AC) module sends transactions to mempool. Mempool holds the transactions for a period of time, before consensus commits them. When a new transaction is added, mempool shares this transaction with other validators (validator nodes) in the system. Mempool is a “shared mempool,” as transactions between mempools are shared with other validators. This helps maintain a pseudo-global ordering.
 

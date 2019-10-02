@@ -7,7 +7,7 @@ custom_edit_url: https://github.com/libra/libra/edit/master/language/README.md
 
 Move is a new programming language developed to provide a safe and programmable foundation for the Libra Blockchain.
 
-## Overview
+## 概览
 
 The Move language directory consists of five parts:
 

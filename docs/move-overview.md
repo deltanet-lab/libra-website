@@ -120,6 +120,8 @@ main(payee: address, amount: u64) {
 
 This transaction script has an unfortunate problem &mdash; it will fail if there is no account under the address `payee`. We will fix this problem by modifying the script to create an account for the `payee` if one does not already exist.
 
+此事务脚本有一个不幸的问题 &mdash; 如果地址`payee`下没有帐户，它将失败。我们将通过修改脚本来解决这个问题，以创建一个`payee`的帐户，如果其还不存在。
+
 ```move
 // A small variant of the peer-peer payment example that creates a fresh
 // account if one does not already exist.
@@ -148,7 +150,7 @@ main(payee: address, amount: u64) {
 }
 ```
 
-Let us look at a more complex example. In this example, we will use a transaction script to pay multiple recipients instead of just one.
+让我们看一个更复杂的例子。在本例中，我们将使用事务脚本向多个收件人付款，而不是仅向一个收件人付款。
 
 ```move
 // Multiple payee example. This is written in a slightly verbose way to
@@ -176,6 +178,8 @@ main(payee1: address, amount1: u64, payee2: address, amount2: u64) {
 ```
 
 This concludes our "tour" of transaction scripts. For more examples, including the transaction scripts supported in the initial testnet, refer to `libra/language/stdlib/transaction_scripts`.
+
+我们的事务脚本之旅到此结束。对于更多的示例，包括在初始测试网络中支持的事务脚本，请查看`libra/language/stdlib/transaction_scripts`。
 
 ### 编写模块
 

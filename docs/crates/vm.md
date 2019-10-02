@@ -10,7 +10,7 @@ two main crates: the core VM and the VM runtime. The VM core contains the low-le
 data type for the VM - mostly the file format and abstraction over it. A gas
 metering logical abstraction is also defined there.
 
-## Overview
+## 概览
 
 The MoveVM is a stack machine with a static type system. The MoveVM honors
 the specification of the Move language through a mix of file format,
