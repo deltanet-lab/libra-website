@@ -33,7 +33,7 @@ Libra Core components interact with the language component through the VM. Speci
 * The most complete documentation of the Move IR syntax is the [grammar](compiler/ir_to_bytecode/src/parser.rs). You can also take a look at the [parser for the Move IR](compiler/ir_to_bytecode/syntax/src/syntax.lalrpop).
 * Refer to the [IR compiler README](compiler/README.md) for more details on writing Move IR code.
 
-## How is this folder organized?
+## 代码目录结构
 
 ```
 ├── README.md          # This README

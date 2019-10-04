@@ -44,7 +44,7 @@ simple abstraction over the file format. Additionally, a set of
 [*Views*](https://github.com/libra/libra/blob/master/language/vm/src/views.rs) are defined to easily navigate and inspect
 `CompiledModule`s and `CompiledScript`s.
 
-## Folder Structure
+## 代码目录结构
 
 ```
 .

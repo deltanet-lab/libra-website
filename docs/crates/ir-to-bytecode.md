@@ -5,7 +5,7 @@ custom_edit_url: https://github.com/libra/libra/edit/master/language/compiler/RE
 ---
 
 
-## Summary
+## 总结
 
 The Move IR compiler compiles the Move IR down to its bytecode representation. 
 
@@ -27,7 +27,7 @@ invalid---bytecode programs. The semantics of the compiled bytecode is
 then verified by the [bytecode verifier](https://github.com/libra/libra/blob/master/language/bytecode_verifier/README.md). The compiler command line
 automatically calls the bytecode verifier at the end of compilation.
 
-## Command-line options
+## 命令行参数
 
 ```text
 USAGE:
@@ -47,7 +47,7 @@ ARGS:
     <source_path>    Path to the Move IR source to compile
 ```
 
-### Example Usage
+### 使用示例
 
 > cargo build --bin compiler
 
@@ -61,7 +61,7 @@ To compile and verify `foo.mvir`, which contains a Move IR module:
 To compile and verify `bar.mvir`, which contains a transaction script:
 > `compiler -s bar.mvir`
 
-## Folder Structure
+## 代码目录结构
 
 ```text
 compiler                        # Main compiler crate. This depends on stdlib.

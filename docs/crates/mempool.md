@@ -25,7 +25,7 @@ Mempool doesn't keep track of transactions sent to consensus. On each get_block 
 
 When a transaction is fully executed and written to storage, consensus notifies mempool. Mempool then drops this transaction from its internal state.
 
-## Implementation Details
+## 实现细节
 
 Internally, mempool is modeled as `HashMap<AccountAddress, AccountTransactions>` with various indexes built on top of it.
 
@@ -39,7 +39,7 @@ Mempool only holds a limited number of transactions to avoid overwhelming the sy
 
 SystemTTL is checked periodically in the background, while the expiration specified by the client is checked on every Consensus commit request. We use a separate system TTL to ensure that a transaction doesn’t remain stuck in the Mempool forever, even if Consensus doesn't make progress.
 
-## How is this module organized?
+## 模块代码组织
 ```
     mempool/src
     ├── core_mempool             # main in memory data structure
