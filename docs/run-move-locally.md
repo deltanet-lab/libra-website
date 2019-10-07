@@ -143,7 +143,7 @@ Upon successful execution of the `dev publish` command, the bytecode for `MyModu
 
 <blockquote class="block_note">
 
-**Note**: You'll find samples of transaction scripts in the [libra/language/stdlib/transaction_scripts](https://github.com/libra/libra/tree/master/language/stdlib/transaction_scripts) directory.
+**Note**: You'll find samples of transaction scripts in the [libra/language/stdlib/transaction_scripts](https://github.com/deltanet-lab/libra-website-cn/tree/master/language/stdlib/transaction_scripts) directory.
 </blockquote>
 
 Now let’s write the following script to use `MyModule` and save it as `custom_script.mvir`:
@@ -220,7 +220,7 @@ If you see the following error, refer to the usage of the [dev compile](referenc
 ```
 Invalid number of arguments for compilation
 ```
-For syntax related compilation errors, refer to [Move IR syntax](https://github.com/libra/libra/blob/master/language/compiler/ir_to_bytecode/syntax/src/lib.rs).
+For syntax related compilation errors, refer to [Move IR syntax](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/compiler/ir_to_bytecode/syntax/src/lib.rs).
 
 ### Publish Compiled Module
 

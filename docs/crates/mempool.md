@@ -1,7 +1,7 @@
 ---
 id: mempool
 title: 内存池
-custom_edit_url: https://github.com/libra/libra/edit/master/mempool/README.md
+custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/mempool/README.md
 ---
 
 内存池是一个内存缓冲区，用于保存等待执行的事务。

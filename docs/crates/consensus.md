@@ -1,7 +1,7 @@
 ---
 id: consensus
 title: 共识
-custom_edit_url: https://github.com/libra/libra/edit/master/consensus/README.md
+custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/consensus/README.md
 ---
 
 

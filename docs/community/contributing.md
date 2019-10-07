@@ -48,7 +48,7 @@ $ cargo test
 
 ## 贡献者许可协议
 
-为了使任何Libra项目都能接受您的（代码）合并请求，您需要签署CLA。 您只需执行一次即可在任何Libra开源项目上工作。 代表自己作出贡献的个人可以签署[个人CLA](https://github.com/libra/libra/blob/master/contributing/individual-cla.pdf)。 如果您代表雇主供款，请要求他们签署[公司CLA](https://github.com/libra/libra/blob/master/contributing/corporate-cla.pdf)。
+为了使任何Libra项目都能接受您的（代码）合并请求，您需要签署CLA。 您只需执行一次即可在任何Libra开源项目上工作。 代表自己作出贡献的个人可以签署[个人CLA](https://github.com/deltanet-lab/libra-website-cn/blob/master/contributing/individual-cla.pdf)。 如果您代表雇主供款，请要求他们签署[公司CLA](https://github.com/deltanet-lab/libra-website-cn/master/contributing/corporate-cla.pdf)。
 
 ## 行为准则
 

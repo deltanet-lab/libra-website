@@ -1,7 +1,7 @@
 ---
 id: ir-to-bytecode
 title: Move的IR编译器
-custom_edit_url: https://github.com/libra/libra/edit/master/language/compiler/README.md
+custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/language/compiler/README.md
 ---
 
 
@@ -14,9 +14,9 @@ Move IR编译器将Movie IR编译为字节码表示形式。
 The Move IR compiler compiles modules and scripts written in Move down to
 their respective bytecode representations. The two data types used to
 represent these outputs are `CompiledModule` and `CompiledScript`. These
-data types are defined in [file_format.rs](https://github.com/libra/libra/blob/master/language/vm/src/file_format.rs).
+data types are defined in [file_format.rs](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/vm/src/file_format.rs).
 
-Move IR编译器把使用Move编写的模块和脚本编译为它们各自的字节码表示形式。`CompiledModule`和`CompiledScript`这两种数据类型分别对应于这两者的输出。这些数据类型在源码[file_format.rs](https://github.com/libra/libra/blob/master/language/vm/src/file_format.rs)中定义。
+Move IR编译器把使用Move编写的模块和脚本编译为它们各自的字节码表示形式。`CompiledModule`和`CompiledScript`这两种数据类型分别对应于这两者的输出。这些数据类型在源码[file_format.rs](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/vm/src/file_format.rs)中定义。
 
 Beyond translating Move IR to Move bytecode, the compiler's purpose is as a
 testing tool for the bytecode verifier. Because of this, its job is to
@@ -26,7 +26,7 @@ performed during the compilation process. In fact, the compiler goes out of
 its way to push these semantic checks into the bytecode, and compile
 semantically invalid code in the Move IR to equivalent---semantically
 invalid---bytecode programs. The semantics of the compiled bytecode is
-then verified by the [bytecode verifier](https://github.com/libra/libra/blob/master/language/bytecode_verifier/README.md). The compiler command line
+then verified by the [bytecode verifier](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/bytecode_verifier/README.md). The compiler command line
 automatically calls the bytecode verifier at the end of compilation.
 
 除了将Move IR转换为Move字节码外，编译器的目的还在于
@@ -37,7 +37,7 @@ automatically calls the bytecode verifier at the end of compilation.
 将这些语义检查推入字节码并进行编译的方法
 将IR移至等效语言中的语义无效代码
 无效的字节码程序。编译后的字节码的语义是
-然后由[字节码验证程序](https://github.com/libra/libra/blob/master/language/bytecode_verifier/README.md)进行验证。编译器命令行在编译结束时自动调用字节码验证程序。
+然后由[字节码验证程序](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/bytecode_verifier/README.md)进行验证。编译器命令行在编译结束时自动调用字节码验证程序。
 
 ## 命令行参数
 

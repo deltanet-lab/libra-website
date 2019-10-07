@@ -1,7 +1,7 @@
 ---
 id: vm
 title: 虚拟机
-custom_edit_url: https://github.com/libra/libra/edit/master/language/vm/README.md
+custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/language/vm/README.md
 ---
 
 
@@ -17,7 +17,7 @@ VM的数据类型 - 主要是文件格式和对其的抽象。燃料的计量逻
 
 The MoveVM is a stack machine with a static type system. The MoveVM honors
 the specification of the Move language through a mix of file format,
-verification (for reference [bytcode verifier README](https://github.com/libra/libra/blob/master/language/bytecode_verifier/README.md))
+verification (for reference [bytcode verifier README](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/bytecode_verifier/README.md))
 and runtime constraints. The structure of the file format allows the
 definition of modules, types (resources and unrestricted types), and
 functions. Code is expressed via bytecode instructions, which may have
@@ -27,7 +27,7 @@ From the file format definition it should be clear that modules define a
 scope/namespace for functions and types. Types are opaque given all fields
 are private, and types carry no functions or methods.
 
-MoveVM是具有静态类型系统的堆栈计算机。 MoveVM通过混合使用文件格式、验证器和运行时约束来实现Move语言的规范（供参考[bytcode验证程序README](https://github.com/libra/libra/blob/master/language/bytecode_verifier/README.md)）。 文件格式的结构允许定义模块，类型（资源和非受限类型）和函数。代码通过字节码指令表示，该指令可能引用了外部函数和类型。 文件格式还强加了语言的某些不变性，例如不透明类型和私有字段。
+MoveVM是具有静态类型系统的堆栈计算机。 MoveVM通过混合使用文件格式、验证器和运行时约束来实现Move语言的规范（供参考[bytcode验证程序README](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/bytecode_verifier/README.md)）。 文件格式的结构允许定义模块，类型（资源和非受限类型）和函数。代码通过字节码指令表示，该指令可能引用了外部函数和类型。 文件格式还强加了语言的某些不变性，例如不透明类型和私有字段。
 根据文件格式定义，应该清楚模块定义了
 函数和类型的范围/命名空间。 如果所有字段均为私有，则类型是不透明的，并且类型不包含任何函数或方法。
 
@@ -48,7 +48,7 @@ The `CompiledModule` and `CompiledScript` definitions in
 `libra/language/vm/src/file_format.rs` are the top-level structs for a Move
 *Module* or *Transaction Script*, respectively. These structs provide a
 simple abstraction over the file format. Additionally, a set of
-[*Views*](https://github.com/libra/libra/blob/master/language/vm/src/views.rs) are defined to easily navigate and inspect
+[*Views*](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/vm/src/views.rs) are defined to easily navigate and inspect
 `CompiledModule`s and `CompiledScript`s.
 
 
@@ -62,7 +62,7 @@ MoveVM核心库提供了文件格式的定义以及所有与文件格式有关�
 在`libra/language/vm/src/file_format.rs`中定义的`CompiledModule`和`CompiledScript`
 是Move的顶层结构
 分别是*Module*或*Transaction Script*。 这些结构提供了对文件格式的简单抽象。 另外，一组
-[*Views*](https://github.com/libra/libra/blob/master/language/vm/src/views.rs)的定义可以轻松导航和检查`CompiledModule`s和`CompiledScript`s。
+[*Views*](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/vm/src/views.rs)的定义可以轻松导航和检查`CompiledModule`s和`CompiledScript`s。
 
 ## 代码目录结构（Folder Structure）
 

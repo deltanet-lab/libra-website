@@ -1,7 +1,7 @@
 ---
 id: execution
 title: 执行
-custom_edit_url: https://github.com/libra/libra/edit/master/execution/README.md
+custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/execution/README.md
 ---
 
 
@@ -12,6 +12,8 @@ of the system. Starting from genesis state S<sub>0</sub>, each transaction
 T<sub>i</sub> updates previous state S<sub>i-1</sub> to S<sub>i</sub>. Each
 S<sub>i</sub> is a mapping from accounts (represented by 32-byte addresses) to
 some data associated with each account.
+
+Libra区块链是一个复制状态机。每个验证器都是系统的一个副本。从初始状态S<sub>0</sub>开始，每个事务T<sub>i</sub>将先前的状态S<sub>i-1</sub>更新为S<sub>i</sub>。每个S<sub>i</sub>是从帐户（32字节的地址）到与每个帐户相关联的某些数据的映射。
 
 The execution component takes the ordered transactions, computes the output
 for each transaction via the Move virtual machine, applies the output on the
@@ -24,13 +26,8 @@ transaction is identified by its position within the ledger, which is also
 referred to as its "version". Each consensus participant builds a tree of blocks
 like the following:
 
-Libra区块链是一个复制状态机。每个验证器都是系统的一个副本。从初始状态S<sub>0</sub>开始，每个交易T<sub>i</sub>将上一个状态S<sub>i-1</sub>更新为S<sub>i</sub>。状态S<sub>i</sub>是从帐户（由32字节构成的地址）与每个帐户相关联的一些数据的映射。
+执行组件获取有序的事务，通过Move虚拟机计算每个事务的输出，将输出应用于先前状态，并生成新状态。执行系统与共识算法HotStuff（基于领导者的算法）配合使用，以帮助它就提议的一组交易及其执行达成共识。这样的一组交易是一个区块。与其他区块链系统不同，区块除了作为一批交易之外没有其他意义 - 每个交易都由其在账本中的位置标识，这也称为其“版本”。每个共识参与者都构建如下的块树：
 
-执行组件获取有序的事务，通过Move虚拟机计算每个事务的输出，将输出应用于上一个状态，并生成新状态。执行组件与共识组件合作
-使用consensum algorithm&amp;mdash；hotstuff，一种基于领导者的算法 -
-一组提议的事务及其执行达成一致。这样的事务组是一个块。与其他区块链系统不同，区块只不过是一批交易
-交易由其在分类账中的位置确定，分类账中的位置
-称为“版本”。每个共识参与者构建一个区块树，如下所示：
 ```
                    ┌-- C
           ┌-- B <--┤
@@ -78,6 +75,22 @@ and `commit_block` - to support the above operations.
 决定提交一个块及其所有祖先规则。然后我们将所有这些块保存到永久存储器中，并丢弃同时所有的冲突块。
 因此，execution组件提供了两个主要api - `execute_block`和`commit_block` - 以支持上述操作。
 
+
+区块是应按给定顺序应用一次的交易列表该块已提交。从最后一个提交的块到未提交的块形成有效链。无论提交规则是什么共识算法，此树上有两种可能的操作：
+
+1.使用给定的父级将块添加到树中，并扩展特定的
+   链（例如，将块“ F”扩展为块“ G”）。当我们扩展一个
+   与一个新块链接，该块应包含正确的执行
+   区块中交易的结果，就好像它的所有祖先
+   以相同的顺序提交。但是，所有未提交的块及其
+   执行结果保存在某个临时位置，并且看不到
+   外部客户。
+2.提交一个块。随着共识在区块上收集越来越多的选票，
+   决定根据某些具体情况提交一个区块及其所有祖先
+   规则。然后我们将所有这些块保存到永久存储中并丢弃
+   所有冲突的区块同时出现。
+
+因此，执行组件提供了两个主要的API - `execute_block`和`commit_block` - 支持上述操作。
 
 ## 实现细节（Implementation Details）
 
