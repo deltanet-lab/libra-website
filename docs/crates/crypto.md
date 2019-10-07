@@ -32,7 +32,7 @@ Libra使用了如下几种密码学算法：
 * SLIP-0010根据[SLIP-0010](https://github.com/satoshilabs/slips/blob/master/slip-0010.md)实现ED25519的通用分层密钥派生。
 * 用于执行密钥交换的X25519：它通过[Noise协议框架](http://www.noiseprotocol.org/noise.html)保护验证器之间的通信。它基于x25519-dalek库进行开发。
 
-## 模块的代码组织
+## 模块的代码组织（How is this module organized?）
 ```
     crypto/src
     ├── hash.rs             # Hash function (SHA-3)

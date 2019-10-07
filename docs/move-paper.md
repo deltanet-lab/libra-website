@@ -1,6 +1,6 @@
 ---
 id: move-paper
-title: Move: 一种具有可编程资源的计算机编程语言
+title: Move: 一种资源可编程的编程语言
 ---
 
 <!-- hide the table of contents --><style>.toc-headings {display: none !important; visibility: hidden !important;}</style>

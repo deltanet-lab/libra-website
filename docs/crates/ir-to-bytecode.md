@@ -1,13 +1,13 @@
 ---
 id: ir-to-bytecode
-title: Move中间表示编译器
+title: Move的IR编译器
 custom_edit_url: https://github.com/libra/libra/edit/master/language/compiler/README.md
 ---
 
 
 ## 总结
 
-The Move IR compiler compiles the Move IR down to its bytecode representation. 
+Move IR编译器将Movie IR编译为字节码表示形式。
 
 ## 概览
 
@@ -15,6 +15,8 @@ The Move IR compiler compiles modules and scripts written in Move down to
 their respective bytecode representations. The two data types used to
 represent these outputs are `CompiledModule` and `CompiledScript`. These
 data types are defined in [file_format.rs](https://github.com/libra/libra/blob/master/language/vm/src/file_format.rs).
+
+Move IR编译器把使用Move编写的模块和脚本编译为它们各自的字节码表示形式。`CompiledModule`和`CompiledScript`这两种数据类型分别对应于这两者的输出。这些数据类型在源码[file_format.rs](https://github.com/libra/libra/blob/master/language/vm/src/file_format.rs)中定义。
 
 Beyond translating Move IR to Move bytecode, the compiler's purpose is as a
 testing tool for the bytecode verifier. Because of this, its job is to
@@ -26,6 +28,16 @@ semantically invalid code in the Move IR to equivalent---semantically
 invalid---bytecode programs. The semantics of the compiled bytecode is
 then verified by the [bytecode verifier](https://github.com/libra/libra/blob/master/language/bytecode_verifier/README.md). The compiler command line
 automatically calls the bytecode verifier at the end of compilation.
+
+除了将Move IR转换为Move字节码外，编译器的目的还在于
+字节码验证程序的测试工具。因此，它的工作是
+输出字节码程序，它们应尽可能与
+输入IR;优化和高级语义检查不是
+在编译过程中执行。实际上，编译器会淘汰
+将这些语义检查推入字节码并进行编译的方法
+将IR移至等效语言中的语义无效代码
+无效的字节码程序。编译后的字节码的语义是
+然后由[字节码验证程序](https://github.com/libra/libra/blob/master/language/bytecode_verifier/README.md)进行验证。编译器命令行在编译结束时自动调用字节码验证程序。
 
 ## 命令行参数
 
@@ -51,14 +63,14 @@ ARGS:
 
 > cargo build --bin compiler
 
-* This will build the compiler + verifier binary.
-* The binary can be found at `libra/target/debug/compiler`.
-* Alternatively, the binary can be run directly with `cargo run -p compiler`.
+* 这将构建编译器+验证程序的二进制文件；
+* 二进制文件可以在目录`libra/target/debug/compiler`中找到；
+* 或者，可以直接执行命令`cargo run -p compiler`。
 
-To compile and verify `foo.mvir`, which contains a Move IR module:
+要编译并验证`foo.mvir`， 其包含一个Move IR模块，请执行如下命令：
 > `compiler foo.mvir`
 
-To compile and verify `bar.mvir`, which contains a transaction script:
+要编译并验证`bar.mvir`， 其包含一个交易脚本，请执行如下命令：
 > `compiler -s bar.mvir`
 
 ## 代码目录结构

@@ -174,7 +174,7 @@ ReleaseRef(ref) {
 
 A subtle point not explicated by the rules above is that `BorrowField` and `FreezeRef`, when applied to a global reference, leave the reference count unchanged. This is because these instructions consume the reference at the top of the stack while producing an extension of it at the top of the stack. Similarly, since `ReadRef`, `WriteRef`, `Eq`, and `Neq` consume the reference at the top of the stack, they will reduce the reference count by 1.
 
-## 模块的代码组织?
+## 模块的代码组织（How is this module organized?）
 
 ```text
 *

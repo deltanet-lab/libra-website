@@ -3,7 +3,7 @@ id: my-first-transaction
 title: 我的第一笔交易
 ---
 
-本文档将指导您完成在Libra区块链上的第一笔交易。 在执行执行第一笔交易的步骤之前，建议您阅读以下文档，以熟悉Libra生态系统和Libra协议的关键方面：
+本文档将指导您完成在Libra区块链上的第一笔交易。 在执行执行第一笔交易的步骤之前，建议您阅读以下文档，以熟悉Libra生态系统和Libra协议的关键概念：
 
 * [欢迎页](welcome-to-libra.md)
 * [Libra协议: 关键概念](libra-protocol.md)
@@ -32,15 +32,21 @@ title: 我的第一笔交易
 4. [铸造代币并添加到Alice和Bob的帐户中](#add-libra-coins-to-alice-s-and-bob-s-accounts)。
 5. [提交一个交易](#submit-a-transaction)。
 
-## 克隆并构建Libra Core
+## 克隆并构建Libra Core（Clone and Build Libra Core）
 
-### 克隆Libra Core代码库
+### 克隆Libra Core代码库（Clone the Libra Core Repository）
 
 ```bash
 git clone https://github.com/libra/libra.git
 ```
 
-### 安装Libra Core
+### 获取testnet分支的代码（Checkout the testnet Branch）
+
+```bash
+git checkout testnet
+```
+
+### 安装相关依赖（Install Dependencies）
 
 要安装Libra Core，请转至`libra`目录并运行安装脚本以安装依赖项，如下所示：
 
@@ -48,7 +54,7 @@ git clone https://github.com/libra/libra.git
 cd libra
 ./scripts/dev_setup.sh
 ```
-The setup script performs these actions:
+安装脚本执行以下操作：
 
 * 安装 rustup &mdash; rustup是Rust编程语言的安装程序，Libra Core使用该语言实现。
 * 安装指定版本的rust-toolchain.
@@ -135,7 +141,7 @@ mint | mintb | m | mb <receiver account> <number of coins>
 
 `libra% account create`
 
-Sample output on success:
+成功样例输出：
 
 ```plaintext
 >> Creating/retrieving next account from wallet
@@ -150,7 +156,7 @@ Created/retrieved account #0 address 3ed8e5fafae4147b2a105a0be2f81972883441cfaaa
 
 `libra% account create`
 
-Sample output on success:
+成功样例输出：
 
 ```plaintext
 >> Creating/retrieving next account from wallet
@@ -166,7 +172,7 @@ Created/retrieved account #1 address 8337aac709a41fe6be03cad8878a0d4209740b1608f
 
 `libra% account list`
 
-Sample output on success:
+成功样例输出：
 ```plaintext
 User account index: 0, address: 3ed8e5fafae4147b2a105a0be2f81972883441cfaaadf93fc0868e7a0253c4a8, sequence number: 0
 User account index: 1, address: 8337aac709a41fe6be03cad8878a0d4209740b1608f8a81566c9a7d4b95a2ec7, sequence number: 0
@@ -252,7 +258,7 @@ libra% query sequence 1
 Sequence number is: 0
 ```
 
-In `query sequence 0`, 0 is the index of Alice’s account. A sequence number of 0 for both Alice’s and Bob’s accounts indicates that no transactions from either Alice’s or Bob’s account has been executed so far.
+在`query sequence 0`命令中，0是Alice的帐户索引。Alice和Bob帐户的交易序列号均为0，表示到目前为止，Alice或Bob帐户均未执行任何交易。
 
 ### 现金转账
 
@@ -260,9 +266,9 @@ In `query sequence 0`, 0 is the index of Alice’s account. A sequence number of
 
 `libra% transfer 0 1 10`
 
-* 0 is the index of Alice’s account.
-* 1 is the index of Bob’s account.
-* 10 is the number of Libra to transfer from Alice’s account to Bob’s account.
+* 0是Alice帐户的索引。
+* 1是Bob帐户的索引。
+* 10是从Alice的帐户转移到Bob的帐户的Libra数目。
 
 成功样例输出：
 
@@ -272,21 +278,9 @@ Transaction submitted to validator
 To query for transaction status, run: query txn_acc_seq 0 0 <fetch_events=true|false>
 ```
 
-You can use the command `query txn_acc_seq 0 0 true` (transaction by account and sequence number) to retrieve the information about the transaction you just submitted. The first parameter is the local index of the sender account, and the second parameter is the sequence number of the account. To see a sample output of this command refer to [Sample Outputs](#query-transaction-by-account-and-sequence-number).
-
-You just submitted your transaction to a validator node on testnet, and it was included in the [mempool](reference/glossary.md#mempool) of the validator. This doesn't necessarily mean your transaction has been executed. In theory, if the system were slow or overloaded, it would take some time to see the results, and you may have to check multiple times by querying the accounts. To query an account with index 0, you can use the command  `query account_state 0.` The expected output is shown in the [Sample Outputs](#query-events) section
-
-To troubleshoot the transfer command, refer to [Troubleshooting](#the-transfer-command).
-
-**The Blocking Transfer Command**: You can use the `transferb` command (as shown below), instead of the `transfer` command. `transferb` will submit the transaction and return to the client prompt only after the transaction has been committed to the blockchain. An example is shown below:
-
-`libra% transferb 0 1 10`
-
-Refer to [Life of a Transaction](life-of-a-transaction.md) for an understanding of the lifecycle of a transaction from submission to execution and storage.
-
 您可以使用命令`query txn_acc_seq 0 0 true`（按帐户和序列号进行交易）来检索您刚才提交的交易的信息。第一个参数是发送方帐户的本地索引，第二个参数是帐户的序列号。若要查看此命令的示例输出，请参考[示例输出](#query-transaction-by-account-and-sequence-number)。
 
-您刚刚将交易提交给了测试网络上的验证节点，它被放在验证器的[内存池](reference/glossary.md#mempool)中。这并不一定意味着你的交易已经被执行。理论上，如果系统是慢的或超载的，则需要一些时间来查看结果，并且您可能需要通过查询帐户多次检查。若要查询索引为0的帐户，可以使用命令`query account_state 0`。预期输出显示在[示例输出](#query-events)部分
+您刚刚将交易提交给了测试网络上的验证节点，它被放在验证器的[内存池](reference/glossary.md#mempool)中。这并不一定意味着你的交易已经被执行。理论上，如果系统是慢的或超载的，则需要一些时间来查看结果，并且您可能需要通过查询帐户多次检查。若要查询索引为0的帐户，可以使用命令`query account_state 0`。预期输出显示在[示例输出](#query-events)部分。
 
 要对传输命令进行故障排除，请参阅[故障排除](#the-transfer-command)。
 
@@ -329,62 +323,64 @@ Balance is: 62
 ### 安装
 
 * 更新Rust:
-    * Run `rustup update` from your libra directory.
+    * 从你的libra目录运行`rustup update`。
 * 更新protoc:
-    * Update `protoc` to version 3.6.0 or above.
-* Re-run setup script from your libra directory:
+    * 把`protoc`更新到版本3.6.0或更高的版本.
+* 从您的libra目录中重新运行安装脚本：
     * `./scripts/dev_setup.sh`
 
 ### 客户端构建和运行
 
-If you are experiencing build failures, try to remove the cargo lock file from the libra directory:
+如果遇到构建失败，请尝试从libra目录中删除cargo lock文件：
 
 * `rm Cargo.lock`
 
-If your client did not connect to the testnet:
+如果您的客户端未连接到测试网：
 
-* Check your internet connection.
-* Ensure that you are using the latest version of the client. Pull the latest Libra Core and rerun the client:
+* 检查您的互联网连接。
+* 确保您使用的是最新版本的客户端。 获得最新的Libra Core代码并重新运行客户端：
     * `./scripts/cli/start_cli_testnet.sh`
 
 
-### Minting and Adding Money to Account
+### 铸币并打入账户中（Minting and Adding Money to Account）
 
-* If the validator node you connected to on testnet is unavailable, you will get a “Server unavailable” message as shown below:
+* 如果您在testnet上连接的验证器节点不可用，您将收到“Server unavailable”消息，如下所示：
 
   ```plaintext
   libra% account mint 0 110
   >> Minting coins
   [ERROR] Error minting coins: Server unavailable, please retry and/or check **if** host passed to the client is running
   ```
-* If your balance was not updated after submitting a transaction, wait a moment and query the balance again. There may be a delay if the blockchain is experiencing a very high volume of transactions.  If your balance still is not updated, please try minting again.
 
-* To check if an account exists, query the account state. For an account with index 0 enter this:
+* 如果提交交易后余额未更新，请稍等片刻，然后再次查询余额。 如果区块链正在处理大量交易，则可能会有延迟。 如果您的余额仍未更新，请尝试重新铸造。
+
+* 要检查帐户是否存在，请查询帐户状态。 对于索引为0的帐户，请输入以下内容：
 
   `libra% query account_state 0`
 
 ### Transfer命令
 
-If the testnet validator node (your client was connected to) is unavailable or your connection to the testnet has timed-out, you will see this error:
+如果（您的客户端已连接的）testnet验证器节点不可用，或者您与testnet的连接已超时，则将看到以下错误：
 
 ```plaintext
 libra% transfer 0 1 10
 >> Transferring
 [ERROR] Failed to perform transaction: Server unavailable, please retry and/or check if host passed to the client is running
 ```
-To troubleshoot transfer errors:
 
-* Check the connection to testnet.
-* Query the sender account to make sure it exists. Use the following command for an account with index 0:
-    * `query account_state 0`
-* You can try quitting the client using `quit` or `q!`, and rerun the following command to connect to the testnet:
-    * `./scripts/cli/start_cli_testnet.sh` from the libra directory
+如何解决传输相关问题：
+* 检查与testnet的连接。
+* 查询发送者帐户以确保它存在。 对索引为0的帐户使用以下命令：
+     * `query account_state 0`
+* 您可以尝试使用`quit`或`q!`退出客户端，然后重新运行以下命令以连接到测试网：
+     * 在libra目录下执行：`./scripts/cli/start_cli_testnet.sh`
 
-## Sample Outputs of Additional Query Commands
 
-### Query Transaction by Account and Sequence Number
+## 额外查询命令的示例输出（Sample Outputs of Additional Query Commands）
 
-This example will query for a single transaction's details using the account and sequence number.
+### 查询交易的账户和交易序列号（Query Transaction by Account and Sequence Number）
+
+本示例将使用帐户和序列号查询单个交易的详细信息。
 
 ```plaintext
 libra% query txn_acc_seq 0 0 true
@@ -415,13 +411,11 @@ ContractEvent { access_path: AccessPath { address: 3ed8e5fafae4147b2a105a0be2f81
 ContractEvent { access_path: AccessPath { address: 8337aac709a41fe6be03cad8878a0d4209740b1608f8a81566c9a7d4b95a2ec7, type: Resource, hash: "217da6c6b3e19f1825cfb2676daecce3bf3de03cf26647c78df00b371b25cc97", suffix: "/received_events_count/" } , index: 0, event_data: AccountEvent { account: 3ed8e5fafae4147b2a105a0be2f81972883441cfaaadf93fc0868e7a0253c4a8, amount: 10000000 } }
 ```
 
-Note that the transaction amount is shown in microlibra.
+请注意：交易金额的单位为microlibra。
 
 ### 事件查询
 
-In the following example, we will query for “sent” events from the account at reference index 0.  You will notice there is a single event since we sent one transaction from this account.  The proof of the current state is also returned so that verification can be performed that no events are missing - this is done when the query does not return “limit” events.
-
-在下面的示例中，我们将在引用索引0处查询来自帐户的“sent”事件。您会注意到有一个事件，因为我们从这个帐户发送了一个交易。还将返回当前状态的证明，以便可以执行验证，确保不缺少任何事件—当查询不返回“limit”事件时，将执行此操作。
+在下面的示例中，我们将在引用索引0处查询来自帐户的“sent”事件。您会注意到有一个事件，因为我们从这个帐户发送了一个交易。还将返回当前状态的证明，以便可以执行验证，确保不缺少任何事件 — 当查询不返回“limit”事件时，将执行此操作。
 
 ```plaintext
 libra% query event 0 sent 0 true 10
@@ -482,7 +476,7 @@ Last event state: Some(
 
 ### 查询账户状态
 
-In this example, we will query for the state of a single account.
+在此示例中，我们将查询单个帐户的状态。
 
 ```plaintext
 libra% query account_state 0

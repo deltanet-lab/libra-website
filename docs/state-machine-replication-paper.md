@@ -1,6 +1,6 @@
 ---
 id: state-machine-replication-paper
-title: Libra区块链中的复制状态机（SMR）
+title: Libra区块链中的复制状态机
 ---
 
 <!-- hide the table of contents --><style>.toc-headings {display: none !important; visibility: hidden !important;}</style>
@@ -11,4 +11,4 @@ title: Libra区块链中的复制状态机（SMR）
 
 ### 下载链接
 
-[![State Machine Replication in the Libra Blockchain PDF Download](assets/illustrations/state-machine-pdf.png){: .download}](assets/papers/libra-consensus-state-machine-replication-in-the-libra-blockchain.pdf)
+[![《Libra区块链中的状态机复制》一书的PDF下载](assets/illustrations/state-machine-pdf.png){: .download}](assets/papers/libra-consensus-state-machine-replication-in-the-libra-blockchain.pdf)

@@ -37,7 +37,7 @@ A block is committed when a contiguous 3-chain commit rule is met. A block at ro
 
 当满足连续的3链提交规则时，将提交一个块。 如果第k轮中的一个块具有法定人数认证，并且在第k+1轮和k+2轮的两个区块和法定人数认证中得到确认，则提交该块。提交规则最终允许诚实的验证者提交一个块。 LibraBFT保证所有诚实的验证者最终都会提交该块（以及后续链接到它的区块）。 一旦提交了一系列块，执行其事务所产生的状态就可以持久化并形成一个复制的数据库。
 
-### Hotstuff范式的优势
+### Hotstuff范式的优势（Advantages of the HotStuff Paradigm）
 
 We evaluated several BFT-based protocols against the dimensions of performance, reliability, security, ease of robust implementation, and operational overhead for validators. Our goal was to choose a protocol that would initially support at least 100 validators and would be able to evolve over time to support 500–1,000 validators. We had three reasons for selecting the HotStuff protocol as the basis for LibraBFT: (i) simplicity and modularity; (ii) ability to easily integrate consensus with execution; and (iii) promising performance in early experiments.
 
@@ -49,13 +49,13 @@ and high energy (and environmental) costs.
 HotStuff协议分解为安全性（投票和提交规则）和活动性（起搏器）模块。这种解耦提供了独立开发并在不同模块上并行进行实验的能力。由于投票和提交规则简单，协议安全性易于实现和验证。将执行作为共识的一部分进行集成很简单，可以避免在基于领导者的协议中因不确定性执行而引起的分叉问题。最后，我们的早期原型证实了高吞吐量和低事务延迟，这在[HotStuff](https://arxiv.org/pdf/1803.05069.pdf)中进行了独立测量。我们未考虑基于工作量证明的协议，例如[比特币](https://bitcoin.org/bitcoin.pdf)，
 因为其性能不佳以及高昂的能源（和环境）成本。
 
-### HotStuff的扩展与修改
+### HotStuff的扩展与修改（HotStuff Extensions and Modifications）
 
 In LibraBFT, to better support the goals of the Libra ecosystem, we extend and adapt the core HotStuff protocol and implementation in several ways. Importantly, we reformulate the safety conditions and provide extended proofs of safety, liveness, and optimistic responsiveness. We also implement a number of additional features. First, we make the protocol more resistant to non-determinism bugs, by having validators collectively sign the resulting state of a block rather than just the sequence of transactions. This also allows clients to use quorum certificates to authenticate reads from the database. Second, we design a pacemaker that emits explicit timeouts, and validators rely on a quorum of those to move to the next round — without requiring synchronized clocks. Third, we intend to design an unpredictable leader election mechanism in which the leader of a round is determined by the proposer of the latest committed block using a verifiable random function [VRF](https://people.csail.mit.edu/silvio/Selected%20Scientific%20Papers/Pseudo%20Randomness/Verifiable_Random_Functions.pdf). This mechanism limits the window of time in which an adversary can launch an effective denial-of-service attack against a leader. Fourth, we use aggregate signatures that preserve the identity of validators who sign quorum certificates. This allows us to provide incentives to validators that contribute to quorum certificates. Aggregate signatures also do not require a complex [threshold key setup](https://www.cypherpunks.ca/~iang/pubs/DKG.pdf).
 
 为了更好地支持Libra生态系统的目标，在LibraBFT中我们以多种方式扩展和调整核心HOTSTUFF协议和实现。重要的是，我们重新制定安全条件，并提供安全、活跃和乐观响应的扩展证明。我们还实现了一些附加功能。首先，我们通过让验证器集体签署块的结果状态，而不仅仅是事务序列，使协议更能抵抗非确定性错误。这还允许客户端使用法定人数认证对从数据库读取的内容进行验证。其次，我们设计了一个发出显式超时的起搏器，并且验证器依靠那些法定人数移动到下一轮 - 而不需要同步时钟。第三，我们打算设计一个不可预测的领导者选举机制，其中一个回合的领导者是由一个可验证的随机函数的提议者使用可验证的随机函数[VRF](https://people.csail.mit.edu/silvio/Selected%20Scientific%20Papers/Pseudo%20Randomness/Verifiable_Random_Functions.pdf)来确定的。这种机制限制了对手可以对领导者发起有效的拒绝服务攻击的时间窗口。第四，我们使用聚合签名来保存签署法定人数认证的验证者的身份。这允许我们提供对法定人数证书的验证者的激励。聚合签名也不需要复杂的[门限密钥生成](https://www.cypherpunks.ca/~iang/pubs/DKG.pdf)。
 
-## 实现细节
+## 实现细节（Implementation Details）
 
 The consensus component is mostly implemented in the [Actor](https://en.wikipedia.org/wiki/Actor_model) programming model &mdash; i.e., it uses message-passing to communicate between different subcomponents with the [tokio](https://tokio.rs/) framework used as the task runtime. The primary exception to the actor model (as it is accessed in parallel by several subcomponents) is the consensus data structure *BlockStore* which manages the blocks, execution, quorum certificates, and other shared data structures. The major subcomponents in the consensus component are:
 
@@ -79,7 +79,7 @@ All consensus messages are signed by their creators and verified by their receiv
 
 所有共识信息都由其创建者签名并由其接收者验证。消息验证发生在最靠近网络层的地方，以避免无效或不必要的数据进入共识协议。
 
-## 模块的代码组织
+## 模块的代码组织（How is this module organized?）
 
     consensus
     ├── src
