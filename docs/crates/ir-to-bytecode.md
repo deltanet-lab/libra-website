@@ -1,7 +1,7 @@
 ---
 id: ir-to-bytecode
 title: Move的IR编译器
-custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/language/compiler/README.md
+custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/docs/crates/compiler.md
 ---
 
 

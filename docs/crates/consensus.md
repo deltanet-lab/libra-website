@@ -1,7 +1,7 @@
 ---
 id: consensus
 title: 共识
-custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/consensus/README.md
+custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/docs/crates/consensus.md
 ---
 
 
@@ -35,7 +35,7 @@ In LibraBFT, validators receive transactions from clients and share them with ea
 
 A block is committed when a contiguous 3-chain commit rule is met. A block at round k is committed if it has a quorum certificate and is confirmed by two more blocks and quorum certificates at rounds k + 1 and k + 2. The commit rule eventually allows honest validators to commit a block. LibraBFT guarantees that all honest validators will eventually commit the block (and proceeding sequence of blocks linked from it). Once a sequence of blocks has committed, the state resulting from executing their transactions can be persisted and forms a replicated database.
 
-当满足连续的3链提交规则时，将提交一个块。 如果第k轮中的一个块具有法定人数认证，并且在第k+1轮和k+2轮的两个区块和法定人数认证中得到确认，则提交该块。提交规则最终允许诚实的验证者提交一个块。 LibraBFT保证所有诚实的验证者最终都会提交该块（以及后续链接到它的区块）。 一旦提交了一系列块，执行其事务所产生的状态就可以持久化并形成一个复制的数据库。
+当满足连续的3链提交规则时，将提交一个块。如果第k轮中的一个块具有法定人数认证，并且在第k+1轮和k+2轮的两个区块和法定人数认证中得到确认，则提交该块。提交规则最终允许诚实的验证者提交一个块。 LibraBFT保证所有诚实的验证者最终都会提交该块（以及后续链接到它的区块）。 一旦提交了一系列块，执行其事务所产生的状态就可以持久化并形成一个复制的数据库。
 
 ### Hotstuff范式的优势（Advantages of the HotStuff Paradigm）
 
@@ -70,12 +70,12 @@ All consensus messages are signed by their creators and verified by their receiv
 
 共识组件的大部分使用[Actor](https://en.wikipedia.org/wiki/Actor_model)编程模型实现 &mdash; 例如：它使用消息传递机制来在不同子组件进行通信，并使用[tokio](https://tokio.rs/)框架作为任务运行时。除了Actor模型外，最主要的就是共识数据结构（因为它由多个子组件并行访问）*BlockStore*，它管理区块、执行、法定人数认证和其他共享数据结构。共识组件的主要子组件包括：
 
-* **TxnManager**是内存池（mempool）组件的接口，支持提取事务以及删除提交的事务。提议者从内存池中按需提取事务来形成提议块。
-* **StateComputer**是访问执行（execution）组件的接口。它可以执行块、提交块和同步状态。
-* **BlockStore**维护块提议树、块执行、投票、法定人数认证和持久存储。它负责维护这些数据结构的组合的一致性，并且可以同时被其他子组件访问。
-* **EventProcessor**负责处理各个事件（例如：process_new_round、process_proposal、process_vote）。它公布了每种事件类型的异步处理函数与驱动协议。
-* **Pacemaker**负责共识协议的活跃性。它由于超时证书或法定人数认证而改变回合，并且当它是当前回合的提议者时提议块。
-* **SafetyRules**负责共识协议的安全。它处理法定人数认证和LedgerInfo，以了解新的提交，并确保遵循两个投票规则 —— 即使在重启的情况下（因为所有安全数据都保存到本地存储）。
+* **TxnManager**：是内存池（mempool）组件的接口，支持提取事务以及删除提交的事务。提议者从内存池中按需提取事务来形成提议块。
+* **StateComputer**：是访问执行（execution）组件的接口。它可以执行块、提交块和同步状态。
+* **BlockStore**：维护块提议树、块执行、投票、法定人数认证和持久存储。它负责维护这些数据结构的组合的一致性，并且可以同时被其他子组件访问。
+* **EventProcessor**：负责处理各个事件（例如：process_new_round、process_proposal、process_vote）。它公布了每种事件类型的异步处理函数与驱动协议。
+* **Pacemaker**：负责共识协议的活跃性。它由于超时证书或法定人数认证而改变回合，并且当它是当前回合的提议者时提议块。
+* **SafetyRules**：负责共识协议的安全。它处理法定人数认证和LedgerInfo，以了解新的提交，并确保遵循两个投票规则 —— 即使在重启的情况下（因为所有安全数据都保存到本地存储）。
 
 所有共识信息都由其创建者签名并由其接收者验证。消息验证发生在最靠近网络层的地方，以避免无效或不必要的数据进入共识协议。
 

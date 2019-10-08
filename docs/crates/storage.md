@@ -1,7 +1,7 @@
 ---
 id: storage
 title: 存储
-custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/storage/README.md
+custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/docs/crates/storage.md
 ---
 
 

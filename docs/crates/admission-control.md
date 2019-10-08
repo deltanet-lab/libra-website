@@ -1,7 +1,7 @@
 ---
 id: admission-control
 title: 准入控制
-custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/admission_control/README.md
+custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/docs/crates/admission_control.md
 ---
 
 准入控制（AC）是Libra的公共API端点，它接受来自客户端的公共gRPC请求。

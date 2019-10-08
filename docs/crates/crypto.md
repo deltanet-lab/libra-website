@@ -1,7 +1,7 @@
 ---
 id: crypto
 title: 加密
-custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/crypto/crypto/README.md
+custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/docs/crates/crypto.md
 ---
 
 The crypto component hosts all the implementations of cryptographic primitives we use in Libra: hashing, signing, and key derivation/generation. The parts of the library usig traits.rs contain the crypto API enforcing type safety, verifiable random functions, EdDSA & BLS signatures.

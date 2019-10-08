@@ -1,7 +1,7 @@
 ---
 id: network
 title: 网络
-custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/network/README.md
+custom_edit_url: https://github.com/deltanet-lab/libra-website-cn/edit/master/docs/crates/network.md
 ---
 
 
