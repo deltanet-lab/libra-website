@@ -14,33 +14,31 @@ Admission control (AC) module sends transactions to mempool. Mempool holds the t
 
 When a validator receives a transaction from another mempool, the transaction is ordered when it’s added to the ordered queue of the recipient validator. To reduce network consumption in the shared mempool, each validator is responsible for the delivery of its own transactions. We don't rebroadcast transactions originating from a peer validator.
 
+当验证器从另一个内存池接收到事务时，该事务将被添加到接收者验证器的已序队列中，并被排序。为了减少共享内存池中的网络消耗，每个验证器负责交付自己的事务。我们不会重播源自对等验证者的交易。
+
 We only broadcast transactions that have some probability of being included in the next block. This means that either the sequence number of the transaction is the next sequence number of the sender account, or it is sequential to it. For example, if the current sequence number for an account is 2 and local mempool contains transactions with sequence numbers 2, 3, 4, 7, 8, then only transactions 2, 3, and 4 will be broadcast.
 
+我们仅广播可能包含在下一个区块中的交易。这意味着交易的序号是发件人帐户的下一个序号，或者是顺序的。例如，如果帐户的当前序号为2，并且本地内存池包含序号为2、3、4、7、8的交易，则仅广播交易2、3和4。
+
 The consensus module pulls transactions from mempool, mempool does not push transactions into consensus. This is to ensure that while consensus is not ready for transactions:
+
+共识模块将事务从内存池中拉出，内存池不会将事务推入共识中。这是为了确保在尚未达成共识的情况下进行交易：
 
 * Mempool can continue ordering transactions based on gas; and
 * Consensus can allow transactions to build up in the mempool.
 
-This allows transactions to be grouped into a single consensus block, and prioritized by gas price.
-
-Mempool doesn't keep track of transactions sent to consensus. On each get_block request (to pull a block of transaction from mempool), consensus sends a set of transactions that were pulled from mempool, but not committed. This allows the mempool to stay agnostic about different consensus proposal branches.
-
-When a transaction is fully executed and written to storage, consensus notifies mempool. Mempool then drops this transaction from its internal state.
-
-
-
-当验证器从另一个内存池接收到事务时，该事务将被添加到接收者验证器的已排序队列中，并被排序。为了减少共享内存池中的网络消耗，每个验证器负责交付自己的事务。我们不会重播源自对等验证者的交易。
-
-我们仅广播可能包含在下一个区块中的交易。这意味着交易的序号是发件人帐户的下一个序号，或者是顺序的。例如，如果帐户的当前序号为2，并且本地内存池包含序号为2、3、4、7、8的交易，则仅广播交易2、3和4。
-
-共识模块将事务从内存池中拉出，内存池不会将事务推入共识中。这是为了确保在尚未达成共识的情况下进行交易：
-
 * Mempool可以继续基于天然气订购交易；和
 * 共识可以使交易在内存池中建立。
 
-这允许将交易分组到一个共识块中，并按汽油价格确定优先级。
+This allows transactions to be grouped into a single consensus block, and prioritized by gas price.
+
+这允许将交易分组到一个共识块中，并按燃料价格确定优先级。
+
+Mempool doesn't keep track of transactions sent to consensus. On each get_block request (to pull a block of transaction from mempool), consensus sends a set of transactions that were pulled from mempool, but not committed. This allows the mempool to stay agnostic about different consensus proposal branches.
 
 Mempool不会跟踪已达成共识的交易。在每个get_block请求上（从内存池中提取事务块），共识发送一组从内存池中提取但未提交的事务。这使Mempool可以不了解不同的共识提议分支。
+
+When a transaction is fully executed and written to storage, consensus notifies mempool. Mempool then drops this transaction from its internal state.
 
 当事务完全执行并写入存储后，共识会通知内存池。然后，内存池将该事务从其内部状态删除。
 

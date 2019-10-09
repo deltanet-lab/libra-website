@@ -16,7 +16,7 @@ their respective bytecode representations. The two data types used to
 represent these outputs are `CompiledModule` and `CompiledScript`. These
 data types are defined in [file_format.rs](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/vm/src/file_format.rs).
 
-Move IR编译器把使用Move编写的模块和脚本编译为它们各自的字节码表示形式。`CompiledModule`和`CompiledScript`这两种数据类型分别对应于这两者的输出。这些数据类型在源码[file_format.rs](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/vm/src/file_format.rs)中定义。
+Move IR编译器把使用Move编写的模块和脚本编译为各自的字节码表示形式。用来表示这些输出的两种数据类型是`CompiledModule`和`CompiledScript`。这些数据类型在[file_format.rs](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/vm/src/file_format.rs)中定义。
 
 Beyond translating Move IR to Move bytecode, the compiler's purpose is as a
 testing tool for the bytecode verifier. Because of this, its job is to
@@ -29,15 +29,7 @@ invalid---bytecode programs. The semantics of the compiled bytecode is
 then verified by the [bytecode verifier](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/bytecode_verifier/README.md). The compiler command line
 automatically calls the bytecode verifier at the end of compilation.
 
-除了将Move IR转换为Move字节码外，编译器的目的还在于
-字节码验证程序的测试工具。因此，它的工作是
-输出字节码程序，它们应尽可能与
-输入IR;优化和高级语义检查不是
-在编译过程中执行。实际上，编译器会淘汰
-将这些语义检查推入字节码并进行编译的方法
-将IR移至等效语言中的语义无效代码
-无效的字节码程序。编译后的字节码的语义是
-然后由[字节码验证程序](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/bytecode_verifier/README.md)进行验证。编译器命令行在编译结束时自动调用字节码验证程序。
+除了将Move IR转换为Move字节码外，编译器的目的还在于作为字节码验证程序的测试工具。 因此，它的工作是输出与输入IR尽可能接近的字节码程序。 在编译过程中不会特别执行优化和高级语义检查。 实际上，编译器不遗余力地将这些语义检查放入字节码中，并在“Move IR”中将语义无效的代码编译为等效的 - 语义无效 - 字节代码程序。 然后，已编译的字节码的语义由[字节码验证程序](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/bytecode_verifier/README.md)进行验证。 编译器命令行在编译结束时自动调用字节码验证程序。
 
 ## 命令行参数
 

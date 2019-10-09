@@ -44,6 +44,7 @@ Each new substream is assigned a *protocol* supported by both the sender and
 the receiver. Each RPC and DirectSend type corresponds to one such protocol.
 
 每个新的子流都分配有一个由发送者和收件人。每种RPC和DirectSend类型都对应一个这样的协议。
+每个新的子流都分配了一个由发送方和接收方都支持的协议（协议）。每种RPC和DirectSend类型都对应一个这样的协议。
 
 Only eligible members are allowed to join the inter-validator network. Their
 identity and public key information is provided by the consensus
@@ -53,38 +54,31 @@ bootstrap connectivity to the network. The seed peers first authenticate the
 joining validator as an eligible member and then share their network state
 with it.
 
+仅允许合格成员加入验证者间网络。其身份和公共密钥信息由共识提供
+组件在初始化和系统成员资格更新时使用。一个新的验证程序还需要几个*seed*对等方的网络地址来帮助它
+引导到网络的连接。种子对等方首先对作为合格成员加入验证者，然后共享其网络状态用它。
+
 Each member of the network maintains a full membership view and connects
 directly to any validator it needs to communicate with. A validator that cannot
 be connected to directly is assumed to fall in the quota of Byzantine faults
 tolerated by the system.
 
+网络的每个成员都维护完整的成员资格视图并进行连接直接与需要与之通信的任何验证器。验证者不能
+假定直接连接属于拜占庭式断层被系统所容忍。
+
 Validator health information, determined using periodic liveness probes, is not
 shared between validators; instead, each validator directly monitors its peers
 for liveness.
-
-This approach should scale up to a few hundred validators before requiring
-partial membership views, sophisticated failure detectors, or network overlays.
-
-
-仅允许合格成员加入验证者间网络。其
-身份和公共密钥信息由共识提供
-组件在初始化和系统成员资格更新时使用。一个新的
-验证程序还需要几个*seed*对等方的网络地址来帮助它
-引导到网络的连接。种子对等方首先对
-作为合格成员加入验证者，然后共享其网络状态
-用它。
-
-网络的每个成员都维护完整的成员资格视图并进行连接
-直接与需要与之通信的任何验证器。验证者不能
-假定直接连接属于拜占庭式断层
-被系统所容忍。
 
 使用定期活动性探针确定的验证者健康信息不是
 验证者之间共享；取而代之的是，每个验证器直接监视其对等项
 为了活泼。
 
-在要求之前，此方法应扩展到数百个验证器
-部分成员资格视图，复杂的故障检测器或网络覆盖。
+This approach should scale up to a few hundred validators before requiring
+partial membership views, sophisticated failure detectors, or network overlays.
+
+在需要部分成员资格视图，复杂的故障检测器或网络覆盖之前，此方法应扩展到数百个验证器。
+
 
 ## 实现细节
 
