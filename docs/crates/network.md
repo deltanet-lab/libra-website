@@ -40,6 +40,17 @@ discovery.
 * [Yamux](https://github.com/hashicorp/yamux/blob/master/spec.md)，用于通过单个连接多路复用子流。
 * 对等体的推式[gossip](https://en.wikipedia.org/wiki/Gossip_protocol)，用于对端发现。
 
+
+
+仅允许合格成员加入验证者间网络。他们的身份和公共密钥信息由共识提供
+组件在初始化和系统成员资格更新时使用。新的验证程序还需要几个*seed*对等方的网络地址，以帮助其引导到网络的连接。种子对等方首先将加入的验证器认证为合格成员，然后与之共享其网络状态。
+
+网络的每个成员都维护完整的成员资格视图，并直接连接到与之通信所需的任何验证器。假定无法直接连接的验证器属于系统允许的拜占庭式故障配额。
+
+验证者之间不会共享使用周期性活动性探针确定的验证者健康信息；取而代之的是，每个验证器直接监视其对等方的活动。
+
+在需要部分成员资格视图，复杂的故障检测器或网络覆盖之前，此方法应扩展到数百个验证器。
+
 Each new substream is assigned a *protocol* supported by both the sender and
 the receiver. Each RPC and DirectSend type corresponds to one such protocol.
 
@@ -58,6 +69,9 @@ with it.
 组件在初始化和系统成员资格更新时使用。一个新的验证程序还需要几个*seed*对等方的网络地址来帮助它
 引导到网络的连接。种子对等方首先对作为合格成员加入验证者，然后共享其网络状态用它。
 
+仅允许合格成员加入验证者间网络。由共识组件提供的身份和公共密钥信息
+在系统初始化和系统成员资格更新时使用。新的验证程序还需要几个*seed*对等方的网络地址，以帮助其引导到网络的连接。种子对等方首先将加入的验证器认证为合格成员，然后与之共享其网络状态。
+
 Each member of the network maintains a full membership view and connects
 directly to any validator it needs to communicate with. A validator that cannot
 be connected to directly is assumed to fall in the quota of Byzantine faults
@@ -70,12 +84,15 @@ Validator health information, determined using periodic liveness probes, is not
 shared between validators; instead, each validator directly monitors its peers
 for liveness.
 
-使用定期活动性探针确定的验证者健康信息不是
-验证者之间共享；取而代之的是，每个验证器直接监视其对等项
+使用定期活动性探针确定的验证者健康信息不是验证者之间共享；取而代之的是，每个验证器直接监视其对等项
 为了活泼。
+
+验证者之间不会共享使用周期性活动性探针确定的验证者健康信息；取而代之的是，每个验证器直接监视其对等方的活动。
+
 
 This approach should scale up to a few hundred validators before requiring
 partial membership views, sophisticated failure detectors, or network overlays.
+
 
 在需要部分成员资格视图，复杂的故障检测器或网络覆盖之前，此方法应扩展到数百个验证器。
 

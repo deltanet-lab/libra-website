@@ -65,32 +65,13 @@ Therefore, the execution component provides two primary APIs - `execute_block`
 and `commit_block` - to support the above operations.
 
 
-区块是一个事务列表，一旦提交区块，就应该按照给定的顺序应用这些事务。从上一个提交的块到未提交的块的每个路径都构成一个有效链。无论共识算法的提交规则如何，此树上都有两种可能的操作：
+区块是提交区块后应以给定顺序执行的事务列表。从最后一个提交的块到未提交的块的每条路径形成一个有效链。无论共识算法的提交规则如何，此树上都有两种可能的操作：
 
-1. 使用给定的父对象向树中添加块并扩展特定的
-链（例如，用块“g”扩展块“f”）。当我们扩展
-使用新块链接时，块应包含正确的执行块中事务的结果，就好像它的所有祖先
-以相同的顺序提交。但是，所有未提交的块及其执行结果保存在某些临时位置，对外部客户。
-2. 正在提交块。随着“共识”在街区上获得越来越多的选票，它
-决定提交一个块及其所有祖先规则。然后我们将所有这些块保存到永久存储器中，并丢弃同时所有的冲突块。
-因此，execution组件提供了两个主要api - `execute_block`和`commit_block` - 以支持上述操作。
+1. 使用给定的父级将一个块添加到树中并扩展特定链（例如，用块`G`扩展块`F`）。当我们用新的块扩展链时，该块中应包括事务的正确执行结果，就好像其所有祖先都以相同顺序提交一样。但是，所有未提交的块及其执行结果都保存在某个临时位置，并且对于外部客户端不可见。
+2. 提交一个块。随着共识在区块上获得越来越多的选票，它决定根据某些特定规则来提交区块及其所有祖先。然后，我们将所有这些块保存到永久存储中，并同时丢弃所有冲突的块。
 
+因此，执行组件提供了两个主要的API - `execute_block`和`commit_block` - 以支持上述操作。
 
-区块是应按给定顺序应用一次的交易列表该块已提交。从最后一个提交的块到未提交的块形成有效链。无论提交规则是什么共识算法，此树上有两种可能的操作：
-
-1.使用给定的父级将块添加到树中，并扩展特定的
-   链（例如，将块“ F”扩展为块“ G”）。当我们扩展一个
-   与一个新块链接，该块应包含正确的执行
-   区块中交易的结果，就好像它的所有祖先
-   以相同的顺序提交。但是，所有未提交的块及其
-   执行结果保存在某个临时位置，并且看不到
-   外部客户。
-2.提交一个块。随着共识在区块上收集越来越多的选票，
-   决定根据某些具体情况提交一个区块及其所有祖先
-   规则。然后我们将所有这些块保存到永久存储中并丢弃
-   所有冲突的区块同时出现。
-
-因此，执行组件提供了两个主要的API - `execute_block`和`commit_block` - 支持上述操作。
 
 ## 实现细节（Implementation Details）
 
@@ -100,9 +81,7 @@ root of the Merkle tree to the account are loaded into memory. For example, if
 we execute a transaction T<sub>i</sub> on top of the committed state and the
 transaction modified account `A`, we will end up having the following tree:
 
-每个版本的状态都表示为存储中的稀疏Merkle树。
-当交易修改帐户时，该帐户和自Merkle树根到该账户路径上的所有兄弟将被加载到内存中。
-例如，如果我们在帐户`A`已提交状态的基础上执行交易T<sub>i</sub>，则将得到以下树：
+每个版本的状态都表示为存储中的稀疏Merkle树。当交易修改帐户时，该帐户和从Merkle树根到该帐户路径上的同级项将被加载到内存中。 例如，如果我们在帐户`A`已提交状态的基础上执行交易T<sub>i</sub>，则将得到以下树：
 
 ```
              S_i
@@ -118,7 +97,8 @@ transaction T<sub>i+1</sub> modified another account `B` that lives in the
 subtree at `y`, a new tree will be constructed, and the structure will look
 like the following:
 
-在上面显示的树中，`A`具有帐户的新状态，`y`和`x`是从树的根到`A`的路径上的兄弟。如果下一笔交易T<sub>i+1</sub>发生在另一个账户`B`的位于`y`的子树上，则将构建一棵新树，并且该结构看起来如下所示：
+在上面显示的树中，`A`具有帐户的新状态，`y`和`x`是从树的根到`A`的路径上的同级节点。如果下一个交易T<sub>i+1</sub>修改了另一个子帐户`B`，该子帐户位于`y`子树中，则将构造一棵新树，其结构如下所示：
+
 
 ```
                 S_i      S_{i+1}
@@ -140,9 +120,8 @@ storage. As another example, if we want to execute transaction T<sub>i+2</sub>,
 we can use the tree S<sub>i+1</sub> that has updated values for both account `A`
 and `B`.
 
-使用这种结构，我们可以查询全局状态，未提交交易的输出。例如，如果我们要执行另一个事务T<sub>i+1</sub><sup>'</sup>，我们可以使用树S<sub>i</sub>。 如果我们查找帐户A，则可以在树中找到其新值。
-否则，我们知道该帐户在树中不存在，我们可以转而使用存储。 再举一个例子，如果我们要执行事务T<sub>i+2</sub>，
-我们可以使用已经更新了两个帐户`A`和`B`的值的树S<sub>i+1</sub>。
+使用这种结构，我们可以查询全局状态，同时考虑未提交事务的输出。例如，如果我们要执行另一个事务T<sub>i+1</sub><sup>'</sup>，则可以使用树S<sub>i</sub>。 如果我们查找帐户A，则可以在树中找到其新值。否则，我们知道该帐户在树中不存在，我们可以转而使用存储。再举一个例子，如果我们想执行事务T<sub>i+2</sub>，我们可以使用树S<sub>i+1</sub>，该树已经更新了两个帐户`A`和`B`的值。
+
 
 ## 模块的代码组织（How is this component organized?）
 ```

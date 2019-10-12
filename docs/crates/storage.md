@@ -26,10 +26,10 @@ components:
 
 存储模块旨在满足两个主要目的：
 
-1.保存区块链数据，特别是验证者通过共识协议达成的交易及其输出。
-2.对要求部分区块链数据的任何查询提供带有Merkle证明的响应，如果客户端已获得正确的根哈希，则可以轻松地验证响应的完整性。
+1. 保存区块链数据，特别是验证者通过共识协议达成的交易及其输出。
+2. 对要求部分区块链数据的任何查询提供带有Merkle证明的响应，如果客户端已获得正确的根哈希，则可以轻松地验证响应的完整性。
 
-天秤座区块链可以看作是由以下组件组成的Merkle树：
+Libra区块链可以看作是由以下组件组成的Merkle树：
 
 ![data](https://developers.libra.org/docs/assets/data.png)
 
@@ -53,7 +53,7 @@ blob. While a tree of size `2^256` is an intractable representation, subtrees
 consisting entirely of empty nodes are replaced with a placeholder value, and
 subtrees consisting of exactly one leaf are replaced with a single node.
 
-每个版本的账本状态由具有所有帐户状态的稀疏Merkle树表示。 键是地址的256位哈希，它们的对应值是序列化为二进制Blob的整个帐户的状态。因为一棵大小为`2^256`的树是很难处理的表示形式，所以完全由空节点组成的子树将被替换为占位符，而仅由一个叶子组成的子树将被替换为单个节点。
+每个版本的账本状态由具有所有帐户状态的稀疏Merkle树表示。键是地址的256位哈希，它们的对应值是序列化为二进制Blob的整个帐户的状态。因为一棵大小为`2^256`的树是很难处理的表示形式，所以完全由空节点组成的子树将被替换为占位符，而仅由一个叶子组成的子树将被替换为单个节点。
 
 While each *TransactionInfo* structure points to a different state tree, the new
 tree can reuse unchanged portion of the previous tree, forming a persistent data

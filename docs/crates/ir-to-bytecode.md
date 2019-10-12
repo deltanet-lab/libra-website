@@ -26,10 +26,10 @@ performed during the compilation process. In fact, the compiler goes out of
 its way to push these semantic checks into the bytecode, and compile
 semantically invalid code in the Move IR to equivalent---semantically
 invalid---bytecode programs. The semantics of the compiled bytecode is
-then verified by the [bytecode verifier](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/bytecode_verifier/README.md). The compiler command line
+then verified by the [bytecode verifier](https://github.com/deltanet-lab/libra-website-cn/blob/master/docs/crates/ir-to-bytecode.md). The compiler command line
 automatically calls the bytecode verifier at the end of compilation.
 
-除了将Move IR转换为Move字节码外，编译器的目的还在于作为字节码验证程序的测试工具。 因此，它的工作是输出与输入IR尽可能接近的字节码程序。 在编译过程中不会特别执行优化和高级语义检查。 实际上，编译器不遗余力地将这些语义检查放入字节码中，并在“Move IR”中将语义无效的代码编译为等效的 - 语义无效 - 字节代码程序。 然后，已编译的字节码的语义由[字节码验证程序](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/bytecode_verifier/README.md)进行验证。 编译器命令行在编译结束时自动调用字节码验证程序。
+除了将Move IR转换为Move字节码外，编译器的目的还在于作为字节码验证程序的测试工具。 因此，它的工作是输出与输入IR尽可能接近的字节码程序。 在编译过程中不会特别执行优化和高级语义检查。 实际上，编译器不遗余力地将这些语义检查放入字节码中，并在“Move IR”中将语义无效的代码编译为等效的 - 语义无效 - 字节代码程序。 然后，已编译的字节码的语义由[字节码验证程序](https://github.com/deltanet-lab/libra-website-cn/blob/master/docs/crates/ir-to-bytecode.md)进行验证。 编译器命令行在编译结束时自动调用字节码验证程序。
 
 ## 命令行参数
 

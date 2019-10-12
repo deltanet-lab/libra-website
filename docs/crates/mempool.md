@@ -27,8 +27,8 @@ The consensus module pulls transactions from mempool, mempool does not push tran
 * Mempool can continue ordering transactions based on gas; and
 * Consensus can allow transactions to build up in the mempool.
 
-* Mempool可以继续基于天然气订购交易；和
-* 共识可以使交易在内存池中建立。
+* Mempool可持续基于燃料价格对交易进行排序；和
+* 可以使交易的共识在内存池中达成。
 
 This allows transactions to be grouped into a single consensus block, and prioritized by gas price.
 
@@ -50,7 +50,7 @@ Internally, mempool is modeled as `HashMap<AccountAddress, AccountTransactions>`
 
 The main index - PriorityIndex is an ordered queue of transactions that are “ready” to be included in the next block (i.e., they have a sequence number which is sequential to the current sequence number for the account). This queue is ordered by gas price so that if a client is willing to pay more (than other clients) per unit of execution, then they can enter consensus earlier.
 
-主要索引 - PriorityIndex是“已准备好”包含在下一个区块中的交易的有序队列（即，它们的序列号与该帐户的当前序列号相继）。此队列按汽油价格排序，因此，如果一个客户愿意为每个执行单位支付更多的费用（比其他客户多），那么他们可以更早地达成共识。
+主索引 - PriorityIndex是“已准备好”包含在下一个区块中的交易的有序队列（即，它们的序列号与该帐户的当前序列号相继）。此队列按燃料价格排序，因此，如果一个客户愿意为每个执行单位支付更多的费用（比其他客户多），那么他们可以更早地达成共识。
 
 Note that, even though global ordering is maintained by gas price, for a single account, transactions are ordered by sequence number. All transactions that are not ready to be included in the next block are part of a separate ParkingLotIndex. They are moved to the ordered queue once some event unblocks them.
 
@@ -62,7 +62,7 @@ Here is an example: mempool has a transaction with sequence number 4, while the 
 
 Mempool only holds a limited number of transactions to avoid overwhelming the system and to prevent abuse and attack. Transactions in Mempool have two types of expirations: systemTTL and client-specified expiration. When either of these is reached, the transaction is removed from Mempool.
 
-Mempool仅保留有限数量的事务，以避免使系统不堪重负，并防止滥用和攻击。 Mempool中的事务有两种到期类型：systemTTL和客户端指定的到期。当达到上述任何一个条件时，该事务将从Mempool中删除。
+Mempool仅保留有限数量的事务，以避免使系统不堪重负，并防止滥用和攻击。Mempool中的事务有两种到期类型：systemTTL和客户端指定的到期。当达到上述任何一个条件时，该事务将从Mempool中删除。
 
 SystemTTL is checked periodically in the background, while the expiration specified by the client is checked on every Consensus commit request. We use a separate system TTL to ensure that a transaction doesn’t remain stuck in the Mempool forever, even if Consensus doesn't make progress.
 

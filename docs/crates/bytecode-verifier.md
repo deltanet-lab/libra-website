@@ -31,6 +31,8 @@ The execution of a block happens in the context of a stack and an array of local
 
 The second phase of the analysis checks that each operation, primitive or defined function, is invoked with arguments of appropriate types. The operands of an operation are values located either in a local variable or on the stack. The types of local variables of a function are already provided in the bytecode. However, the types of stack values are inferred. This inference and the type checking of each operation can be done separately for each block. Since the stack height at the beginning of each block is *n* and does not go below *n* during the execution of the block, we only need to model the suffix of the stack starting at *n* for type checking the block instructions. We model this suffix using a stack of types on which types are pushed and popped as the instruction stream in a block is processed. Only the type stack and the statically-known types of local variables are needed to type check each instruction.
 
+分析的第二阶段检查是否使用适当类型的参数调用了每个操作（原始或定义的函数）。运算的操作数是位于局部变量或堆栈中的值。 函数的局部变量的类型已在字节码中提供。但是，可以推断堆栈值的类型。 可以针对每个块分别进行此推断和每个操作的类型检查。 由于每个块开始处的堆栈高度为*n*，并且在执行该块期间不会低于*n*，因此我们只需对以*n*开头的堆栈后缀进行建模，即可对块指令进行类型检查。我们使用一堆类型对这个后缀进行建模，在处理块中的指令流时，将在这些类型上推送和弹出这些类型。仅需要类型堆栈和静态已知的局部变量类型即可对每个指令进行类型检查。
+
 ## 资源安全（Resource Safety）
 
 Resources represent the assets of the blockchain. As such, there are certain restrictions on these types that do not apply to normal values. Intuitively, resource values cannot be copied and must be used by the end of the transaction (this means that they are moved to global storage or destroyed). Concretely, the following restrictions apply:
@@ -45,6 +47,19 @@ As mentioned above, this last rule around `Ret` implies that the resource *must*
 * Destroyed via `Unpack`.
 
 Both `MoveToSender` and `Unpack` are internal to the module in which the resource is declared.
+
+资源代表区块链的资产。因此，对这些类型存在某些限制，这些限制不适用于正常值。直观地讲，资源值无法复制，必须在事务结束时使用（这意味着它们已移至全局存储或已销毁）。具体来说，以下限制适用：
+
+* `CopyLoc`和`StLoc`要求本地类型不是资源类型。
+* `WriteRef`，`Eq`和`Neq`要求引用的类型不是资源类型。
+* 在函数的末尾（到达`Ret`时），任何类型为资源类型的局部语言都不能为空，即，该值必须已移出局部语言。
+
+如上所述，关于`Ret`的最后一条规则意味着资源*必须*为以下两种情况之一：
+
+* 通过`MoveToSender`移至全局存储。
+* 通过`Unpack`销毁。
+
+MoveToSender和Unpack都在声明资源的模块内部。
 
 ## 引用安全（Reference Safety）
 
@@ -71,9 +86,34 @@ References can be either exclusive or shared; the latter allow read-only access.
 
 The two conditions above establish the property of referential transparency, important for scalable program verification, which looks roughly as follows: consider the piece of code `v1 = *r; S; v2 = *r`, where `S` is an arbitrary computation that does not perform any write through the syntactic reference `r` (and no writes to any `r'` that extends `r`). Then `v1 == v2`.
 
+引用是字节码语言中的第一流。新的引用可以通过几种方式用于功能：
+
+* 输入参数。
+* 将值的地址放在局部变量中。
+* 在地址中取全球公开值的地址。
+* 从引用到包含结构的字段获取地址。
+* 从函数返回值。
+
+参考安全检查的目的是确保没有悬挂的参考。以下是一些悬空引用的示例：
+
+* 局部变量`y`包含对局部变量`x`中值的引用；然后`x`被移动。
+* 局部变量`y`包含对局部变量`x`中值的引用；然后将`x`绑定到一个新值。
+* 引用未初始化的局部变量。
+* 从函数返回对局部变量中值的引用。
+* 参考`r`取为全球发布的值`v`； `v`则未发布。
+
+引用可以是独占或共享；后者允许只读访问。参考安全检查的第二个目标是确保在字节码程序的执行上下文中-包括整个评估堆栈和所有功能框-如果存在两个包含引用r1和r2的不同存储位置，使得`r2`扩展`r1`，则同时满足以下两个条件：
+
+* 如果`r1`被标记为独占，则它必须是非活动的，即不可能到达`r1`被取消引用或突变的控制位置。
+* 如果共享`r1`，则共享`r2`。
+
+上面的两个条件建立了引用透明性，这对于可伸缩程序验证很重要，它看起来大致如下：考虑代码段`v1 = *r; S; v2 = *r`，其中`S`是任意计算，不通过语法引用`r`执行任何写操作（并且不对扩展`r`的任何`r`进行写操作）。然后是`v1 == v2`。
+
 ### Analysis Setup
 
 The reference safety analysis is set up as a flow analysis (or abstract interpretation). An abstract state is defined for abstractly executing the code of a basic block. A map is maintained from basic blocks to abstract states. Given an abstract state *S* at the beginning of a basic block *B*, the abstract execution of *B* results in state *S'*. This state *S'* is propagated to all successors of *B* and recorded in the map. If a state already existed for a block, the freshly propagated state is “joined” with the existing state. If the join fails an error is reported. If the join succeeds but the abstract state remains unchanged, no further propagation is done. Otherwise, the state is updated and propagated again through the block. An error may also be reported when an instruction is processed during the propagation of abstract state through a block.
+
+参考安全分析被设置为流分析（或抽象解释）。 定义了一个抽象状态，用于抽象地执行基本块的代码。映射是从基本块到抽象状态的。 给定基本块*B*开头的抽象状态*S*，*B*的抽象执行将导致状态*S'*。状态*S'*会传播到*B*的所有后继，并记录在映射中。 如果某个块的状态已经存在，则将新传播的状态与现有状态“合并”。如果连接失败，将报告错误。如果连接成功，但是抽象状态保持不变，则不会进行进一步的传播。否则，状态将更新并再次通过块传播。 在通过块传播抽象状态期间处理指令时，也会报告错误。
 
 ### Abstract State
 
@@ -90,6 +130,21 @@ The current implementation stores this information as two separate maps with dis
       * If *n2* in *borrowed_by*[*n1*], then it means that the reference represented by *n2* is an extension of the reference represented by *n1*.
       * If *n2* in *fields_borrowed_by*[*n1*][*f*], it means that the reference represented by *n2* is an extension of the *f*-extension of the reference represented by *n1*. Based on this intuition, it is a sound overapproximation to move a nonce *n* from the domain of *fields_borrowed_by* to the domain of *borrowed_by* by taking the union of all nonce sets corresponding to all fields in the domain of *fields_borrowed_by*[*n*].
 * To propagate an abstract state across the instructions in a block, the values and references on the stack must also be modeled. We had earlier described how we model the usable stack suffix as a stack of types. We now augment the contents of this stack to be a structure containing a type and an abstract value. We maintain the invariant that non-reference values on the stack cannot have pending borrows on them. Therefore, if there is an abstract value *Value*(*ns*) on the stack, then *ns* is empty.
+
+抽象状态包含三个组成部分：
+
+* 从局部变量到抽象值的局部映射。不在此地图域中的本地人不可用。可用性是对初始化概念的概括。局部变量可能会在初始化后由于被移动而变得不可用。抽象值是*Reference*（*n*）（对于引用类型的变量）或*Value*（*ns*）（对于值类型的变量），其中* n *是随机数，*ns*是a随机数的集合。随机数是用于表示参考的常数。让* Nonce *代表所有随机数的集合。如果将局部变量*l*映射到*Value*（* ns *），则意味着存在指向* l *中存储的值的未完成借用引用。对于* ns *的每个成员* n *，必须有一个映射到* Reference *（* n *）的局部变量* l *。如果将局部变量* x *映射到* Reference *（* n *）并且存在局部变量* y *和* z *分别映射到* Value *（* ns1 *）和* Value *（* ns2 *） ，则* n *可能是* ns1 *和* ns2 *的成员。这仅意味着分析是有损的。 * l *映射到* Value *（{}）的特殊情况意味着没有借用的* l *引用，因此* l *可能被破坏或移动。
+*从局部变量到抽象值的局部映射本身不足以检查字节码程序，因为由字节码操纵的值可以是大型嵌套结构，且引用指向中间。指向值中间的引用可以扩展以生成另一个引用。某些扩展名应被允许，而其他扩展名则不应被允许。为了跟踪引用之间的相对扩展，抽象状态具有第二个组件。此组件是从随机数到以下两种借用信息之一的映射：
+* 一组随机数。
+* 从字段到随机数集的映射。
+
+当前的实现将此信息存储为两个单独的映射，这些映射具有互斥的域：
+  * * rowrowed_by *从* Nonce *映射到* Set * <* Nonce *>。
+  * * fields_borrowed_by *从* Nonce *映射到* Map * <* Field *，* Set * <* Nonce * >>。
+      *如果* borrowed_by * [* n1 *]中的* n2 *，则表示* n2 *表示的引用是* n1 *表示的引用的扩展。
+      *如果* fields_borrowed_by * [* n1 *] [* f *]中的* n2 *，则表示* n2 *表示的引用是* n1 *表示的引用的* f *扩展的扩展。根据这种直觉，通过将与*fields_borrowed_by*域中的所有字段相对应的所有随机数集的并集，将随机数* n *从* fields_borrowed_by *的域移动到*borrowed_by*的域是一种声音的近似估计。 [*n*]。
+*要在块中的指令之间传播抽象状态，还必须对堆栈上的值和引用进行建模。前面我们已经描述了如何将可用的堆栈后缀建模为类型堆栈。现在，我们将该堆栈的内容扩充为包含类型和抽象值的结构。我们保持不变性，即堆栈上的非引用值不能在它们上面有未决借用。因此，如果堆栈上有一个抽象值*Value*（*ns*），则*ns*为空。
+
 
 ### 值与引用（Values and References）
 
