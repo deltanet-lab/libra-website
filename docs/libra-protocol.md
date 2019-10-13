@@ -17,14 +17,14 @@ Libra协议的核心是两个基础概念 &mdash; 交易和状态。在任何一
 ![Figure 1.1 A transaction changes state.](assets/illustrations/transactions.svg)
 <small class="figure">图1.1 交易改变状态</small>
 
-图1.1表示执行交易时发生的Libra区块链的状态变化。 例如，在状态S~N-1~下，Alice的余额为110个Libra，Bob的余额为52个Libra。 将交易应用于区块链时，它将生成一个新状态。 为了从S~N-1~过渡到S~N~，在状态S~N-1~之上执行了交易T~N~。 这会导致Alice的余额减少10个Libra，而Bob的余额增加10个Libra。 现在，新状态S~N~显示这些更新的余额。 在图1.1中：
+图1.1表示执行交易时发生的Libra区块链的状态变化。例如，在状态S~N-1~下，Alice的余额为110个Libra，Bob的余额为52个Libra。 将交易应用于区块链时，它将生成一个新状态。为了从S~N-1~过渡到S~N~，在状态S~N-1~之上执行了交易T~N~。这会导致Alice的余额减少10个Libra，而Bob的余额增加10个Libra。现在，新状态S~N~显示这些更新的余额。在图1.1中：
 
 * **A** 和 **B** 分别表示Alice和Bob在区块链中的账户。
 * **S~N-1~** 代表在区块链中的第 (N-1)^th^ 的状态。
-* **T~N~** 是指在区块链上执行的第 n-th 个交易。  
+* **T~N~** 是指在区块链上执行的第 n-th 个交易。
     * 在该例子中, T~N~ 是指 - “从用户A的账户转账10个Libra币到用户B的账户。”
-* **F** 是一个确定性的函数。 F always returns the same final state for a specific initial state and a specific transaction. If the current state of the blockchain is S~N-1~, and transaction T~N~ is executed on state S~N-1~, the new state of the blockchain is always S~N~. 对于特定的初始状态和特定的交易，F始终返回相同的最终状态。如果区块链的当前状态为S~N-1~，并且交易T~N~在状态S~N-1~上执行，则区块链的新状态始终为S~N~。
-* **S~N~** is the n-th state of the blockchain. S~N~ is an outcome of applying F to S~N-1~ and T~N~.
+* **F** 是一个确定性的函数。对于特定的初始状态和特定的交易，F始终返回相同的最终状态。如果区块链的当前状态为S~N-1~，并且交易T~N~在状态S~N-1~上执行，则区块链的新状态始终为S~N~。
+* **S~N~**是区块链的第n个状态。S~N~是将F应用于S~N-1~和T~N~的结果。
 
 Libra协议使用[Move语言](move-overview.md)来执行确定性函数F.
 
@@ -36,23 +36,23 @@ Libra区块链的用户通过提交一个交易请求来更新账本状态，区
 * **发送者的公钥** &mdash; 与对交易进行签名的私钥相对应的公钥。
 * **程序** &mdash; 该程序由如下部分组成：
     * Move字节码。
-    * 可选的脚本输入列表 An optional list of inputs to the script. For a peer-to-peer transaction, the inputs contain the information about the recipient and the amount transferred to the recipient.
+    * 可选的脚本输入列表。对于点对点交易，输入包含有关接收者和转移到接收者的金额的信息。
     * 可选的将要发布的Move字节码模块。
-* **Gas 价格** (in microlibra/gas units) &mdash; The amount the sender is willing to pay per unit of [gas](reference/glossary.md#gas) to execute the transaction. Gas is a way to pay for computation and storage. A gas unit is an abstract measurement of computation with no inherent real-world value.
+* **Gas 价格** (in microlibra/gas units) &mdash; 发送方愿意为执行交易而每[燃料](reference/glossary.md#gas)支付的金额。燃料是一种支付计算和存储费用的方式。 气体单位是对计算的抽象度量，没有固有的实际值。
 * **最大燃料总量** &mdash; 交易允许消费的最大燃料量。 
 * **序列号** &mdash; 一个正整数，等于发送者账户中的序列号。
-* **超时时间** &mdash; The time after which the transaction ceases to be valid.
+* **超时时间** &mdash; 交易保持有效的超时时间。
 * **签名** &mdash; 发送者的数字签名。
 
 交易脚本可以是任意的程序，该程序编码了交易逻辑，与发布在Libra区块链上的分布式数据库中的资源进行交互。
 
 ### 账本状态(Ledger State)
 
-账本状态或Libra区块链的全局状态由区块链中所有帐户的状态组成。为了执行交易，每个验证者必须知道最新版本的区块链分布式数据库的全局状态。 请参见[版本化数据库](#versioned-database)。
+账本状态或Libra区块链的全局状态由区块链中所有帐户的状态组成。为了执行交易，每个验证者必须知道最新版本的区块链分布式数据库的全局状态。请参见[版本化数据库](#versioned-database)。
 
 ## 版本化数据库(Versioned Database)
 
-Libra区块链中的所有数据都保存在单版本的分布式数据库中。 版本号是一个无符号的64位整数，与系统已执行的交易数相对应。
+Libra区块链中的所有数据都保存在单版本的分布式数据库中。版本号是一个无符号的64位整数，与系统已执行的交易数相对应。
 
 版本化数据库允许验证者执行以下操作：
 
@@ -61,9 +61,9 @@ Libra区块链中的所有数据都保存在单版本的分布式数据库中。
 
 ## 账户(Account)
 
-Libra帐户是Move模块和Move资源的容器。 它由[帐户地址](reference/glossary.md#account-address)标识。 这实质上意味着每个帐户的状态都由代码和数据组成：
+Libra帐户是Move模块和Move资源的容器。它由[帐户地址](reference/glossary.md#account-address)标识。 这实质上意味着每个帐户的状态都由代码和数据组成：
 
-* [Move模块](move-overview.md#move-modules-allow-composable-smart-contracts)**包含代码（类型和过程声明），但不包含数据。 模块的过程对用于更新区块链全局状态的规则进行编码。
+* [Move模块](move-overview.md#move-modules-allow-composable-smart-contracts)**包含代码（类型和过程声明），但不包含数据。模块的过程对用于更新区块链全局状态的规则进行编码。
 * [移动资源](move-overview.md#move-has-first-class-resources)**包含数据但不包含代码。 每个资源值都有在区块链分布式数据库中发布的模块中声明的类型。
 
 一个帐户可以包含任意数量的Move资源和Move模块。

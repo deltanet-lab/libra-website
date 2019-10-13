@@ -257,7 +257,7 @@ Successfully finished execution
 
 ### 编译Move程序（Compile Move Program）
 
-If the client cannot locate your Move program (module or script), you'll see this error:
+如果客户端找不到您的Move程序（模块或脚本），您将会看到此错误：
 
 ```
 libra% dev compile 0 ~/my-tscripts/custom_script.mvir script
@@ -265,12 +265,14 @@ libra% dev compile 0 ~/my-tscripts/custom_script.mvir script
 No such file or directory (os error 2)
 ```
 
-If you see the following error, refer to the usage of the [dev compile](reference/libra-cli#dev-d-mdash-operations-related-to-move-transaction-scripts-and-modules) command, specify all the required arguments and try compiling again.
+如果看到以下错误，请参考[dev compile](reference/libra-cli#dev-d-mdash-operations-related-to-move-transaction-scripts-and-modules)命令的用法，指定所有 必需的参数，然后尝试再次编译。
 
 ```
 Invalid number of arguments for compilation
 ```
 For syntax related compilation errors, refer to [Move IR syntax](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/compiler/ir_to_bytecode/syntax/src/lib.rs).
+
+与语法相关的编译错误，请参阅[Move IR语法](https://github.com/deltanet-lab/libra-website-cn/blob/master/language/compiler/ir_to_bytecode/syntax/src/lib.rs)。
 
 ### 发布编译好的模块（Publish Compiled Module）
 

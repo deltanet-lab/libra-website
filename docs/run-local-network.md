@@ -43,6 +43,10 @@ To run a network with one or more validator nodes and to create a local blockcha
 
 The following example starts a network with 4 nodes:
 
+要运行具有一个或多个验证器节点的网络并创建本地区块链，请使用带有-n选项的`libra_swarm`，如下所示。如果未指定-n选项，则`libra_swarm`将产生一个节点为1的网络。
+
+以下示例启动具有4个节点的网络：
+
 ```
 $ cd libra
 $ cargo run -p libra_swarm -- -s -n 4
@@ -54,17 +58,33 @@ The `cargo run -p libra_swarm -- -s` command does the following:
 * Performs configuration management of the validator network.
 * Starts an instance of the Libra CLI client; the client is connected to the local network.
 
+`cargo run -p libra_swarm -- -s`命令执行以下操作：
+
+* 在您的计算机上本地生成验证程序节点网络。
+* 执行验证器网络的配置管理。
+* 启动Libra CLI客户端的实例；客户端已连接到本地网络。
+
 The configuration management of the validator network generates:
 
 * A genesis transaction.
 * Mint key &mdash; Key for the account that's allowed to perform the mint operation.
 * Bootstrap configuration of each validator in the local network &mdash; Ports to listen to, system limits, etc.
 
+验证器网络的配置管理生成：
+
+* 创世交易。
+* 薄荷键允许执行铸币操作的帐户的键。
+* 本地网络中每个验证器的引导程序配置要监听的端口，系统限制等。
+
 The `cargo run` command may take some time to run. If you have started `libra_swarm` using the `-s` option, upon successful execution of the command, an instance of the Libra CLI client will be running on your system. You will see the CLI client menu and the `libra%` prompt. This instance of the client is connected to the local network of nodes you just spawned. You can now enter CLI commands to interact with the local network.
+
+`cargo run`命令可能需要一些时间才能运行。如果您已经使用`-s`选项启动了`libra_swarm`，那么在成功执行命令后，Libra CLI客户端实例将在您的系统上运行。您将看到CLI客户端菜单和`libra％`提示。客户端的该实例连接到刚生成的节点的本地网络。 现在，您可以输入CLI命令与本地网络进行交互。
 
 ## Run Libra CLI client in a Separate Process From `libra_swarm`
 
 In the previous section, we ran `libra_swarm` using the `-s` option. This automatically starts the Libra CLI client and `libra_swarm` in the same process. If you would like to run the CLI client in a separate process from `libra_swarm`, use the following steps:
+
+在上一节中，我们使用`-s`选项运行了`libra_swarm`。这将以相同的过程自动启动Libra CLI客户端和`libra_swarm`。如果您想在与`libra_swarm`分开的进程中运行CLI客户端，请使用以下步骤：
 
 ### Step 1: Run `libra_swarm`
 
@@ -75,6 +95,8 @@ $ cd libra
 $ cargo run -p libra_swarm
 ```
 You will see the following information in the output.
+
+您将在输出中看到以下信息。
 
 ```
  To run the Libra CLI client in a separate process and connect to the local cluster of nodes you just spawned, use this command:
@@ -90,6 +112,11 @@ To  start an instance of the CLI client and connect to the local network you spa
 * In a new terminal window, change to the `libra` directory.
 * Run the entire command you see in your output from step 1, as shown below:
 
+要启动命令行客户端实例并连接到您在步骤1中产生的本地网络：
+
+* 在新的终端窗口中，转到`libra`目录。
+* 运行在步骤1的输出中看到的整个命令，如下所示：
+
 ```
 $ cd libra
 $ cargo run --bin client -- -a localhost -p 57149 -s "/var/folders/xd/sfg4x6713w350lq73kgfc7qxnq5swl/T/.tmpmSSKk9/trusted_peers.config.toml" -m "/var/folders/xd/sfg4x6713w350lq73kgfc7qxnq5swl/T/keypair.ATvJWTliQf0a/temp_faucet_keys"
@@ -97,6 +124,10 @@ $ cargo run --bin client -- -a localhost -p 57149 -s "/var/folders/xd/sfg4x6713w
 This will spawn an instance of the CLI client in a separate process, and you will see the `libra%` prompt.
 
 A sample output from running this command is shown below:
+
+这将在单独的过程中生成命令行客户端的实例，并且您会看到`libra％`提示。
+
+运行此命令的示例输出如下所示：
 
 ```
 
@@ -129,6 +160,8 @@ libra%
 
 You can now enter CLI commands to interact with the local network. Refer to the [Libra CLI Guide](reference/libra-cli.md) for command usage information. Refer to [My First Transaction](my-first-transaction.md) for guidance on creating accounts and running transactions on your local blockchain.
 
+现在，您可以输入命令行命令与本地网络进行交互。有关命令用法信息，请参考[Libra命令行指南](reference/libra-cli.md)。 有关在本地区块链上创建帐户和运行交易的指导，请参考[我的第一笔交易](my-first-transaction.md)。
+
 ## Troubleshooting FAQ
 
 To see usage options for `libra_swarm`, run:
@@ -141,20 +174,22 @@ $ cargo run -p libra_swarm -- -h
 
 By default, logging is disabled in `libra_swarm`. If you would like to enable logging, run `libra_swarm` with the `-l` option as shown below:
 
+默认情况下，在`libra_swarm`中禁用日志记录。如果您想启用日志记录，请使用`-l`选项运行`libra_swarm`，如下所示：
+
 ```
 $ cargo run -p libra_swarm -- -s -l
 ```
 
 ### How Do I Access the Logs?
 
-When you run the `cargo run -p libra_swarm -- -s -l `command you will see the following in your output:
+当您运行`cargo run -p libra_swarm -- -s -l`命令后，您将在输出中看到以下内容：
 
 ```
 Base directory containing logs and configs: Temporary(TempDir { path:"/var/folders/tq/8gxrrmhx16376zxd5r4h9hhn_x1zq3/T/.tmpzeOPC0"})
 
 ```
 
-In a different terminal window, you can use the `tail` command to access the logs:
+在另一个终端窗口中，可以使用`tail`命令访问日志：
 
 ```
 $ tail -f <generated_path>/logs/*
@@ -166,9 +201,11 @@ The `<generated_path>` in the above example is:
 /var/folders/tq/8gxrrmhx16376zxd5r4h9hhn_x1zq3/T/.tmpzeOPC0
 ```
 
-### How Do I Persist the Logs?
+### 如何保存日志？（How Do I Persist the Logs?）
 
 The local validator nodes use a temporary directory to generate the logs and the database. This temporary directory is deleted when the `libra_swarm` process exits. To persist the logs after the termination of `libra_swarm`, run `libra_swarm` using the -`-c` option as specified in [libra_swarm usage](#usage).
+
+本地验证器节点使用一个临时目录来生成日志和数据库。当`libra_swarm`进程退出时，该临时目录被删除。要在`libra_swarm`终止后保留日志，请使用[libra_swarm用法](#usage)中指定的` -c`选项运行`libra_swarm`。
 
 ## 参考资料（Reference）
 

@@ -87,13 +87,13 @@ Now let us see how a programmer can interact with these modules and resources in
 
 ----------------
 
-正如我们在[Move交易脚本让交易可编程](#move-transaction-scripts-enable-programmable-transactions)中所解释的那样，用户编写交易脚本以请求更新Libra区块链的全局存储。几乎所有交易脚本中都会出现两个重要的构建基块：LibraAccount.T和LibraCoin.T资源类型。“LibraAccount”是模块的名称，而“T”是该模块声明的资源的名称。这是Move中的通用命名约定。模块声明的“主要”类型通常称为“T”。
+正如我们在[Move交易脚本让交易可编程](#move-transaction-scripts-enable-programmable-transactions)中所解释的那样，用户编写交易脚本以请求更新Libra区块链的全局存储。几乎所有交易脚本中都会出现两个重要的构建基块：LibraAccount.T和LibraCoin.T资源类型。`LibraAccount`是模块的名称，而“T”是该模块声明的资源的名称。这是Move中的通用命名约定。模块声明的“主要”类型通常称为“T”。
 
-当我们说用户“在Libra区块链上的地址`0xff`上有一个帐户”时，我们的意思是地址'0xff`拥有`LibraAccount.T`资源的实例。每个非空地址都有一个`LibraAccount.T`资源。此资源存储帐户数据，例如序列号，身份验证密钥和余额。要与帐户进行交互的Libra系统的任何部分都必须通过从LibraAccount.T资源中读取数据或调用LibraAccount模块的过程来进行此操作。
+当我们说用户“在Libra区块链上的地址`0xff`上有一个帐户”时，我们的意思是地址'0xff`拥有`LibraAccount.T`资源的实例。每个非空地址都有一个`LibraAccount.T`资源。此资源存储帐户数据，例如序列号，身份验证密钥和余额。要与帐户进行交互的Libra系统的任何部分都必须通过从`LibraAccount.T`资源中读取数据或调用LibraAccount模块的过程来进行此操作。
 
-帐户余额是类型为“ LibraCoin.T”的资源。正如我们在[移动具有一流资源]（＃move-has-first-class-resources）中所解释的那样，这是天秤座硬币的类型。与任何其他Move资源一样，此类型在语言上是“一流公民”。可以将LibraCoin.T类型的资源存储在程序变量中，并在过程之间传递等等。
+帐户余额是类型为`LibraCoin.T`的资源。正如我们在[移动具有一流资源](#move-has-first-class-resources)中所解释的那样，这是天秤座硬币的类型。与任何其他Move资源一样，此类型在语言上是“一流公民”。可以将LibraCoin.T类型的资源存储在程序变量中，并在过程之间传递等等。
 
-我们鼓励感兴趣的读者在libra / language / stdlib / modules /目录下的LibraAccount和LibraCoin模块中检查这两个关键资源的移动IR定义。
+我们鼓励感兴趣的读者在`libra/language/stdlib/modules/`目录下的`LibraAccount`和`LibraCoin`模块中检查这两个关键资源的移动IR定义。
 
 现在让我们看看程序员如何在事务脚本中与这些模块和资源进行交互。
 
@@ -201,6 +201,14 @@ To solve this problem for Alice, we will write a module `EarmarkedLibraCoin` whi
 * Allows Bob to claim the resource (the `claim_for_recipient` procedure).
 * Allows anyone with an `EarmarkedLibraCoin.T` to destroy it and acquire the underlying coin (the `unwrap` procedure).
 
+现在，我们将注意力转向编写自己的Move模块，而不是仅重用现有的`LibraAccount`和`LibraCoin`模块。考虑这种情况：Bob将来会在地址*a*上创建一个帐户。Alice想为Bob“专款”一些资金，以便他一旦创建就可以将其存入他的帐户。但是，如果Bob从未创建该帐户，她还希望能够自己收回资金。
+
+为了解决爱丽丝的这个问题，我们将编写模块`EarmarkedLibraCoin`，该模块：
+* 声明一个新的资源类型`EarmarkedLibraCoin.T`，其中包装了一个天秤座硬币和收件人地址。
+* 允许Alice创建这样的类型并将其发布到她的帐户下（`create`过程）。
+* 允许Bob声明资源（`claim_for_recipient`过程）。
+* 允许拥有`EarmarkedLibraCoin.T`的任何人销毁它并获得基础硬币（`unwrap`程序）。
+
 ```move
 // A module for earmarking a coin for a specific recipient
 module EarmarkedLibraCoin {
@@ -283,6 +291,10 @@ module EarmarkedLibraCoin {
 Alice can create an earmarked coin for Bob by creating a transaction script that invokes `create` on Bob's address *a* and a `LibraCoin.T` that she owns. Once *a* has been created, Bob can claim the coin by sending a transaction from *a*. This invokes `claim_for_recipient`, passes the result to `unwrap`, and stores the returned `LibraCoin` wherever he wishes. If Bob takes too long to create an account under *a* and Alice wants to reclaim her funds, she can do so by using `claim_for_creator` followed by `unwrap`.
 
 The observant reader may have noticed that the code in this module is agnostic to the internal structure of `LibraCoin.T`. It could just as easily be written using generic programming (e.g., `resource T<AnyResource: R> { coin: AnyResource, ... }`). We are currently working on adding support for exactly this sort of parametric polymorphism to Move.
+
+Alice可以通过创建一个交易脚本为Bob创建专用硬币，该交易脚本会在Bob的地址*a*和她拥有的`LibraCoin.T`上调用`create`。创建*a*后，Bob可以通过从*a*发送交易来要求硬币。这将调用`claim_for_recipient`，将结果传递给`unwrap`，并将返回的`LibraCoin`存储在他希望的任何地方。如果Bob花费太长时间在*a*下创建帐户，而Alice想要收回她的资金，则可以通过使用`claim_for_creator`然后再使用`unwrap`来收回。
+
+细心的读者可能已经注意到，该模块中的代码与`LibraCoin.T`的内部结构无关。它可以使用通用编程轻松编写（例如，`resource T <AnyResource：R> {coin：AnyResource，...}`）。我们目前正在努力为Move添加对此类参量多态性的支持。
 
 ### 未来开发者体验（Future Developer Experience）
 
