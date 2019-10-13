@@ -11,8 +11,7 @@ Move是一种新的编程语言，为Libra区块链提供了一个安全和可�
 2. [Move模块允许组合智能合约](#move-modules-allow-composable-smart-contracts)
 3. [Move拥有头等资源](#move-has-first-class-resources)
 
-对于好奇的读者来说，[Move技术论文](move-paper.md)包含了关于语言的更多细节。
-在本指南的第二部分中，我们将“内部揭秘”并向您展示如何使用[Move中间表示码](#move-intermediate-representation)编写自己的Move程序。在最初的测试网络版本中不支持自定义Move程序，但这些功能可供您在本地试用。
+对于好奇的读者来说，[Move技术论文](move-paper.md)包含了关于语言的更多细节。在本指南的第二部分中，我们将“内部揭秘”并向您展示如何使用[Move中间表示码](#move-intermediate-representation)编写自己的Move程序。在最初的测试网络版本中不支持自定义Move程序，但这些功能可供您在本地试用。
 
 ## Move的关键特性
 
@@ -78,11 +77,25 @@ Now let us see how a programmer can interact with these modules and resources in
 
 正如我们在[Move交易脚本使交易可编程](#move-transaction-scripts-enable-programmable-transactions)中所解释的，用户编写交易脚本以请求对Libra区块链的全局存储进行更新。在几乎所有的交易脚本中都有两个重要的构建块：`LibraAccount.T`和`LibraCoin.T`资源类型。`LibraAccount`是模块的名称，`T`是由该模块声明的资源的名称。这是Move中常用的命名约定；由模块声明的“主”类型通常称为‘t’。
 
-当我们说用户“在Libra区块链上的地址'0xff'有一个帐户”时，我们的意思是地址'0xff'拥有一个'LibraAccount.t'资源的实例。每个非空地址都有一个“libraaccount.t”资源。该资源存储帐户数据，例如序列号、认证密钥和余额。与帐户交互的天秤系统的任何一个部分都必须通过从“天秤帐号”资源读取数据或调用“库帐户”模块的过程来完成。
+当我们说用户“在Libra区块链上的地址'0xff'有一个帐户”时，我们的意思是地址'0xff'拥有一个`LibraCoin.T`资源的实例。每个非空地址都有一个“libraaccount.t”资源。该资源存储帐户数据，例如序列号、认证密钥和余额。与帐户交互的天秤系统的任何一个部分都必须通过从“天秤帐号”资源读取数据或调用“库帐户”模块的过程来完成。
 
-帐户余额是“LeavaCoin .t”类型的资源。正如我们在[移动拥有一等资源]（移动拥有一等资源）中所解释的，这是Libra硬币的类型。这种类型的人在语言上是“一等公民”，就像其他的移动资源一样。类型“RealCuoin .t”的资源可以存储在程序变量中，在程序之间传递，等等。
-我们鼓励感兴趣的读者在“天秤/语言/STDLIB／模块/目录”下，研究“库帐户”和“图书馆”模块中的这两个关键资源的移动IR定义。
+帐户余额是`LibraCoin.T`类型的资源。正如我们在[移动拥有一等资源](#move-has-first-class-resources)中所解释的，这是Libra币的类型。这种类型的人在语言上是“一等公民”，就像其他的移动资源一样。类型`LibraCoin.T`的资源可以存储在程序变量中，在程序之间传递，等等。
+
+我们鼓励感兴趣的读者在目录`libra/language/stdlib/modules/`下，研究`LibraAccount`和`LibraCoin`模块中的这两个关键资源的Move IR定义。
+
 现在让我们看看程序员如何在事务脚本中与这些模块和资源交互。
+
+----------------
+
+正如我们在[Move交易脚本让交易可编程](#move-transaction-scripts-enable-programmable-transactions)中所解释的那样，用户编写交易脚本以请求更新Libra区块链的全局存储。几乎所有交易脚本中都会出现两个重要的构建基块：LibraAccount.T和LibraCoin.T资源类型。“LibraAccount”是模块的名称，而“T”是该模块声明的资源的名称。这是Move中的通用命名约定。模块声明的“主要”类型通常称为“T”。
+
+当我们说用户“在Libra区块链上的地址`0xff`上有一个帐户”时，我们的意思是地址'0xff`拥有`LibraAccount.T`资源的实例。每个非空地址都有一个`LibraAccount.T`资源。此资源存储帐户数据，例如序列号，身份验证密钥和余额。要与帐户进行交互的Libra系统的任何部分都必须通过从LibraAccount.T资源中读取数据或调用LibraAccount模块的过程来进行此操作。
+
+帐户余额是类型为“ LibraCoin.T”的资源。正如我们在[移动具有一流资源]（＃move-has-first-class-resources）中所解释的那样，这是天秤座硬币的类型。与任何其他Move资源一样，此类型在语言上是“一流公民”。可以将LibraCoin.T类型的资源存储在程序变量中，并在过程之间传递等等。
+
+我们鼓励感兴趣的读者在libra / language / stdlib / modules /目录下的LibraAccount和LibraCoin模块中检查这两个关键资源的移动IR定义。
+
+现在让我们看看程序员如何在事务脚本中与这些模块和资源进行交互。
 
 ```move
 // Simple peer-peer payment example.

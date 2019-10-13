@@ -7,6 +7,10 @@ title: 运行本地网络
 
 `libra_swarm` package is located in the root directory of the `libra` repository.
 
+`libra_swarm`用于启动验证器节点的本地网络和计算机上的本地区块链。运行本地网络可以更轻松地测试和调试代码更改。 要查看由本地节点生成的日志，请使用[如何访问日志？](#how-do-i-access-the-logs)中的说明。您可以使用CLI命令`dev`进行编译，发布，并在本地节点群集上执行Move中间表示（IR）程序。有关更多详细信息，请参考[本地运行移动程序](run-move-locally.md)。
+
+`libra_swarm`软件包位于`libra`存储库的根目录中。
+
 ## Usage
 
 `libra_swarm [FLAGS] [OPTIONS]`
@@ -25,11 +29,13 @@ OPTIONS:
 
 To install all the required dependencies, run the build script as described in [Clone and Build Libra Core](my-first-transaction.md#clone-and-build-libra-core).
 
-## Run a local network
+要安装所有必需的依赖项，请按照[克隆并构建Libra Core](my-first-transaction.md#clone-and-build-libra-core)中所述运行构建脚本。
+
+## 运行本地网络（Run a local network）
 
 <blockquote class="block_note">
 
-**Note:** The local network of validator nodes will not be connected to the testnet; currently, it is not possible to connect the local validator network to the testnet.
+**注意:** The local network of validator nodes will not be connected to the testnet; currently, it is not possible to connect the local validator network to the testnet.
 
 </blockquote>
 

@@ -109,11 +109,11 @@ libra%
 
 ## 创建Alice和Bob的帐户
 
-一旦客户端连接到测试网，就可以运行命令行命令来创建新帐户。 我们将引导您为两个用户创建帐户（我们将其称为Alice和Bob）。
+一旦客户端连接到测试网，就可以运行命令行命令来创建新帐户。我们将引导您为两个用户创建帐户（我们将其称为Alice和Bob）。
 
 ### 第一步：确保命令行客户端已经在你的系统上运行
 
-**libra%**命令行提示符表示您的Libra CLI客户端正在运行。 要查看`account`命令的帮助信息，请输入“account”，如下所示：
+**libra%**命令行提示符表示您的Libra CLI客户端正在运行。要查看`account`命令的帮助信息，请输入“account”，如下所示：
 
 ```plaintext
 libra% account
@@ -148,7 +148,7 @@ mint | mintb | m | mb <receiver account> <number of coins>
 Created/retrieved account #0 address 3ed8e5fafae4147b2a105a0be2f81972883441cfaaadf93fc0868e7a0253c4a8
 ```
 
-#0是Alice帐户的索引，十六进制字符串是Alice帐户的地址。 索引只是引用爱丽丝帐户的一种方式。 帐户索引是本地CLI索引，可以在其他CLI命令中使用，以使用户方便地参考他们创建的帐户。 该索引对区块链没有意义。 仅当通过铸造将钱添加到Alice的帐户中，或者通过其他用户的转账将资金转移到Alice的帐户中时，才会在区块链上创建Alice的帐户。 请注意，您也可以在CLI命令中使用十六进制地址。 帐户索引只是帐户地址的便利包装。
+#0是Alice帐户的索引，十六进制字符串是Alice帐户的地址。索引只是引用爱丽丝帐户的一种方式。帐户索引是本地CLI索引，可以在其他CLI命令中使用，以使用户方便地参考他们创建的帐户。该索引对区块链没有意义。仅当通过铸造将钱添加到Alice的帐户中，或者通过其他用户的转账将资金转移到Alice的帐户中时，才会在区块链上创建Alice的帐户。请注意，您也可以在CLI命令中使用十六进制地址。帐户索引只是帐户地址的便利包装。
 
 ### 第三步：创建Bob的账户
 
@@ -163,8 +163,7 @@ Created/retrieved account #0 address 3ed8e5fafae4147b2a105a0be2f81972883441cfaaa
 Created/retrieved account #1 address 8337aac709a41fe6be03cad8878a0d4209740b1608f8a81566c9a7d4b95a2ec7
 ```
 
-#1是Bob帐户的索引，十六进制字符串是Bob帐户的地址。
-有关索引的更多详细信息，请参考[创建爱丽丝的帐户](#step-2-create-alice-s-account)。
+#1是Bob帐户的索引，十六进制字符串是Bob帐户的地址。有关索引的更多详细信息，请参考[创建爱丽丝的帐户](#step-2-create-alice-s-account)。
 
 ### 第四步(可选)：查询账户
 
@@ -178,11 +177,11 @@ User account index: 0, address: 3ed8e5fafae4147b2a105a0be2f81972883441cfaaadf93f
 User account index: 1, address: 8337aac709a41fe6be03cad8878a0d4209740b1608f8a81566c9a7d4b95a2ec7, sequence number: 0
 ```
 
-帐户的序列号指示已从该帐户发送的交易数量。 每次执行从该帐户发送的交易并将其存储在区块链中时，它都会增加。 要了解更多信息，请参阅[交易序列号](reference/glossary.md#sequence-number)。
+帐户的序列号指示已从该帐户发送的交易数量。每次执行从该帐户发送的交易并将其存储在区块链中时，它都会增加。要了解更多信息，请参阅[交易序列号](reference/glossary.md#sequence-number)。
 
 ## 将Libra币添加到Alice和Bob的帐户中
 
-铸造硬币并将硬币添加到测试网上的帐户是通过Faucet服务完成的。 Faucet是与测试网一起运行的服务。 该服务仅用于为测试网络铸造硬币，而对于[主网](reference/glossary.md#mainnet)不存在。 它创建的Libra币没有现实价值。 假设您已经[创建了Alice和Bob的帐户](#create-alice-s-and-bob-s-account)（分别具有索引0和索引1），则可以按照以下步骤将Libra添加到两个帐户中。
+铸造硬币并将硬币添加到测试网上的帐户是通过Faucet服务完成的。Faucet是与测试网一起运行的服务。该服务仅用于为测试网络铸造硬币，而对于[主网](reference/glossary.md#mainnet)不存在。它创建的Libra币没有现实价值。假设您已经[创建了Alice和Bob的帐户](#create-alice-s-and-bob-s-account)（分别具有索引0和索引1），则可以按照以下步骤将Libra添加到两个帐户中。
 
 ### 步骤1：将110个Libra添加到Alice的帐户
 
@@ -202,7 +201,7 @@ User account index: 1, address: 8337aac709a41fe6be03cad8878a0d4209740b1608f8a815
 Mint request submitted
 ```
 
-请注意，提交请求后，这意味着已将其成功添加到（测试网中验证者节点的）内存池中。 它不一定意味着它将成功完成。 稍后，我们将查询帐户余额以确认铸造是否成功。
+请注意，提交请求后，这意味着已将其成功添加到（测试网中验证者节点的）内存池中。它不一定意味着它将成功完成。稍后，我们将查询帐户余额以确认铸造是否成功。
 
 如果您的帐户mint命令未能成功提交您的请求，请参阅[故障处理](#minting-and-adding-money-to-account)
 
@@ -245,7 +244,7 @@ Mint request submitted
 
 ## 提交一个交易
 
-在提交交易以将Libra从Alice的帐户转移到Bob的帐户之前，我们将查询每个帐户的序列号。 这将帮助我们了解执行交易如何更改每个帐户的序列号。
+在提交交易以将Libra从Alice的帐户转移到Bob的帐户之前，我们将查询每个帐户的序列号。这将帮助我们了解执行交易如何更改每个帐户的序列号。
 
 ### 查询帐号的序列号
 
@@ -301,11 +300,11 @@ libra% query sequence 1
 Sequence number is: 0
 ```
 
-Alice的帐户（索引为0）的交易序列号为1表示到目前为止，Alice的帐户已发送了一笔交易。 Bob的帐户（索引为1）的交易序列号为0表示到目前为止，尚未从Bob的帐户发送任何交易。 每次从帐户发送交易时，交易序列号都会增加1。
+Alice的帐户（索引为0）的交易序列号为1表示到目前为止，Alice的帐户已发送了一笔交易。Bob的帐户（索引为1）的交易序列号为0表示到目前为止，尚未从Bob的帐户发送任何交易。 每次从帐户发送交易时，交易序列号都会增加1。
 
 ### 转账后检查两个账户的余额
 
-要检查两个帐户的最终余额，请像在[此步骤](#step-3-check-the-balance)中一样，再次查询每个帐户的余额。 如果您的交易（转帐）成功执行，您应该在Alice的帐户中看到100个Libra，在Bob的帐户中看到62个Libra。
+要检查两个帐户的最终余额，请像在[此步骤](#step-3-check-the-balance)中一样，再次查询每个帐户的余额。如果您的交易（转帐）成功执行，您应该在Alice的帐户中看到100个Libra，在Bob的帐户中看到62个Libra。
 
 ```plaintext
 libra% query balance 0
@@ -338,7 +337,7 @@ Balance is: 62
 如果您的客户端未连接到测试网：
 
 * 检查您的互联网连接。
-* 确保您使用的是最新版本的客户端。 获得最新的Libra Core代码并重新运行客户端：
+* 确保您使用的是最新版本的客户端。获得最新的Libra Core代码并重新运行客户端：
     * `./scripts/cli/start_cli_testnet.sh`
 
 
@@ -352,8 +351,7 @@ Balance is: 62
   [ERROR] Error minting coins: Server unavailable, please retry and/or check **if** host passed to the client is running
   ```
 
-* 如果提交交易后余额未更新，请稍等片刻，然后再次查询余额。 如果区块链正在处理大量交易，则可能会有延迟。 如果您的余额仍未更新，请尝试重新铸造。
-
+* 如果提交交易后余额未更新，请稍等片刻，然后再次查询余额。如果区块链正在处理大量交易，则可能会有延迟。如果您的余额仍未更新，请尝试重新铸造。
 * 要检查帐户是否存在，请查询帐户状态。 对于索引为0的帐户，请输入以下内容：
 
   `libra% query account_state 0`
@@ -370,7 +368,7 @@ libra% transfer 0 1 10
 
 如何解决传输相关问题：
 * 检查与testnet的连接。
-* 查询发送者帐户以确保它存在。 对索引为0的帐户使用以下命令：
+* 查询发送者帐户以确保它存在。对索引为0的帐户使用以下命令：
      * `query account_state 0`
 * 您可以尝试使用`quit`或`q!`退出客户端，然后重新运行以下命令以连接到测试网：
      * 在libra目录下执行：`./scripts/cli/start_cli_testnet.sh`

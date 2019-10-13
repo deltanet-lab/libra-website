@@ -23,7 +23,7 @@ Libra协议的核心是两个基础概念 &mdash; 交易和状态。在任何一
 * **S~N-1~** 代表在区块链中的第 (N-1)^th^ 的状态。
 * **T~N~** 是指在区块链上执行的第 n-th 个交易。  
     * 在该例子中, T~N~ 是指 - “从用户A的账户转账10个Libra币到用户B的账户。”
-* **F** 是一个确定性的函数。 F always returns the same final state for a specific initial state and a specific transaction. If the current state of the blockchain is S~N-1~, and transaction T~N~ is executed on state S~N-1~, the new state of the blockchain is always S~N~.
+* **F** 是一个确定性的函数。 F always returns the same final state for a specific initial state and a specific transaction. If the current state of the blockchain is S~N-1~, and transaction T~N~ is executed on state S~N-1~, the new state of the blockchain is always S~N~. 对于特定的初始状态和特定的交易，F始终返回相同的最终状态。如果区块链的当前状态为S~N-1~，并且交易T~N~在状态S~N-1~上执行，则区块链的新状态始终为S~N~。
 * **S~N~** is the n-th state of the blockchain. S~N~ is an outcome of applying F to S~N-1~ and T~N~.
 
 Libra协议使用[Move语言](move-overview.md)来执行确定性函数F.
